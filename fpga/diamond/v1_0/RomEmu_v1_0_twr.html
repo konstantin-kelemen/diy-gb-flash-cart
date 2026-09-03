@@ -1,0 +1,613 @@
+<HTML>
+<HEAD><TITLE>Lattice TRACE Report</TITLE>
+<STYLE TYPE="text/css">
+<!--
+ body,pre{    font-family:'Courier New', monospace;    color: #000000;    font-size:88%;    background-color: #ffffff;}h1 {    font-weight: bold;    margin-top: 24px;    margin-bottom: 10px;    border-bottom: 3px solid #000;    font-size: 1em;}h2 {    font-weight: bold;    margin-top: 18px;    margin-bottom: 5px;    font-size: 0.90em;}h3 {    font-weight: bold;    margin-top: 12px;    margin-bottom: 5px;    font-size: 0.80em;}p {    font-size:78%;}P.Table {    margin-top: 4px;    margin-bottom: 4px;    margin-right: 4px;    margin-left: 4px;}table{    border-width: 1px 1px 1px 1px;    border-style: solid solid solid solid;    border-color: black black black black;    border-collapse: collapse;}th {    font-weight:bold;    padding: 4px;    border-width: 1px 1px 1px 1px;    border-style: solid solid solid solid;    border-color: black black black black;    vertical-align:top;    text-align:left;    font-size:78%;}td {    padding: 4px;    border-width: 1px 1px 1px 1px;    border-style: solid solid solid solid;    border-color: black black black black;    vertical-align:top;    font-size:78%;}a {    color:#013C9A;    text-decoration:none;}a:visited {    color:#013C9A;}a:hover, a:active {    text-decoration:underline;    color:#5BAFD4;}.pass{background-color: #00ff00;}.fail{background-color: #ff0000;}.comment{    font-size: 90%;    font-style: italic;}
+-->
+</STYLE>
+</HEAD>
+<PRE><A name="Par_Twr"></A><B><U><big>Place & Route TRACE Report</big></U></B>
+
+Loading design for application trce from file romemu_v1_0.ncd.
+Design name: top
+NCD version: 3.3
+Vendor:      LATTICE
+Device:      LCMXO2-1200HC
+Package:     TQFP100
+Performance: 4
+Loading device for application trce from file 'xo2c1200.nph' in environment: C:/lscc/diamond/3.14/ispfpga.
+Package Status:                     Final          Version 1.44.
+Performance Hardware Data Status:   Final          Version 36.4.
+Setup and Hold Report
+
+--------------------------------------------------------------------------------
+<A name="Par_Twr_setup"></A><B><U><big>Lattice TRACE Report - Setup, Version Diamond (64-bit) 3.14.0.75.2</big></U></B>
+Wed Sep 02 21:50:03 2026
+
+Copyright (c) 1991-1994 by NeoCAD Inc. All rights reserved.
+Copyright (c) 1995 AT&T Corp.   All rights reserved.
+Copyright (c) 1995-2001 Lucent Technologies Inc.  All rights reserved.
+Copyright (c) 2001 Agere Systems   All rights reserved.
+Copyright (c) 2002-2024 Lattice Semiconductor Corporation,  All rights reserved.
+
+<A name="ptwr_set_ri"></A><B><U><big>Report Information</big></U></B>
+------------------
+Command line:    trce -v 10 -gt -sethld -sp 4 -sphld m -o RomEmu_v1_0.twr -gui RomEmu_v1_0.ncd RomEmu_v1_0.prf 
+Design file:     romemu_v1_0.ncd
+Preference file: romemu_v1_0.prf
+Device,speed:    LCMXO2-1200HC,4
+Report level:    verbose report, limited to 10 items per preference
+--------------------------------------------------------------------------------
+
+<A name="ptwr_set_ps"></A><B><U><big>Preference Summary</big></U></B>
+
+<LI><A href='#par_twr_pref_0_0' Target='right'>Default path enumeration(0 errors)</A></LI>            345 items scored, 0 timing errors detected.
+
+<LI><A href='#par_twr_pref_0_1' Target='right'>Default net enumeration(0 errors)</A></LI>            85 items scored, 0 timing errors detected.
+
+BLOCK ASYNCPATHS
+BLOCK RESETPATHS
+--------------------------------------------------------------------------------
+
+
+
+================================================================================
+<A name="par_twr_pref_0_0"></A>Preference: Default path enumeration
+            345 items scored, 0 timing errors detected.
+--------------------------------------------------------------------------------
+
+Report:   15.651ns delay gb_a[1] to gb_d[0]
+
+   Name    Fanout   Delay (ns)          Site               Resource
+PADI_DEL    ---     1.132         28.PAD to       28.PADDI gb_a[1]
+ROUTE        50     4.754       28.PADDI to      R8C10A.B0 gb_a_c_1
+CTOF_DEL    ---     0.495      R8C10A.B0 to      R8C10A.F0 SLICE_25
+ROUTE         1     0.656      R8C10A.F0 to      R8C10A.A1 n1011
+CTOF_DEL    ---     0.495      R8C10A.A1 to      R8C10A.F1 SLICE_25
+ROUTE         1     1.004      R8C10A.F1 to      R8C10D.B0 n1012
+CTOOFX_DEL  ---     0.721      R8C10D.B0 to    R8C10D.OFX0 i1158/SLICE_15
+ROUTE         1     1.336    R8C10D.OFX0 to     R10C11D.B1 n1014
+CTOF_DEL    ---     0.495     R10C11D.B1 to     R10C11D.F1 SLICE_28
+ROUTE         1     1.766     R10C11D.F1 to       45.PADDO gb_d_c_0
+DOPAD_DEL   ---     2.797       45.PADDO to         45.PAD gb_d[0]
+                  --------
+                   15.651   (39.2% logic, 60.8% route), 6 logic levels.
+
+Report:   15.364ns delay gb_a[1] to gb_d[0]
+
+   Name    Fanout   Delay (ns)          Site               Resource
+PADI_DEL    ---     1.132         28.PAD to       28.PADDI gb_a[1]
+ROUTE        50     4.376       28.PADDI to      R8C10C.D1 gb_a_c_1
+CTOF_DEL    ---     0.495      R8C10C.D1 to      R8C10C.F1 SLICE_35
+ROUTE         1     0.747      R8C10C.F1 to      R8C10A.C1 n1010
+CTOF_DEL    ---     0.495      R8C10A.C1 to      R8C10A.F1 SLICE_25
+ROUTE         1     1.004      R8C10A.F1 to      R8C10D.B0 n1012
+CTOOFX_DEL  ---     0.721      R8C10D.B0 to    R8C10D.OFX0 i1158/SLICE_15
+ROUTE         1     1.336    R8C10D.OFX0 to     R10C11D.B1 n1014
+CTOF_DEL    ---     0.495     R10C11D.B1 to     R10C11D.F1 SLICE_28
+ROUTE         1     1.766     R10C11D.F1 to       45.PADDO gb_d_c_0
+DOPAD_DEL   ---     2.797       45.PADDO to         45.PAD gb_d[0]
+                  --------
+                   15.364   (39.9% logic, 60.1% route), 6 logic levels.
+
+Report:   15.047ns delay gb_a[0] to gb_d[0]
+
+   Name    Fanout   Delay (ns)          Site               Resource
+PADI_DEL    ---     1.132         27.PAD to       27.PADDI gb_a[0]
+ROUTE        49     4.059       27.PADDI to      R8C10C.A1 gb_a_c_0
+CTOF_DEL    ---     0.495      R8C10C.A1 to      R8C10C.F1 SLICE_35
+ROUTE         1     0.747      R8C10C.F1 to      R8C10A.C1 n1010
+CTOF_DEL    ---     0.495      R8C10A.C1 to      R8C10A.F1 SLICE_25
+ROUTE         1     1.004      R8C10A.F1 to      R8C10D.B0 n1012
+CTOOFX_DEL  ---     0.721      R8C10D.B0 to    R8C10D.OFX0 i1158/SLICE_15
+ROUTE         1     1.336    R8C10D.OFX0 to     R10C11D.B1 n1014
+CTOF_DEL    ---     0.495     R10C11D.B1 to     R10C11D.F1 SLICE_28
+ROUTE         1     1.766     R10C11D.F1 to       45.PADDO gb_d_c_0
+DOPAD_DEL   ---     2.797       45.PADDO to         45.PAD gb_d[0]
+                  --------
+                   15.047   (40.8% logic, 59.2% route), 6 logic levels.
+
+Report:   14.946ns delay gb_a[1] to gb_d[7]
+
+   Name    Fanout   Delay (ns)          Site               Resource
+PADI_DEL    ---     1.132         28.PAD to       28.PADDI gb_a[1]
+ROUTE        50     4.808       28.PADDI to       R8C9B.D1 gb_a_c_1
+CTOF_DEL    ---     0.495       R8C9B.D1 to       R8C9B.F1 SLICE_33
+ROUTE         1     1.001       R8C9B.F1 to       R8C8C.B1 n1147
+CTOOFX_DEL  ---     0.721       R8C8C.B1 to     R8C8C.OFX0 i1043/SLICE_22
+ROUTE         1     1.336     R8C8C.OFX0 to      R10C9D.B0 n906
+CTOF_DEL    ---     0.495      R10C9D.B0 to      R10C9D.F0 SLICE_39
+ROUTE         1     2.161      R10C9D.F0 to       54.PADDO gb_d_c_7
+DOPAD_DEL   ---     2.797       54.PADDO to         54.PAD gb_d[7]
+                  --------
+                   14.946   (37.7% logic, 62.3% route), 5 logic levels.
+
+Report:   14.894ns delay gb_a[1] to gb_d[4]
+
+   Name    Fanout   Delay (ns)          Site               Resource
+PADI_DEL    ---     1.132         28.PAD to       28.PADDI gb_a[1]
+ROUTE        50     4.808       28.PADDI to       R8C9B.D0 gb_a_c_1
+CTOF_DEL    ---     0.495       R8C9B.D0 to       R8C9B.F0 SLICE_33
+ROUTE         1     0.693       R8C9B.F0 to       R8C9C.B1 n1144
+CTOOFX_DEL  ---     0.721       R8C9C.B1 to     R8C9C.OFX0 i1091/SLICE_21
+ROUTE         1     1.498     R8C9C.OFX0 to      R9C11B.A0 n954
+CTOF_DEL    ---     0.495      R9C11B.A0 to      R9C11B.F0 SLICE_41
+ROUTE         1     2.255      R9C11B.F0 to       51.PADDO gb_d_c_4
+DOPAD_DEL   ---     2.797       51.PADDO to         51.PAD gb_d[4]
+                  --------
+                   14.894   (37.9% logic, 62.1% route), 5 logic levels.
+
+Report:   14.857ns delay gb_a[1] to gb_d[4]
+
+   Name    Fanout   Delay (ns)          Site               Resource
+PADI_DEL    ---     1.132         28.PAD to       28.PADDI gb_a[1]
+ROUTE        50     4.808       28.PADDI to       R8C9A.D0 gb_a_c_1
+CTOF_DEL    ---     0.495       R8C9A.D0 to       R8C9A.F0 SLICE_34
+ROUTE         1     0.656       R8C9A.F0 to       R8C9C.A0 n269
+CTOOFX_DEL  ---     0.721       R8C9C.A0 to     R8C9C.OFX0 i1091/SLICE_21
+ROUTE         1     1.498     R8C9C.OFX0 to      R9C11B.A0 n954
+CTOF_DEL    ---     0.495      R9C11B.A0 to      R9C11B.F0 SLICE_41
+ROUTE         1     2.255      R9C11B.F0 to       51.PADDO gb_d_c_4
+DOPAD_DEL   ---     2.797       51.PADDO to         51.PAD gb_d[4]
+                  --------
+                   14.857   (38.0% logic, 62.0% route), 5 logic levels.
+
+Report:   14.854ns delay gb_a[1] to gb_d[4]
+
+   Name    Fanout   Delay (ns)          Site               Resource
+PADI_DEL    ---     1.132         28.PAD to       28.PADDI gb_a[1]
+ROUTE        50     4.717       28.PADDI to      R8C10B.A0 gb_a_c_1
+CTOF_DEL    ---     0.495      R8C10B.A0 to      R8C10B.F0 SLICE_36
+ROUTE         1     0.744      R8C10B.F0 to       R8C9C.C1 n356_adj_5
+CTOOFX_DEL  ---     0.721       R8C9C.C1 to     R8C9C.OFX0 i1091/SLICE_21
+ROUTE         1     1.498     R8C9C.OFX0 to      R9C11B.A0 n954
+CTOF_DEL    ---     0.495      R9C11B.A0 to      R9C11B.F0 SLICE_41
+ROUTE         1     2.255      R9C11B.F0 to       51.PADDO gb_d_c_4
+DOPAD_DEL   ---     2.797       51.PADDO to         51.PAD gb_d[4]
+                  --------
+                   14.854   (38.0% logic, 62.0% route), 5 logic levels.
+
+Report:   14.850ns delay gb_a[1] to gb_d[7]
+
+   Name    Fanout   Delay (ns)          Site               Resource
+PADI_DEL    ---     1.132         28.PAD to       28.PADDI gb_a[1]
+ROUTE        50     4.746       28.PADDI to       R8C8A.B0 gb_a_c_1
+CTOF_DEL    ---     0.495       R8C8A.B0 to       R8C8A.F0 SLICE_37
+ROUTE         1     0.967       R8C8A.F0 to       R8C8C.A1 n641
+CTOOFX_DEL  ---     0.721       R8C8C.A1 to     R8C8C.OFX0 i1043/SLICE_22
+ROUTE         1     1.336     R8C8C.OFX0 to      R10C9D.B0 n906
+CTOF_DEL    ---     0.495      R10C9D.B0 to      R10C9D.F0 SLICE_39
+ROUTE         1     2.161      R10C9D.F0 to       54.PADDO gb_d_c_7
+DOPAD_DEL   ---     2.797       54.PADDO to         54.PAD gb_d[7]
+                  --------
+                   14.850   (38.0% logic, 62.0% route), 5 logic levels.
+
+Report:   14.770ns delay gb_a[1] to gb_d[4]
+
+   Name    Fanout   Delay (ns)          Site               Resource
+PADI_DEL    ---     1.132         28.PAD to       28.PADDI gb_a[1]
+ROUTE        50     4.376       28.PADDI to      R8C10C.D0 gb_a_c_1
+CTOF_DEL    ---     0.495      R8C10C.D0 to      R8C10C.F0 SLICE_35
+ROUTE         1     1.001      R8C10C.F0 to       R8C9C.B0 n347
+CTOOFX_DEL  ---     0.721       R8C9C.B0 to     R8C9C.OFX0 i1091/SLICE_21
+ROUTE         1     1.498     R8C9C.OFX0 to      R9C11B.A0 n954
+CTOF_DEL    ---     0.495      R9C11B.A0 to      R9C11B.F0 SLICE_41
+ROUTE         1     2.255      R9C11B.F0 to       51.PADDO gb_d_c_4
+DOPAD_DEL   ---     2.797       51.PADDO to         51.PAD gb_d[4]
+                  --------
+                   14.770   (38.2% logic, 61.8% route), 5 logic levels.
+
+Report:   14.736ns delay gb_a[0] to gb_d[0]
+
+   Name    Fanout   Delay (ns)          Site               Resource
+PADI_DEL    ---     1.132         27.PAD to       27.PADDI gb_a[0]
+ROUTE        49     3.839       27.PADDI to      R8C10A.C0 gb_a_c_0
+CTOF_DEL    ---     0.495      R8C10A.C0 to      R8C10A.F0 SLICE_25
+ROUTE         1     0.656      R8C10A.F0 to      R8C10A.A1 n1011
+CTOF_DEL    ---     0.495      R8C10A.A1 to      R8C10A.F1 SLICE_25
+ROUTE         1     1.004      R8C10A.F1 to      R8C10D.B0 n1012
+CTOOFX_DEL  ---     0.721      R8C10D.B0 to    R8C10D.OFX0 i1158/SLICE_15
+ROUTE         1     1.336    R8C10D.OFX0 to     R10C11D.B1 n1014
+CTOF_DEL    ---     0.495     R10C11D.B1 to     R10C11D.F1 SLICE_28
+ROUTE         1     1.766     R10C11D.F1 to       45.PADDO gb_d_c_0
+DOPAD_DEL   ---     2.797       45.PADDO to         45.PAD gb_d[0]
+                  --------
+                   14.736   (41.6% logic, 58.4% route), 6 logic levels.
+
+Report:   15.651ns is the maximum delay for this preference.
+
+
+================================================================================
+<A name="par_twr_pref_0_1"></A>Preference: Default net enumeration
+            85 items scored, 0 timing errors detected.
+--------------------------------------------------------------------------------
+
+Report:    5.106ns maximum delay on gb_a_c_1
+
+           Delays             Connection(s)
+           2.474ns         28.PADDI to R9C8B.A1        
+           2.474ns         28.PADDI to R9C8B.A0        
+           4.746ns         28.PADDI to R8C8A.B1        
+           4.746ns         28.PADDI to R8C8A.B0        
+           4.717ns         28.PADDI to R8C10B.A1       
+           4.717ns         28.PADDI to R8C10B.A0       
+           4.376ns         28.PADDI to R8C10C.D1       
+           4.376ns         28.PADDI to R8C10C.D0       
+           4.808ns         28.PADDI to R8C9A.D1        
+           4.808ns         28.PADDI to R8C9A.D0        
+           4.808ns         28.PADDI to R8C9B.D1        
+           4.808ns         28.PADDI to R8C9B.D0        
+           4.337ns         28.PADDI to R10C9A.B1       
+           4.337ns         28.PADDI to R10C9A.B0       
+           4.337ns         28.PADDI to R10C9C.B0       
+           4.754ns         28.PADDI to R8C10A.B0       
+           3.433ns         28.PADDI to R10C10A.B0      
+           5.106ns         28.PADDI to R8C8C.A0        
+           3.519ns         28.PADDI to R10C8C.D1       
+           3.519ns         28.PADDI to R10C8C.D0       
+           3.176ns         28.PADDI to R10C10D.C1      
+           3.176ns         28.PADDI to R10C10D.C0      
+           4.261ns         28.PADDI to R9C10D.M0       
+           3.519ns         28.PADDI to R10C8D.D1       
+           3.519ns         28.PADDI to R10C8D.D0       
+           3.519ns         28.PADDI to R10C8B.D1       
+           3.519ns         28.PADDI to R10C8B.D0       
+           3.901ns         28.PADDI to R10C9B.M0       
+           3.396ns         28.PADDI to R10C10B.A1      
+           3.396ns         28.PADDI to R10C10B.A0      
+           2.591ns         28.PADDI to R9C10B.D1       
+           2.591ns         28.PADDI to R9C10A.D1       
+           2.591ns         28.PADDI to R9C10A.D0       
+           2.597ns         28.PADDI to R9C7C.D1        
+           2.597ns         28.PADDI to R9C7C.D0        
+           2.861ns         28.PADDI to R9C7D.A1        
+           2.861ns         28.PADDI to R9C7D.A0        
+           3.421ns         28.PADDI to R10C7A.B1       
+           3.421ns         28.PADDI to R10C7A.B0       
+           3.384ns         28.PADDI to R10C7B.A1       
+           3.384ns         28.PADDI to R10C7B.A0       
+           2.597ns         28.PADDI to R9C7A.D1        
+           2.597ns         28.PADDI to R9C7A.D0        
+           2.597ns         28.PADDI to R9C7B.D1        
+           2.597ns         28.PADDI to R9C7B.D0        
+           3.395ns         28.PADDI to R9C9C.B1        
+           3.395ns         28.PADDI to R9C9C.B0        
+           3.395ns         28.PADDI to R9C9D.B1        
+           2.591ns         28.PADDI to R9C9D.D0        
+           2.511ns         28.PADDI to R10C8A.B1       
+
+Report:    4.350ns maximum delay on gb_a_c_4
+
+           Delays             Connection(s)
+           3.904ns         31.PADDI to R9C8C.B0        
+           2.767ns         31.PADDI to R8C10B.C1       
+           4.350ns         31.PADDI to R9C9B.D1        
+           2.554ns         31.PADDI to R10C9C.B1       
+           3.024ns         31.PADDI to R9C10C.B0       
+           2.646ns         31.PADDI to R8C10A.D1       
+           2.646ns         31.PADDI to R8C10A.D0       
+           2.602ns         31.PADDI to R10C10A.D1      
+           2.602ns         31.PADDI to R10C10A.D0      
+           3.867ns         31.PADDI to R9C8D.A1        
+           3.604ns         31.PADDI to R8C8C.C1        
+           3.464ns         31.PADDI to R8C8C.B0        
+           2.573ns         31.PADDI to R8C9C.D1        
+           2.573ns         31.PADDI to R8C9C.D0        
+           2.239ns         31.PADDI to R10C8C.C0       
+           2.536ns         31.PADDI to R9C9A.D1        
+           2.602ns         31.PADDI to R10C10C.D1      
+           2.554ns         31.PADDI to R10C10D.B1      
+           2.554ns         31.PADDI to R10C10D.B0      
+           2.987ns         31.PADDI to R9C10D.A1       
+           2.987ns         31.PADDI to R9C10D.A0       
+           2.987ns         31.PADDI to R8C10D.A1       
+           2.060ns         31.PADDI to R10C8D.M0       
+           1.648ns         31.PADDI to R10C8B.M0       
+           2.554ns         31.PADDI to R10C9B.B1       
+           2.554ns         31.PADDI to R10C9B.B0       
+           2.118ns         31.PADDI to R10C10B.M0      
+           2.066ns         31.PADDI to R9C7C.M0        
+           2.051ns         31.PADDI to R9C7D.M0        
+           2.051ns         31.PADDI to R10C7A.M0       
+           1.654ns         31.PADDI to R10C7B.M0       
+           2.066ns         31.PADDI to R9C7A.M0        
+           1.654ns         31.PADDI to R9C7B.M0        
+           2.139ns         31.PADDI to R9C9C.D1        
+           2.139ns         31.PADDI to R9C9C.D0        
+           2.081ns         31.PADDI to R9C9D.M0        
+           1.706ns         31.PADDI to R10C8A.D0       
+
+Report:    4.096ns maximum delay on gb_a_c_0
+
+           Delays             Connection(s)
+           3.357ns         27.PADDI to R9C8A.C0        
+           3.357ns         27.PADDI to R9C8B.C1        
+           3.357ns         27.PADDI to R9C8B.C0        
+           3.357ns         27.PADDI to R8C8A.C1        
+           3.357ns         27.PADDI to R8C8A.C0        
+           4.096ns         27.PADDI to R8C10B.B1       
+           4.096ns         27.PADDI to R8C10B.B0       
+           4.059ns         27.PADDI to R8C10C.A1       
+           4.059ns         27.PADDI to R8C10C.A0       
+           2.917ns         27.PADDI to R8C9A.C1        
+           2.917ns         27.PADDI to R8C9A.C0        
+           3.174ns         27.PADDI to R8C9B.B1        
+           3.174ns         27.PADDI to R8C9B.B0        
+           2.435ns         27.PADDI to R10C9A.C1       
+           2.435ns         27.PADDI to R10C9A.C0       
+           2.435ns         27.PADDI to R10C9C.C0       
+           3.839ns         27.PADDI to R8C10A.C0       
+           3.827ns         27.PADDI to R10C10A.C0      
+           3.357ns         27.PADDI to R8C8C.C0        
+           3.706ns         27.PADDI to R10C10D.D1      
+           3.706ns         27.PADDI to R10C10D.D0      
+           3.381ns         27.PADDI to R9C10D.C1       
+           3.381ns         27.PADDI to R9C10D.C0       
+           3.718ns         27.PADDI to R8C10D.D1       
+           2.435ns         27.PADDI to R10C8D.C1       
+           2.435ns         27.PADDI to R10C8D.C0       
+           2.435ns         27.PADDI to R10C8B.C1       
+           2.435ns         27.PADDI to R10C8B.C0       
+           2.435ns         27.PADDI to R10C9B.C1       
+           2.435ns         27.PADDI to R10C9B.C0       
+           4.084ns         27.PADDI to R10C10B.B0      
+           3.381ns         27.PADDI to R9C10B.C1       
+           3.381ns         27.PADDI to R9C10A.C1       
+           3.381ns         27.PADDI to R9C10A.C0       
+           2.167ns         27.PADDI to R9C7C.A1        
+           1.826ns         27.PADDI to R9C7D.D1        
+           1.826ns         27.PADDI to R9C7D.D0        
+           1.947ns         27.PADDI to R10C7A.C1       
+           1.947ns         27.PADDI to R10C7A.C0       
+           2.204ns         27.PADDI to R10C7B.B1       
+           2.204ns         27.PADDI to R10C7B.B0       
+           1.947ns         27.PADDI to R9C7A.C1        
+           1.947ns         27.PADDI to R9C7A.C0        
+           2.204ns         27.PADDI to R9C7B.B1        
+           2.204ns         27.PADDI to R9C7B.B0        
+           3.137ns         27.PADDI to R9C9C.A1        
+           3.137ns         27.PADDI to R9C9C.A0        
+           2.796ns         27.PADDI to R9C9D.D1        
+           2.435ns         27.PADDI to R10C8A.C1       
+
+Report:    3.977ns maximum delay on gb_a_c_2
+
+           Delays             Connection(s)
+           2.575ns         29.PADDI to R9C8A.A1        
+           2.575ns         29.PADDI to R9C8A.A0        
+           3.463ns         29.PADDI to R8C8A.A1        
+           3.463ns         29.PADDI to R8C8A.A0        
+           2.700ns         29.PADDI to R8C10B.D1       
+           2.700ns         29.PADDI to R8C10B.D0       
+           2.821ns         29.PADDI to R8C10C.C1       
+           2.821ns         29.PADDI to R8C10C.C0       
+           3.463ns         29.PADDI to R8C9A.B1        
+           3.029ns         29.PADDI to R8C9A.A0        
+           3.250ns         29.PADDI to R8C9B.C1        
+           3.250ns         29.PADDI to R8C9B.C0        
+           3.608ns         29.PADDI to R10C9A.D1       
+           3.608ns         29.PADDI to R10C9A.D0       
+           3.608ns         29.PADDI to R10C9C.D0       
+           3.041ns         29.PADDI to R8C10A.A0       
+           2.678ns         29.PADDI to R10C10A.M0      
+           2.575ns         29.PADDI to R9C8D.A0        
+           3.303ns         29.PADDI to R10C8C.C1       
+           3.977ns         29.PADDI to R10C8C.A0       
+           3.075ns         29.PADDI to R10C10D.M0      
+           2.702ns         29.PADDI to R9C10D.D1       
+           2.702ns         29.PADDI to R9C10D.D0       
+           3.977ns         29.PADDI to R10C8D.A1       
+           3.977ns         29.PADDI to R10C8D.A0       
+           3.977ns         29.PADDI to R10C8B.A1       
+           3.977ns         29.PADDI to R10C8B.A0       
+           3.935ns         29.PADDI to R10C9B.A1       
+           3.935ns         29.PADDI to R10C9B.A0       
+           3.114ns         29.PADDI to R10C10B.B1      
+           2.675ns         29.PADDI to R10C10B.D0      
+           3.028ns         29.PADDI to R9C10B.A1       
+           2.411ns         29.PADDI to R9C10B.C0       
+           2.232ns         29.PADDI to R9C10A.M0       
+           1.929ns         29.PADDI to R9C7C.C1        
+           1.929ns         29.PADDI to R9C7C.C0        
+           1.929ns         29.PADDI to R9C7D.C1        
+           1.929ns         29.PADDI to R9C7D.C0        
+           3.016ns         29.PADDI to R10C7A.A1       
+           3.016ns         29.PADDI to R10C7A.A0       
+           2.675ns         29.PADDI to R10C7B.D1       
+           2.675ns         29.PADDI to R10C7B.D0       
+           2.589ns         29.PADDI to R9C7A.A1        
+           2.589ns         29.PADDI to R9C7A.A0        
+           2.589ns         29.PADDI to R9C7B.A1        
+           2.589ns         29.PADDI to R9C7B.A0        
+           2.411ns         29.PADDI to R9C9C.C1        
+           2.411ns         29.PADDI to R9C9C.C0        
+           2.411ns         29.PADDI to R9C9D.C1        
+           2.411ns         29.PADDI to R9C9D.C0        
+
+Report:    3.485ns maximum delay on gb_a_c_3
+
+           Delays             Connection(s)
+           2.839ns         30.PADDI to R9C8C.C0        
+           2.839ns         30.PADDI to R9C8A.C1        
+           2.670ns         30.PADDI to R9C8B.B0        
+           2.997ns         30.PADDI to R8C9A.A1        
+           2.591ns         30.PADDI to R10C9A.A1       
+           2.591ns         30.PADDI to R10C9A.A0       
+           2.115ns         30.PADDI to R10C9C.A0       
+           3.485ns         30.PADDI to R10C10A.A1      
+           3.485ns         30.PADDI to R10C10A.A0      
+           2.839ns         30.PADDI to R9C8D.C1        
+           3.068ns         30.PADDI to R8C8C.D1        
+           2.542ns         30.PADDI to R8C9C.A1        
+           2.777ns         30.PADDI to R8C9C.C0        
+           2.646ns         30.PADDI to R10C8C.B1       
+           2.646ns         30.PADDI to R10C8C.B0       
+           3.073ns         30.PADDI to R10C10D.A1      
+           3.073ns         30.PADDI to R10C10D.A0      
+           2.658ns         30.PADDI to R9C10D.B1       
+           2.658ns         30.PADDI to R9C10D.B0       
+           3.232ns         30.PADDI to R8C10D.C1       
+           3.055ns         30.PADDI to R8C10D.A0       
+           2.646ns         30.PADDI to R10C8D.B1       
+           2.646ns         30.PADDI to R10C8D.B0       
+           2.646ns         30.PADDI to R10C8B.B1       
+           2.646ns         30.PADDI to R10C8B.B0       
+           2.250ns         30.PADDI to R10C9B.D1       
+           2.250ns         30.PADDI to R10C9B.D0       
+           2.853ns         30.PADDI to R10C10B.C1      
+           2.853ns         30.PADDI to R10C10B.C0      
+           2.658ns         30.PADDI to R9C10B.B1       
+           2.658ns         30.PADDI to R9C10B.B0       
+           2.658ns         30.PADDI to R9C10A.B1       
+           2.658ns         30.PADDI to R9C10A.B0       
+           2.670ns         30.PADDI to R9C7C.B1        
+           2.670ns         30.PADDI to R9C7C.B0        
+           2.670ns         30.PADDI to R9C7D.B1        
+           2.670ns         30.PADDI to R9C7D.B0        
+           2.738ns         30.PADDI to R10C7A.D1       
+           2.738ns         30.PADDI to R10C7A.D0       
+           2.859ns         30.PADDI to R10C7B.C1       
+           2.859ns         30.PADDI to R10C7B.C0       
+           2.670ns         30.PADDI to R9C7A.B1        
+           2.670ns         30.PADDI to R9C7A.B0        
+           2.825ns         30.PADDI to R9C7B.C1        
+           2.825ns         30.PADDI to R9C7B.C0        
+           2.149ns         30.PADDI to R9C9C.M0        
+           2.151ns         30.PADDI to R9C9D.A1        
+           2.151ns         30.PADDI to R9C9D.A0        
+
+Report:    3.276ns maximum delay on gb_a_c_5
+
+           Delays             Connection(s)
+           3.276ns         32.PADDI to R9C9B.A1        
+           2.428ns         32.PADDI to R10C9C.D1       
+           3.274ns         32.PADDI to R9C8D.M0        
+           2.865ns         32.PADDI to R8C8C.M0        
+           2.865ns         32.PADDI to R8C9C.M0        
+           1.527ns         32.PADDI to R10C8C.M1       
+           3.276ns         32.PADDI to R9C9A.A1        
+           3.276ns         32.PADDI to R9C9A.A0        
+           2.372ns         32.PADDI to R10C10C.A1      
+           2.372ns         32.PADDI to R10C10C.A0      
+           2.828ns         32.PADDI to R8C10D.M0       
+           2.828ns         32.PADDI to R9C10B.M0       
+           2.830ns         32.PADDI to R9C10A.A1       
+           2.830ns         32.PADDI to R9C10A.A0       
+           1.961ns         32.PADDI to R9C7C.M1        
+           1.924ns         32.PADDI to R10C7A.M1       
+           2.358ns         32.PADDI to R9C7A.M1        
+           1.924ns         32.PADDI to R10C8A.M1       
+
+Report:    2.899ns maximum delay on gb_a_c_15
+
+           Delays             Connection(s)
+           2.899ns         43.PADDI to R9C11B.D1       
+           2.487ns         43.PADDI to R10C11B.D0      
+           2.487ns         43.PADDI to R10C11C.D0      
+           2.453ns         43.PADDI to R10C11D.B0      
+
+Report:    2.564ns maximum delay on gb_a_c_13
+
+           Delays             Connection(s)
+           2.564ns         41.PADDI to R10C11B.B1      
+
+Report:    2.382ns maximum delay on gb_rd_n_c
+
+           Delays             Connection(s)
+           2.382ns         60.PADDI to R9C11B.C1       
+
+Report:    2.307ns maximum delay on gb_a_c_14
+
+           Delays             Connection(s)
+           2.307ns         42.PADDI to R10C11C.C1      
+
+Report:    5.106ns is the maximum delay for this preference.
+
+<A name="ptwr_set_rs"></A><B><U><big>Report Summary</big></U></B>
+--------------
+----------------------------------------------------------------------------
+Preference                              |   Constraint|       Actual|Levels
+----------------------------------------------------------------------------
+                                        |             |             |
+Default path enumeration                |     0.000 ns|    15.651 ns|   0  
+                                        |             |             |
+Default net enumeration                 |     0.000 ns|     5.106 ns|   0  
+                                        |             |             |
+----------------------------------------------------------------------------
+
+
+All preferences were met.
+
+
+<A name="ptwr_set_clkda"></A><B><U><big>Clock Domains Analysis</big></U></B>
+------------------------
+
+Found 0 clocks:
+
+
+<A name="ptwr_set_ts"></A><B><U><big>Timing summary (Setup):</big></U></B>
+---------------
+
+Timing errors: 0  Score: 0
+Cumulative negative slack: 0
+
+Constraints cover 345 paths, 85 nets, and 352 connections (100.00% coverage)
+
+--------------------------------------------------------------------------------
+
+
+
+
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+<BR>
+</PRE></FONT>
+</BODY>
+</HTML>

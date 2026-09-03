@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BaliProject version="3.2" title="RomEmu" device="LCMXO2-1200HC-4TG100C" default_implementation="v1_0">
+    <Options/>
+    <Implementation title="v1_0" dir="v1_0" description="v1_0" synthesis="lse" default_strategy="Strategy1">
+        <Options def_top="top"/>
+        <Source name="top.v" type="Verilog" type_short="Verilog">
+            <Options top_module="top"/>
+        </Source>
+        <Source name="RomEmu.lpf" type="Logic Preference" type_short="LPF">
+            <Options/>
+        </Source>
+    </Implementation>
+    <Strategy name="Strategy1" file="RomEmu1.sty"/>
+</BaliProject>
