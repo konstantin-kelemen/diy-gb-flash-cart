@@ -8251,7 +8251,7 @@
 				)
 			)
 		)
-		(property "Footprint" "PW24"
+		(property "Footprint" "SN74LVC8T245PWR:PW24"
 			(at 182.88 207.01 0)
 			(hide yes)
 			(show_name no)
@@ -8795,7 +8795,7 @@
 				)
 			)
 		)
-		(property "Footprint" "TQFP100_LAT"
+		(property "Footprint" "LCMXO2-1200HC-4TG100C:TQFP100_LAT"
 			(at 57.15 121.92 0)
 			(hide yes)
 			(show_name no)
@@ -10020,7 +10020,6 @@
 		(on_board yes)
 		(in_pos_files yes)
 		(dnp no)
-		(fields_autoplaced yes)
 		(uuid "19084078-e47f-4abb-b317-4fd6efe37419")
 		(property "Reference" "#PWR046"
 			(at 185.42 160.02 0)
@@ -10033,15 +10032,14 @@
 				)
 			)
 		)
-		(property "Value" "gb_a8"
-			(at 177.8 160.0199 90)
+		(property "Value" "gb_a1"
+			(at 175.006 160.02 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(justify left)
 			)
 		)
 		(property "Footprint" ""
@@ -10663,7 +10661,6 @@
 		(on_board yes)
 		(in_pos_files yes)
 		(dnp no)
-		(fields_autoplaced yes)
 		(uuid "1e54dcf5-76d5-434c-8032-3c3a76d3c7f3")
 		(property "Reference" "#PWR067"
 			(at 185.42 165.1 0)
@@ -10676,15 +10673,14 @@
 				)
 			)
 		)
-		(property "Value" "gb_a10"
-			(at 177.8 165.0999 90)
+		(property "Value" "gb_a3"
+			(at 174.752 165.1 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(justify left)
 			)
 		)
 		(property "Footprint" ""
@@ -14146,7 +14142,6 @@
 		(on_board yes)
 		(in_pos_files yes)
 		(dnp no)
-		(fields_autoplaced yes)
 		(uuid "49544476-b0f2-45f9-bbc1-fd4984dcd33c")
 		(property "Reference" "#PWR0209"
 			(at 185.42 177.8 0)
@@ -14159,15 +14154,14 @@
 				)
 			)
 		)
-		(property "Value" "gb_a15"
-			(at 177.8 177.7999 90)
+		(property "Value" "gb_a8"
+			(at 174.752 177.546 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(justify left)
 			)
 		)
 		(property "Footprint" ""
@@ -14225,7 +14219,6 @@
 		(on_board yes)
 		(in_pos_files yes)
 		(dnp no)
-		(fields_autoplaced yes)
 		(uuid "4b2c9ecd-94df-4945-bac6-61522a58dfd5")
 		(property "Reference" "#PWR0208"
 			(at 185.42 175.26 0)
@@ -14238,15 +14231,14 @@
 				)
 			)
 		)
-		(property "Value" "gb_a14"
-			(at 177.8 175.2599 90)
+		(property "Value" "gb_a7"
+			(at 174.752 175.26 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(justify left)
 			)
 		)
 		(property "Footprint" ""
@@ -14620,7 +14612,6 @@
 		(on_board yes)
 		(in_pos_files yes)
 		(dnp no)
-		(fields_autoplaced yes)
 		(uuid "4ec76748-f085-493f-87f4-c1b40f5e700c")
 		(property "Reference" "#PWR049"
 			(at 185.42 162.56 0)
@@ -14633,15 +14624,14 @@
 				)
 			)
 		)
-		(property "Value" "gb_a9"
-			(at 177.8 162.5599 90)
+		(property "Value" "gb_a2"
+			(at 174.752 162.56 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(justify left)
 			)
 		)
 		(property "Footprint" ""
@@ -18842,7 +18832,7 @@
 				)
 			)
 		)
-		(property "Footprint" "PW24"
+		(property "Footprint" "SN74LVC8T245PWR:PW24"
 			(at 181.61 154.94 0)
 			(hide yes)
 			(show_name no)
@@ -19126,7 +19116,6 @@
 		(on_board yes)
 		(in_pos_files yes)
 		(dnp no)
-		(fields_autoplaced yes)
 		(uuid "9b9d83fd-2526-45ca-988e-cdf241af514a")
 		(property "Reference" "#PWR0206"
 			(at 185.42 170.18 0)
@@ -19139,15 +19128,14 @@
 				)
 			)
 		)
-		(property "Value" "gb_a12"
-			(at 177.8 170.1799 90)
+		(property "Value" "gb_a5"
+			(at 174.752 170.18 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(justify left)
 			)
 		)
 		(property "Footprint" ""
@@ -19205,7 +19193,6 @@
 		(on_board yes)
 		(in_pos_files yes)
 		(dnp no)
-		(fields_autoplaced yes)
 		(uuid "9d281192-40f2-4e32-ae04-e76c61e7935d")
 		(property "Reference" "#PWR088"
 			(at 185.42 167.64 0)
@@ -19218,15 +19205,14 @@
 				)
 			)
 		)
-		(property "Value" "gb_a11"
-			(at 177.8 167.6399 90)
+		(property "Value" "gb_a4"
+			(at 174.752 167.64 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(justify left)
 			)
 		)
 		(property "Footprint" ""
@@ -19463,7 +19449,7 @@
 				)
 			)
 		)
-		(property "Footprint" "TSOPI48L12X20NORMAL_MAC"
+		(property "Footprint" "MX29LV320EBTI-70G:TSOPI48L12X20NORMAL_MAC"
 			(at 57.15 33.02 0)
 			(hide yes)
 			(show_name no)
@@ -20551,7 +20537,7 @@
 				)
 			)
 		)
-		(property "Footprint" "PW24"
+		(property "Footprint" "SN74LVC8T245PWR:PW24"
 			(at 290.83 207.01 0)
 			(hide yes)
 			(show_name no)
@@ -22684,7 +22670,7 @@
 				)
 			)
 		)
-		(property "Footprint" "TSOP-32"
+		(property "Footprint" "FM28V100-TG:TSOP-32"
 			(at 185.42 31.75 0)
 			(hide yes)
 			(show_name no)
@@ -25363,7 +25349,6 @@
 		(on_board yes)
 		(in_pos_files yes)
 		(dnp no)
-		(fields_autoplaced yes)
 		(uuid "efbc84b6-4a08-4b09-b24e-ea2ff77b6e19")
 		(property "Reference" "#PWR0207"
 			(at 185.42 172.72 0)
@@ -25376,15 +25361,14 @@
 				)
 			)
 		)
-		(property "Value" "gb_a13"
-			(at 177.8 172.7199 90)
+		(property "Value" "gb_a6"
+			(at 174.752 172.72 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(justify left)
 			)
 		)
 		(property "Footprint" ""
@@ -26099,7 +26083,7 @@
 				)
 			)
 		)
-		(property "Footprint" "PW24"
+		(property "Footprint" "SN74LVC8T245PWR:PW24"
 			(at 290.83 154.94 0)
 			(hide yes)
 			(show_name no)

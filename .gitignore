@@ -4,6 +4,7 @@
 _autosave-*
 *.bak
 *.lck
+.history
 
 # Diamond temporary/build output
 *.run
