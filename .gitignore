@@ -1,0 +1,25 @@
+# KiCad
+*.kicad_prl
+*-backups/
+_autosave-*
+*.bak
+
+# Gerbers
+*.gbr
+*.gbrjob
+*.drl
+*.pos
+
+# Diamond temporary/build output
+*.run
+
+# Editors
+*~
+*.swp
+
+# G-codes
+*.gcode
+
+# OS
+.DS_Store
+Thumbs.db
