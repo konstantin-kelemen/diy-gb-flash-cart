@@ -10,9 +10,9 @@ DIY USB-programmable Game Boy flash cartridge based on:
 
 ## Repository structure
 
-hardware/   KiCad hardware designs
-fpga/       MachXO2 HDL and Diamond project
-firmware/   RP2040 firmware
-docs/       Project documentation
-references/ Datasheets and third-party designs
-releases/   Manufacturing releases
+- hardware/   KiCad hardware designs
+- fpga/       MachXO2 HDL and Diamond project
+- firmware/   RP2040 firmware
+- docs/       Project documentation
+- references/ Datasheets and third-party designs
+- releases/   Manufacturing releases
