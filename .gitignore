@@ -8,6 +8,7 @@ _autosave-*
 
 # Diamond temporary/build output
 *.run
+/fpga/diamond/v1_0/
 
 # Editors
 *~

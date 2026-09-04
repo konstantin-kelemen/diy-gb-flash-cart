@@ -1,0 +1,27 @@
+* text=auto
+
+*.md text eol=lf
+*.csv text eol=lf
+*.v text eol=lf
+*.lpf text eol=lf
+*.ldf text eol=lf
+*.sty text eol=lf
+*.kicad_pro text eol=lf
+*.kicad_sch text eol=lf
+*.kicad_pcb text eol=lf
+*.kicad_sym text eol=lf
+*.kicad_mod text eol=lf
+
+# Артефакты Diamond сохраняются побайтово: их SHA-256 опубликованы в манифесте.
+*.jed binary
+*.twr -text
+*.mrp -text
+*.bgn -text
+
+*.pdf binary
+*.png binary
+*.webp binary
+*.zip binary
+*.stl binary
+*.step binary
+*.3mf binary
