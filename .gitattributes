@@ -24,4 +24,5 @@
 *.zip binary
 *.stl binary
 *.step binary
+*.stp binary
 *.3mf binary

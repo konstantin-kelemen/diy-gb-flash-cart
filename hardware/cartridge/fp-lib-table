@@ -4,4 +4,5 @@
 	(lib (name "MX29LV320EBTI-70G") (type "KiCad") (uri "${KIPRJMOD}/libraries/MX29LV320EBTI-70G/footprints.pretty") (options "") (descr ""))
 	(lib (name "FM28V100-TG") (type "KiCad") (uri "${KIPRJMOD}/libraries/FM28V100-TG/footprints.pretty") (options "") (descr ""))
 	(lib (name "SN74LVC8T245PWR") (type "KiCad") (uri "${KIPRJMOD}/libraries/SN74LVC8T245PWR/footprints.pretty") (options "") (descr ""))
+	(lib (name "RP2040-Zero") (type "KiCad") (uri "${KIPRJMOD}/libraries/RP2040-Zero/Andrews-Custom.pretty") (options "") (descr ""))
 )
