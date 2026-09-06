@@ -92,11 +92,11 @@ git status --short
 - `internal_rom` — проверена на реальном Game Boy.
 - `flash_bringup` — активная реализация Diamond; 2026-09-06 проведена проверка
   Flash на аппаратуре. JEDEC и отчёты сохранены в
-  [flash-bringup-baseline](../releases/fpga/flash-bringup-baseline/MANIFEST.md).
-  После исправления LPF тест повторён: 83 — HIGH (`test_fail`),
-  82 — LOW (`test_pass`). Стенд и результат записаны в
+  [flash-bringup-pass](../releases/fpga/flash-bringup-pass/MANIFEST.md).
+  После исправления стартового сброса получен PASS: 82 — HIGH (`test_pass`),
+  83 — LOW (`test_fail`). Стенд, новая сборка и результат записаны в
   [журнале результатов](../docs/TEST_PLAN.md#журнал-результатов).
-  Тест провален; следующий шаг — определить операцию, приведшую к `ST_FAIL`.
+  В `flash-bringup-fail` пока остаётся прежняя сборка с FAIL.
 
 Файлы из `examples/` не являются активными конфигурациями и не учитываются как
 реализованные этапы проекта.

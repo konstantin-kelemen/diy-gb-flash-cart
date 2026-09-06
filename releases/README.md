@@ -7,3 +7,11 @@
 коммитом, версией инструментов, контрольными суммами и результатами проверки.
 Артефакт сборки нельзя считать проверенным на аппаратуре, если такая проверка
 явно не зафиксирована в манифесте.
+
+## FPGA
+
+- [flash-bringup-pass](fpga/flash-bringup-pass/MANIFEST.md) — рабочая сборка
+  Flash-теста со стартовым сбросом; PASS после прошивки и выключения/включения питания.
+- [flash-bringup-fail](fpga/flash-bringup-fail/MANIFEST.md) — прежняя сборка с FAIL.
+- [internal-rom-baseline](fpga/internal-rom-baseline/MANIFEST.md) — базовая
+  проверенная конфигурация с внутренним ПЗУ.

@@ -1,0 +1,534 @@
+
+             Lattice Mapping Report File for Design Module 'top'
+
+
+Design Information
+------------------
+
+Command line:   map -a MachXO2 -p LCMXO2-1200HC -t TQFP100 -s 4 -oc Commercial
+     RomEmu_flash_bringup.ngd -o RomEmu_flash_bringup_map.ncd -pr
+     RomEmu_flash_bringup.prf -mp RomEmu_flash_bringup.mrp -lpf C:/Users/Admin/D
+     ocuments/diy-gb-flash-cart/fpga/diamond/flash_bringup/RomEmu_flash_bringup.
+     lpf -lpf C:/Users/Admin/Documents/diy-gb-flash-cart/fpga/constraints/intern
+     al_rom.lpf -c 0 -gui -msgset
+     C:/Users/Admin/Documents/diy-gb-flash-cart/fpga/diamond/promote.xml 
+Target Vendor:  LATTICE
+Target Device:  LCMXO2-1200HCTQFP100
+Target Performance:   4
+Mapper:  xo2c00,  version:  Diamond (64-bit) 3.14.0.75.2
+Mapped on:  09/06/26  23:23:08
+
+Design Summary
+--------------
+
+   Number of registers:    209 out of  1520 (14%)
+      PFU registers:          197 out of  1280 (15%)
+      PIO registers:           12 out of   240 (5%)
+   Number of SLICEs:       313 out of   640 (49%)
+      SLICEs as Logic/ROM:    313 out of   640 (49%)
+      SLICEs as RAM:            0 out of   480 (0%)
+      SLICEs as Carry:         26 out of   640 (4%)
+   Number of LUT4s:        623 out of  1280 (49%)
+      Number used as logic LUTs:        571
+      Number used as distributed RAM:     0
+      Number used as ripple logic:       52
+      Number used as shift registers:     0
+   Number of PIO sites used: 35 + 4(JTAG) out of 80 (49%)
+   Number of block RAMs:  0 out of 7 (0%)
+   Number of GSRs:        0 out of 1 (0%)
+   EFB used :        No
+   JTAG used :       No
+   Readback used :   No
+   Oscillator used : Yes
+   Startup used :    No
+   POR :             On
+   Bandgap :         On
+   Number of Power Controller:  0 out of 1 (0%)
+   Number of Dynamic Bank Controller (BCINRD):  0 out of 4 (0%)
+   Number of Dynamic Bank Controller (BCLVDSO):  0 out of 1 (0%)
+   Number of DCCA:  0 out of 8 (0%)
+   Number of DCMA:  0 out of 2 (0%)
+   Number of PLLs:  0 out of 1 (0%)
+   Number of DQSDLLs:  0 out of 2 (0%)
+   Number of CLKDIVC:  0 out of 4 (0%)
+   Number of ECLKSYNCA:  0 out of 4 (0%)
+   Number of ECLKBRIDGECS:  0 out of 2 (0%)
+   Notes:-
+      1. Total number of LUT4s = (Number of logic LUT4s) + 2*(Number of
+     distributed RAMs) + 2*(Number of ripple logic)
+      2. Number of logic LUT4s does not include count of distributed RAM and
+     ripple logic.
+   Number of clocks:  1
+     Net clk: 117 loads, 117 rising, 0 falling (Driver: OSCH_inst )
+
+                                    Page 1
+
+
+
+
+Design:  top                                           Date:  09/06/26  23:23:08
+
+Design Summary (cont)
+---------------------
+   Number of Clock Enables:  15
+     Net bus/clk_enable_20: 4 loads, 4 LSLICEs
+     Net bus/clk_enable_70: 11 loads, 11 LSLICEs
+     Net clk_enable_31: 8 loads, 0 LSLICEs
+     Net bus/clk_enable_46: 1 loads, 1 LSLICEs
+     Net bus/clk_enable_19: 1 loads, 1 LSLICEs
+     Net bus/clk_enable_47: 1 loads, 0 LSLICEs
+     Net bus/clk_enable_48: 1 loads, 0 LSLICEs
+     Net bus/clk_enable_49: 1 loads, 0 LSLICEs
+     Net clk_enable_38: 4 loads, 4 LSLICEs
+     Net clk_enable_93: 12 loads, 12 LSLICEs
+     Net clk_enable_45: 4 loads, 4 LSLICEs
+     Net clk_enable_18: 2 loads, 2 LSLICEs
+     Net clk_enable_7: 1 loads, 1 LSLICEs
+     Net clk_enable_15: 1 loads, 1 LSLICEs
+     Net clk_enable_24: 2 loads, 2 LSLICEs
+   Number of LSRs:  5
+     Net startup_ready_3: 96 loads, 86 LSLICEs
+     Net n9429: 1 loads, 1 LSLICEs
+     Net bus/n6134: 1 loads, 0 LSLICEs
+     Net diag_counter_23__N_148: 4 loads, 3 LSLICEs
+     Net clk_enable_24: 13 loads, 13 LSLICEs
+   Number of nets driven by tri-state buffers:  0
+   Top 10 highest fanout non-clock nets:
+     Net startup_ready_3: 109 loads
+     Net bus_busy: 99 loads
+     Net cmd_step_0: 54 loads
+     Net bus_done: 48 loads
+     Net test_index_0: 48 loads
+     Net test_index_4: 42 loads
+     Net test_pass_N_275: 40 loads
+     Net test_index_3: 39 loads
+     Net test_pass_N_267: 31 loads
+     Net n5_adj_460: 29 loads
+
+
+
+
+   Number of warnings:  54
+   Number of errors:    0
+     
+
+Design Errors/Warnings
+----------------------
+
+WARNING - map: C:/Users/Admin/Documents/diy-gb-flash-cart/fpga/constraints/inter
+     nal_rom.lpf(3): Semantic error in "LOCATE COMP "gb_a[0]" SITE "27" ;": COMP
+     "gb_a[0]" cannot be found in design. This preference has been disabled.
+WARNING - map: C:/Users/Admin/Documents/diy-gb-flash-cart/fpga/constraints/inter
+     nal_rom.lpf(4): Semantic error in "IOBUF PORT "gb_a[0]" IO_TYPE=LVCMOS33
+     ;": Port "gb_a[0]" does not exist in the design. This preference has been
+     disabled.
+WARNING - map: C:/Users/Admin/Documents/diy-gb-flash-cart/fpga/constraints/inter
+     nal_rom.lpf(5): Semantic error in "IOBUF PORT "gb_a[1]" IO_TYPE=LVCMOS33
+     ;": Port "gb_a[1]" does not exist in the design. This preference has been
+     disabled.
+
+                                    Page 2
+
+
+
+
+Design:  top                                           Date:  09/06/26  23:23:08
+
+Design Errors/Warnings (cont)
+-----------------------------
+WARNING - map: C:/Users/Admin/Documents/diy-gb-flash-cart/fpga/constraints/inter
+     nal_rom.lpf(6): Semantic error in "IOBUF PORT "gb_a[2]" IO_TYPE=LVCMOS33
+     ;": Port "gb_a[2]" does not exist in the design. This preference has been
+     disabled.
+WARNING - map: C:/Users/Admin/Documents/diy-gb-flash-cart/fpga/constraints/inter
+     nal_rom.lpf(7): Semantic error in "IOBUF PORT "gb_a[3]" IO_TYPE=LVCMOS33
+     ;": Port "gb_a[3]" does not exist in the design. This preference has been
+     disabled.
+WARNING - map: C:/Users/Admin/Documents/diy-gb-flash-cart/fpga/constraints/inter
+     nal_rom.lpf(8): Semantic error in "IOBUF PORT "gb_a[4]" IO_TYPE=LVCMOS33
+     ;": Port "gb_a[4]" does not exist in the design. This preference has been
+     disabled.
+WARNING - map: C:/Users/Admin/Documents/diy-gb-flash-cart/fpga/constraints/inter
+     nal_rom.lpf(9): Semantic error in "IOBUF PORT "gb_a[5]" IO_TYPE=LVCMOS33
+     ;": Port "gb_a[5]" does not exist in the design. This preference has been
+     disabled.
+WARNING - map: C:/Users/Admin/Documents/diy-gb-flash-cart/fpga/constraints/inter
+     nal_rom.lpf(10): Semantic error in "IOBUF PORT "gb_a[6]" IO_TYPE=LVCMOS33
+     ;": Port "gb_a[6]" does not exist in the design. This preference has been
+     disabled.
+WARNING - map: C:/Users/Admin/Documents/diy-gb-flash-cart/fpga/constraints/inter
+     nal_rom.lpf(11): Semantic error in "IOBUF PORT "gb_a[7]" IO_TYPE=LVCMOS33
+     ;": Port "gb_a[7]" does not exist in the design. This preference has been
+     disabled.
+WARNING - map: C:/Users/Admin/Documents/diy-gb-flash-cart/fpga/constraints/inter
+     nal_rom.lpf(12): Semantic error in "IOBUF PORT "gb_a[9]" IO_TYPE=LVCMOS33
+     ;": Port "gb_a[9]" does not exist in the design. This preference has been
+     disabled.
+WARNING - map: C:/Users/Admin/Documents/diy-gb-flash-cart/fpga/constraints/inter
+     nal_rom.lpf(13): Semantic error in "IOBUF PORT "gb_a[8]" IO_TYPE=LVCMOS33
+     ;": Port "gb_a[8]" does not exist in the design. This preference has been
+     disabled.
+WARNING - map: C:/Users/Admin/Documents/diy-gb-flash-cart/fpga/constraints/inter
+     nal_rom.lpf(14): Semantic error in "IOBUF PORT "gb_a[10]" IO_TYPE=LVCMOS33
+     ;": Port "gb_a[10]" does not exist in the design. This preference has been
+     disabled.
+WARNING - map: C:/Users/Admin/Documents/diy-gb-flash-cart/fpga/constraints/inter
+     nal_rom.lpf(15): Semantic error in "IOBUF PORT "gb_a[11]" IO_TYPE=LVCMOS33
+     ;": Port "gb_a[11]" does not exist in the design. This preference has been
+     disabled.
+WARNING - map: C:/Users/Admin/Documents/diy-gb-flash-cart/fpga/constraints/inter
+     nal_rom.lpf(16): Semantic error in "IOBUF PORT "gb_a[12]" IO_TYPE=LVCMOS33
+     ;": Port "gb_a[12]" does not exist in the design. This preference has been
+     disabled.
+WARNING - map: C:/Users/Admin/Documents/diy-gb-flash-cart/fpga/constraints/inter
+     nal_rom.lpf(17): Semantic error in "IOBUF PORT "gb_a[13]" IO_TYPE=LVCMOS33
+     ;": Port "gb_a[13]" does not exist in the design. This preference has been
+     disabled.
+WARNING - map: C:/Users/Admin/Documents/diy-gb-flash-cart/fpga/constraints/inter
+     nal_rom.lpf(18): Semantic error in "IOBUF PORT "gb_a[14]" IO_TYPE=LVCMOS33
+     ;": Port "gb_a[14]" does not exist in the design. This preference has been
+     disabled.
+WARNING - map: C:/Users/Admin/Documents/diy-gb-flash-cart/fpga/constraints/inter
+     nal_rom.lpf(19): Semantic error in "IOBUF PORT "gb_a[15]" IO_TYPE=LVCMOS33
+     ;": Port "gb_a[15]" does not exist in the design. This preference has been
+     disabled.
+
+                                    Page 3
+
+
+
+
+Design:  top                                           Date:  09/06/26  23:23:08
+
+Design Errors/Warnings (cont)
+-----------------------------
+WARNING - map: C:/Users/Admin/Documents/diy-gb-flash-cart/fpga/constraints/inter
+     nal_rom.lpf(20): Semantic error in "IOBUF PORT "gb_rd_n" IO_TYPE=LVCMOS33
+     ;": Port "gb_rd_n" does not exist in the design. This preference has been
+     disabled.
+WARNING - map: C:/Users/Admin/Documents/diy-gb-flash-cart/fpga/constraints/inter
+     nal_rom.lpf(21): Semantic error in "IOBUF PORT "data_oe_n" IO_TYPE=LVCMOS33
+     ;": Port "data_oe_n" does not exist in the design. This preference has been
+     disabled.
+WARNING - map: C:/Users/Admin/Documents/diy-gb-flash-cart/fpga/constraints/inter
+     nal_rom.lpf(22): Semantic error in "IOBUF PORT "gb_d[0]" IO_TYPE=LVCMOS33
+     ;": Port "gb_d[0]" does not exist in the design. This preference has been
+     disabled.
+WARNING - map: C:/Users/Admin/Documents/diy-gb-flash-cart/fpga/constraints/inter
+     nal_rom.lpf(23): Semantic error in "IOBUF PORT "gb_d[1]" IO_TYPE=LVCMOS33
+     ;": Port "gb_d[1]" does not exist in the design. This preference has been
+     disabled.
+WARNING - map: C:/Users/Admin/Documents/diy-gb-flash-cart/fpga/constraints/inter
+     nal_rom.lpf(24): Semantic error in "IOBUF PORT "gb_d[2]" IO_TYPE=LVCMOS33
+     ;": Port "gb_d[2]" does not exist in the design. This preference has been
+     disabled.
+WARNING - map: C:/Users/Admin/Documents/diy-gb-flash-cart/fpga/constraints/inter
+     nal_rom.lpf(25): Semantic error in "IOBUF PORT "gb_d[3]" IO_TYPE=LVCMOS33
+     ;": Port "gb_d[3]" does not exist in the design. This preference has been
+     disabled.
+WARNING - map: C:/Users/Admin/Documents/diy-gb-flash-cart/fpga/constraints/inter
+     nal_rom.lpf(26): Semantic error in "IOBUF PORT "gb_d[4]" IO_TYPE=LVCMOS33
+     ;": Port "gb_d[4]" does not exist in the design. This preference has been
+     disabled.
+WARNING - map: C:/Users/Admin/Documents/diy-gb-flash-cart/fpga/constraints/inter
+     nal_rom.lpf(27): Semantic error in "IOBUF PORT "gb_d[5]" IO_TYPE=LVCMOS33
+     ;": Port "gb_d[5]" does not exist in the design. This preference has been
+     disabled.
+WARNING - map: C:/Users/Admin/Documents/diy-gb-flash-cart/fpga/constraints/inter
+     nal_rom.lpf(28): Semantic error in "IOBUF PORT "gb_d[6]" IO_TYPE=LVCMOS33
+     ;": Port "gb_d[6]" does not exist in the design. This preference has been
+     disabled.
+WARNING - map: C:/Users/Admin/Documents/diy-gb-flash-cart/fpga/constraints/inter
+     nal_rom.lpf(29): Semantic error in "IOBUF PORT "gb_d[7]" IO_TYPE=LVCMOS33
+     ;": Port "gb_d[7]" does not exist in the design. This preference has been
+     disabled.
+WARNING - map: C:/Users/Admin/Documents/diy-gb-flash-cart/fpga/constraints/inter
+     nal_rom.lpf(30): Semantic error in "LOCATE COMP "gb_a[2]" SITE "29" ;":
+     COMP "gb_a[2]" cannot be found in design. This preference has been
+     disabled.
+WARNING - map: C:/Users/Admin/Documents/diy-gb-flash-cart/fpga/constraints/inter
+     nal_rom.lpf(31): Semantic error in "LOCATE COMP "gb_d[3]" SITE "49" ;":
+     COMP "gb_d[3]" cannot be found in design. This preference has been
+     disabled.
+WARNING - map: C:/Users/Admin/Documents/diy-gb-flash-cart/fpga/constraints/inter
+     nal_rom.lpf(32): Semantic error in "LOCATE COMP "gb_d[4]" SITE "51" ;":
+     COMP "gb_d[4]" cannot be found in design. This preference has been
+     disabled.
+WARNING - map: C:/Users/Admin/Documents/diy-gb-flash-cart/fpga/constraints/inter
+     nal_rom.lpf(33): Semantic error in "LOCATE COMP "gb_d[5]" SITE "52" ;":
+     COMP "gb_d[5]" cannot be found in design. This preference has been
+     disabled.
+
+                                    Page 4
+
+
+
+
+Design:  top                                           Date:  09/06/26  23:23:08
+
+Design Errors/Warnings (cont)
+-----------------------------
+WARNING - map: C:/Users/Admin/Documents/diy-gb-flash-cart/fpga/constraints/inter
+     nal_rom.lpf(34): Semantic error in "LOCATE COMP "gb_d[6]" SITE "53" ;":
+     COMP "gb_d[6]" cannot be found in design. This preference has been
+     disabled.
+WARNING - map: C:/Users/Admin/Documents/diy-gb-flash-cart/fpga/constraints/inter
+     nal_rom.lpf(35): Semantic error in "LOCATE COMP "gb_d[7]" SITE "54" ;":
+     COMP "gb_d[7]" cannot be found in design. This preference has been
+     disabled.
+WARNING - map: C:/Users/Admin/Documents/diy-gb-flash-cart/fpga/constraints/inter
+     nal_rom.lpf(36): Semantic error in "LOCATE COMP "gb_a[3]" SITE "30" ;":
+     COMP "gb_a[3]" cannot be found in design. This preference has been
+     disabled.
+WARNING - map: C:/Users/Admin/Documents/diy-gb-flash-cart/fpga/constraints/inter
+     nal_rom.lpf(37): Semantic error in "LOCATE COMP "gb_a[4]" SITE "31" ;":
+     COMP "gb_a[4]" cannot be found in design. This preference has been
+     disabled.
+WARNING - map: C:/Users/Admin/Documents/diy-gb-flash-cart/fpga/constraints/inter
+     nal_rom.lpf(38): Semantic error in "LOCATE COMP "gb_a[5]" SITE "32" ;":
+     COMP "gb_a[5]" cannot be found in design. This preference has been
+     disabled.
+WARNING - map: C:/Users/Admin/Documents/diy-gb-flash-cart/fpga/constraints/inter
+     nal_rom.lpf(39): Semantic error in "LOCATE COMP "gb_a[6]" SITE "34" ;":
+     COMP "gb_a[6]" cannot be found in design. This preference has been
+     disabled.
+WARNING - map: C:/Users/Admin/Documents/diy-gb-flash-cart/fpga/constraints/inter
+     nal_rom.lpf(40): Semantic error in "LOCATE COMP "gb_a[7]" SITE "35" ;":
+     COMP "gb_a[7]" cannot be found in design. This preference has been
+     disabled.
+WARNING - map: C:/Users/Admin/Documents/diy-gb-flash-cart/fpga/constraints/inter
+     nal_rom.lpf(41): Semantic error in "LOCATE COMP "gb_a[8]" SITE "36" ;":
+     COMP "gb_a[8]" cannot be found in design. This preference has been
+     disabled.
+WARNING - map: C:/Users/Admin/Documents/diy-gb-flash-cart/fpga/constraints/inter
+     nal_rom.lpf(42): Semantic error in "LOCATE COMP "gb_a[9]" SITE "37" ;":
+     COMP "gb_a[9]" cannot be found in design. This preference has been
+     disabled.
+WARNING - map: C:/Users/Admin/Documents/diy-gb-flash-cart/fpga/constraints/inter
+     nal_rom.lpf(43): Semantic error in "LOCATE COMP "gb_a[10]" SITE "38" ;":
+     COMP "gb_a[10]" cannot be found in design. This preference has been
+     disabled.
+WARNING - map: C:/Users/Admin/Documents/diy-gb-flash-cart/fpga/constraints/inter
+     nal_rom.lpf(44): Semantic error in "LOCATE COMP "gb_a[11]" SITE "39" ;":
+     COMP "gb_a[11]" cannot be found in design. This preference has been
+     disabled.
+WARNING - map: C:/Users/Admin/Documents/diy-gb-flash-cart/fpga/constraints/inter
+     nal_rom.lpf(45): Semantic error in "LOCATE COMP "gb_a[12]" SITE "40" ;":
+     COMP "gb_a[12]" cannot be found in design. This preference has been
+     disabled.
+WARNING - map: C:/Users/Admin/Documents/diy-gb-flash-cart/fpga/constraints/inter
+     nal_rom.lpf(46): Semantic error in "LOCATE COMP "gb_a[13]" SITE "41" ;":
+     COMP "gb_a[13]" cannot be found in design. This preference has been
+     disabled.
+WARNING - map: C:/Users/Admin/Documents/diy-gb-flash-cart/fpga/constraints/inter
+     nal_rom.lpf(47): Semantic error in "LOCATE COMP "gb_a[14]" SITE "42" ;":
+     COMP "gb_a[14]" cannot be found in design. This preference has been
+     disabled.
+
+                                    Page 5
+
+
+
+
+Design:  top                                           Date:  09/06/26  23:23:08
+
+Design Errors/Warnings (cont)
+-----------------------------
+WARNING - map: C:/Users/Admin/Documents/diy-gb-flash-cart/fpga/constraints/inter
+     nal_rom.lpf(48): Semantic error in "LOCATE COMP "gb_a[15]" SITE "43" ;":
+     COMP "gb_a[15]" cannot be found in design. This preference has been
+     disabled.
+WARNING - map: C:/Users/Admin/Documents/diy-gb-flash-cart/fpga/constraints/inter
+     nal_rom.lpf(49): Semantic error in "LOCATE COMP "gb_d[0]" SITE "45" ;":
+     COMP "gb_d[0]" cannot be found in design. This preference has been
+     disabled.
+WARNING - map: C:/Users/Admin/Documents/diy-gb-flash-cart/fpga/constraints/inter
+     nal_rom.lpf(50): Semantic error in "LOCATE COMP "gb_d[1]" SITE "47" ;":
+     COMP "gb_d[1]" cannot be found in design. This preference has been
+     disabled.
+WARNING - map: C:/Users/Admin/Documents/diy-gb-flash-cart/fpga/constraints/inter
+     nal_rom.lpf(51): Semantic error in "LOCATE COMP "gb_d[2]" SITE "48" ;":
+     COMP "gb_d[2]" cannot be found in design. This preference has been
+     disabled.
+WARNING - map: C:/Users/Admin/Documents/diy-gb-flash-cart/fpga/constraints/inter
+     nal_rom.lpf(52): Semantic error in "LOCATE COMP "data_oe_n" SITE "58" ;":
+     COMP "data_oe_n" cannot be found in design. This preference has been
+     disabled.
+WARNING - map: C:/Users/Admin/Documents/diy-gb-flash-cart/fpga/constraints/inter
+     nal_rom.lpf(53): Semantic error in "LOCATE COMP "gb_rd_n" SITE "60" ;":
+     COMP "gb_rd_n" cannot be found in design. This preference has been
+     disabled.
+WARNING - map: C:/Users/Admin/Documents/diy-gb-flash-cart/fpga/constraints/inter
+     nal_rom.lpf(54): Semantic error in "LOCATE COMP "gb_a[1]" SITE "28" ;":
+     COMP "gb_a[1]" cannot be found in design. This preference has been
+     disabled.
+WARNING - map: C:/Users/Admin/Documents/diy-gb-flash-cart/fpga/constraints/inter
+     nal_rom.lpf(55): Semantic error in "LOCATE COMP "data_dir" SITE "57" ;":
+     COMP "data_dir" cannot be found in design. This preference has been
+     disabled.
+WARNING - map: C:/Users/Admin/Documents/diy-gb-flash-cart/fpga/constraints/inter
+     nal_rom.lpf(56): Semantic error in "IOBUF PORT "data_dir" IO_TYPE=LVCMOS33
+     ;": Port "data_dir" does not exist in the design. This preference has been
+     disabled.
+
+IO (PIO) Attributes
+-------------------
+
++---------------------+-----------+-----------+------------+
+| IO Name             | Direction | Levelmode | IO         |
+|                     |           |  IO_TYPE  | Register   |
++---------------------+-----------+-----------+------------+
+| flash_d[7]          | BIDIR     | LVCMOS33  | IN         |
++---------------------+-----------+-----------+------------+
+| flash_d[6]          | BIDIR     | LVCMOS33  | IN         |
++---------------------+-----------+-----------+------------+
+| flash_d[5]          | BIDIR     | LVCMOS33  | IN         |
++---------------------+-----------+-----------+------------+
+| flash_d[4]          | BIDIR     | LVCMOS33  | IN         |
++---------------------+-----------+-----------+------------+
+| flash_d[3]          | BIDIR     | LVCMOS33  | IN         |
++---------------------+-----------+-----------+------------+
+| flash_d[2]          | BIDIR     | LVCMOS33  | IN         |
++---------------------+-----------+-----------+------------+
+
+                                    Page 6
+
+
+
+
+Design:  top                                           Date:  09/06/26  23:23:08
+
+IO (PIO) Attributes (cont)
+--------------------------
+| flash_d[1]          | BIDIR     | LVCMOS33  | IN         |
++---------------------+-----------+-----------+------------+
+| flash_d[0]          | BIDIR     | LVCMOS33  | IN         |
++---------------------+-----------+-----------+------------+
+| flash_a[21]         | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[20]         | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[19]         | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[18]         | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[17]         | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[16]         | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[15]         | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[14]         | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[13]         | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[12]         | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[11]         | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[10]         | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[9]          | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[8]          | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[7]          | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[6]          | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[5]          | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[4]          | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[3]          | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[2]          | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[1]          | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[0]          | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_ce_n          | OUTPUT    | LVCMOS33  | OUT        |
++---------------------+-----------+-----------+------------+
+| flash_oe_n          | OUTPUT    | LVCMOS33  | OUT        |
++---------------------+-----------+-----------+------------+
+| flash_we_n          | OUTPUT    | LVCMOS33  | OUT        |
++---------------------+-----------+-----------+------------+
+| test_pass           | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+
+                                    Page 7
+
+
+
+
+Design:  top                                           Date:  09/06/26  23:23:08
+
+IO (PIO) Attributes (cont)
+--------------------------
+| test_fail           | OUTPUT    | LVCMOS33  | OUT        |
++---------------------+-----------+-----------+------------+
+
+Removed logic
+-------------
+
+Block i2 undriven or does not drive anything - clipped.
+Block GSR_INST undriven or does not drive anything - clipped.
+Signal n11099 was merged into signal bus_addr_3
+Signal n4947 was merged into signal bus/flash_d_drive
+Signal GND_net undriven or does not drive anything - clipped.
+Signal VCC_net undriven or does not drive anything - clipped.
+Signal diag_counter_1175_add_4_25/S1 undriven or does not drive anything -
+     clipped.
+Signal diag_counter_1175_add_4_25/CO undriven or does not drive anything -
+     clipped.
+Signal add_24_1/S0 undriven or does not drive anything - clipped.
+Signal add_24_1/CI undriven or does not drive anything - clipped.
+Signal add_24_25/S1 undriven or does not drive anything - clipped.
+Signal add_24_25/CO undriven or does not drive anything - clipped.
+Signal diag_counter_1175_add_4_1/S0 undriven or does not drive anything -
+     clipped.
+Signal diag_counter_1175_add_4_1/CI undriven or does not drive anything -
+     clipped.
+Block mux_262_i4_4_lut_then_1_lut was optimized away.
+Block bus/i1658_1_lut was optimized away.
+Block i1 was optimized away.
+
+     
+
+OSC Summary
+-----------
+
+OSC 1:                                     Pin/Node Value
+  OSC Instance Name:                                OSCH_inst
+  OSC Type:                                         OSCH
+  STDBY Input:                                      NONE
+  OSC Output:                              NODE     clk
+  OSC Nominal Frequency (MHz):                      2.08
+
+ASIC Components
+---------------
+
+Instance Name: OSCH_inst
+         Type: OSCH
+
+Run Time and Memory Usage
+-------------------------
+
+   Total CPU Time: 0 secs  
+   Total REAL Time: 0 secs  
+   Peak Memory Usage: 48 MB
+        
+
+
+
+
+                                    Page 8
+
+
+Copyright (c) 1991-1994 by NeoCAD Inc. All rights reserved.
+     Copyright (c) 1995 AT&T Corp.   All rights reserved.
+     Copyright (c) 1995-2001 Lucent Technologies Inc.  All rights reserved.
+     Copyright (c) 2001 Agere Systems   All rights reserved.
+     Copyright (c) 2002-2024 Lattice Semiconductor Corporation,  All rights
+     reserved.

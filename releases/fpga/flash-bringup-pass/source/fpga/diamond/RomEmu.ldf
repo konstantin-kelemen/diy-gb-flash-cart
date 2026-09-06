@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BaliProject version="3.2" title="RomEmu" device="LCMXO2-1200HC-4TG100C" default_implementation="flash_bringup">
+    <Options/>
+    <Implementation title="flash_bringup" dir="flash_bringup" description="flash_bringup" synthesis="lse" default_strategy="Area">
+        <Options def_top="top"/>
+        <Source name="../targets/flash_bringup/top.v" type="Verilog" type_short="Verilog">
+            <Options top_module="top"/>
+        </Source>
+        <Source name="../rtl/mx29_bus.v" type="Verilog" type_short="Verilog">
+            <Options/>
+        </Source>
+        <Source name="../constraints/internal_rom.lpf" type="Logic Preference" type_short="LPF">
+            <Options/>
+        </Source>
+        <Source name="flash_bringup/flash_bringup.xcf" type="Programming Project File" type_short="Programming">
+            <Options/>
+        </Source>
+    </Implementation>
+    <Implementation title="v1_0" dir="v1_0" description="v1_0" synthesis="lse" default_strategy="Strategy1">
+        <Options def_top="top"/>
+        <Source name="../targets/internal_rom/top.v" type="Verilog" type_short="Verilog">
+            <Options top_module="top"/>
+        </Source>
+        <Source name="../constraints/internal_rom.lpf" type="Logic Preference" type_short="LPF">
+            <Options/>
+        </Source>
+    </Implementation>
+    <Strategy name="Strategy1" file="RomEmu1.sty"/>
+</BaliProject>
