@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <BaliProject version="3.2" title="RomEmu" device="LCMXO2-1200HC-4TG100C" default_implementation="flash_bringup">
     <Options/>
+    <Implementation title="spi_bringup" dir="spi_bringup" description="SPI version probe" synthesis="lse" default_strategy="Strategy1">
+        <Options def_top="top"/>
+        <Source name="../targets/spi_bringup/top.v" type="Verilog" type_short="Verilog">
+            <Options top_module="top"/>
+        </Source>
+        <Source name="../constraints/spi_bringup.lpf" type="Logic Preference" type_short="LPF">
+            <Options/>
+        </Source>
+    </Implementation>
     <Implementation title="flash_bringup" dir="flash_bringup" description="flash_bringup" synthesis="lse" default_strategy="Area">
         <Options def_top="top"/>
         <Source name="../targets/flash_bringup/top.v" type="Verilog" type_short="Verilog">

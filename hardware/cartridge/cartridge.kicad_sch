@@ -29476,6 +29476,46 @@
 			)
 		)
 	)
+	(label "SPI_MISO"
+		(at 304.8 30.48 0)
+		(effects (font (size 1.27 1.27)) (justify left bottom))
+		(uuid "a37b42cb-2930-452b-91bc-620706abc000")
+	)
+	(label "SPI_CS_N"
+		(at 304.8 33.02 0)
+		(effects (font (size 1.27 1.27)) (justify left bottom))
+		(uuid "a37b42cb-2930-452b-91bc-620706abc001")
+	)
+	(label "SPI_SCK"
+		(at 304.8 35.56 0)
+		(effects (font (size 1.27 1.27)) (justify left bottom))
+		(uuid "a37b42cb-2930-452b-91bc-620706abc002")
+	)
+	(label "SPI_MOSI"
+		(at 304.8 38.1 0)
+		(effects (font (size 1.27 1.27)) (justify left bottom))
+		(uuid "a37b42cb-2930-452b-91bc-620706abc003")
+	)
+	(label "SPI_MISO"
+		(at 128.27 124.46 0)
+		(effects (font (size 1.27 1.27)) (justify left bottom))
+		(uuid "a37b42cb-2930-452b-91bc-620706abc004")
+	)
+	(label "SPI_CS_N"
+		(at 128.27 129.54 0)
+		(effects (font (size 1.27 1.27)) (justify left bottom))
+		(uuid "a37b42cb-2930-452b-91bc-620706abc005")
+	)
+	(label "SPI_SCK"
+		(at 128.27 127 0)
+		(effects (font (size 1.27 1.27)) (justify left bottom))
+		(uuid "a37b42cb-2930-452b-91bc-620706abc006")
+	)
+	(label "SPI_MOSI"
+		(at 128.27 132.08 0)
+		(effects (font (size 1.27 1.27)) (justify left bottom))
+		(uuid "a37b42cb-2930-452b-91bc-620706abc007")
+	)
 	(sheet_instances
 		(path "/"
 			(page "1")
