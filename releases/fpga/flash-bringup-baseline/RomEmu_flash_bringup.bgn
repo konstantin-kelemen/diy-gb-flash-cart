@@ -4,7 +4,7 @@ Copyright (c) 1995 AT&T Corp.   All rights reserved.
 Copyright (c) 1995-2001 Lucent Technologies Inc.  All rights reserved.
 Copyright (c) 2001 Agere Systems   All rights reserved.
 Copyright (c) 2002-2024 Lattice Semiconductor Corporation,  All rights reserved.
-Sun Sep 06 22:06:15 2026
+Sun Sep 06 22:35:25 2026
 
 
 Command: bitgen -g RamCfg:Reset -path C:/Users/Admin/Documents/diy-gb-flash-cart/fpga/diamond -w -jedec -gui -msgset C:/Users/Admin/Documents/diy-gb-flash-cart/fpga/diamond/promote.xml RomEmu_flash_bringup.ncd RomEmu_flash_bringup.prf 

@@ -16,7 +16,7 @@ Target Vendor:  LATTICE
 Target Device:  LCMXO2-1200HCTQFP100
 Target Performance:   4
 Mapper:  xo2c00,  version:  Diamond (64-bit) 3.14.0.75.2
-Mapped on:  09/06/26  22:05:58
+Mapped on:  09/06/26  22:34:53
 
 Design Summary
 --------------
@@ -66,7 +66,7 @@ Design Summary
 
 
 
-Design:  top                                           Date:  09/06/26  22:05:58
+Design:  top                                           Date:  09/06/26  22:34:53
 
 Design Summary (cont)
 ---------------------
@@ -132,7 +132,7 @@ Design Summary (cont)
 
 
 
-Design:  top                                           Date:  09/06/26  22:05:58
+Design:  top                                           Date:  09/06/26  22:34:53
 
 Design Summary (cont)
 ---------------------
@@ -198,7 +198,7 @@ WARNING - map: C:/Users/Admin/Documents/diy-gb-flash-cart/fpga/constraints/inter
 
 
 
-Design:  top                                           Date:  09/06/26  22:05:58
+Design:  top                                           Date:  09/06/26  22:34:53
 
 Design Errors/Warnings (cont)
 -----------------------------
@@ -264,7 +264,7 @@ WARNING - map: C:/Users/Admin/Documents/diy-gb-flash-cart/fpga/constraints/inter
 
 
 
-Design:  top                                           Date:  09/06/26  22:05:58
+Design:  top                                           Date:  09/06/26  22:34:53
 
 Design Errors/Warnings (cont)
 -----------------------------
@@ -330,7 +330,7 @@ WARNING - map: C:/Users/Admin/Documents/diy-gb-flash-cart/fpga/constraints/inter
 
 
 
-Design:  top                                           Date:  09/06/26  22:05:58
+Design:  top                                           Date:  09/06/26  22:34:53
 
 Design Errors/Warnings (cont)
 -----------------------------
@@ -396,7 +396,7 @@ WARNING - map: C:/Users/Admin/Documents/diy-gb-flash-cart/fpga/constraints/inter
 
 
 
-Design:  top                                           Date:  09/06/26  22:05:58
+Design:  top                                           Date:  09/06/26  22:34:53
 
 Design Errors/Warnings (cont)
 -----------------------------
@@ -462,7 +462,7 @@ IO (PIO) Attributes
 
 
 
-Design:  top                                           Date:  09/06/26  22:05:58
+Design:  top                                           Date:  09/06/26  22:34:53
 
 IO (PIO) Attributes (cont)
 --------------------------
@@ -528,7 +528,7 @@ IO (PIO) Attributes (cont)
 
 
 
-Design:  top                                           Date:  09/06/26  22:05:58
+Design:  top                                           Date:  09/06/26  22:34:53
 
 IO (PIO) Attributes (cont)
 --------------------------
@@ -580,7 +580,7 @@ Instance Name: OSCH_inst
 Run Time and Memory Usage
 -------------------------
 
-   Total CPU Time: 0 secs  
+   Total CPU Time: 1 secs  
    Total REAL Time: 0 secs  
    Peak Memory Usage: 51 MB
         

@@ -13,7 +13,7 @@ Setup and Hold Report
 
 --------------------------------------------------------------------------------
 Lattice TRACE Report - Setup, Version Diamond (64-bit) 3.14.0.75.2
-Sun Sep 06 22:06:13 2026
+Sun Sep 06 22:35:23 2026
 
 Copyright (c) 1991-1994 by NeoCAD Inc. All rights reserved.
 Copyright (c) 1995 AT&T Corp.   All rights reserved.
@@ -518,21 +518,21 @@ ROUTE       124     3.541        OSC.OSC to    R10C18A.CLK clk
                     3.541   (0.0% logic, 100.0% route), 0 logic levels.
 
 
-Passed: The following path meets requirements by 461.190ns
+Passed: The following path meets requirements by 461.196ns
 
  Logical Details:  Cell type  Pin type       Cell/ASIC name  (clock net +/-)
 
    Source:         FF         Q              state_i0  (from clk +)
    Destination:    FF         Data in        state_i3  (to clk +)
 
-   Delay:              19.413ns  (20.2% logic, 79.8% route), 8 logic levels.
+   Delay:              19.407ns  (20.2% logic, 79.8% route), 8 logic levels.
 
  Constraint Details:
 
-     19.413ns physical path delay SLICE_94 to SLICE_96 meets
+     19.407ns physical path delay SLICE_94 to SLICE_96 meets
     480.769ns delay constraint less
       0.000ns skew and
-      0.166ns DIN_SET requirement (totaling 480.603ns) by 461.190ns
+      0.166ns DIN_SET requirement (totaling 480.603ns) by 461.196ns
 
  Physical Path Details:
 
@@ -540,7 +540,7 @@ Passed: The following path meets requirements by 461.190ns
 
    Name    Fanout   Delay (ns)          Site               Resource
 REG_DEL     ---     0.452     R9C18C.CLK to      R9C18C.Q0 SLICE_94 (from clk)
-ROUTE       215     6.647      R9C18C.Q0 to      R4C16C.A0 state_0
+ROUTE       215     6.641      R9C18C.Q0 to      R4C16C.A0 state_0
 CTOF_DEL    ---     0.495      R4C16C.A0 to      R4C16C.F0 SLICE_430
 ROUTE         2     1.013      R4C16C.F0 to      R4C16C.B1 n9934
 CTOF_DEL    ---     0.495      R4C16C.B1 to      R4C16C.F1 SLICE_430
@@ -556,7 +556,7 @@ ROUTE         1     1.450      R9C16D.F1 to     R10C18A.B0 n12_adj_1087
 CTOF_DEL    ---     0.495     R10C18A.B0 to     R10C18A.F0 SLICE_96
 ROUTE         1     0.000     R10C18A.F0 to    R10C18A.DI0 n17888 (to clk)
                   --------
-                   19.413   (20.2% logic, 79.8% route), 8 logic levels.
+                   19.407   (20.2% logic, 79.8% route), 8 logic levels.
 
  Clock Skew Details: 
 
@@ -664,7 +664,7 @@ Constraints cover 14326 paths, 1 nets, and 4489 connections (99.82% coverage)
 
 --------------------------------------------------------------------------------
 Lattice TRACE Report - Hold, Version Diamond (64-bit) 3.14.0.75.2
-Sun Sep 06 22:06:13 2026
+Sun Sep 06 22:35:23 2026
 
 Copyright (c) 1991-1994 by NeoCAD Inc. All rights reserved.
 Copyright (c) 1995 AT&T Corp.   All rights reserved.
