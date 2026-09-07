@@ -1,56 +1,44 @@
 # RP2040 SPI bring-up
 
-Minimal USB CDC + SPI0 firmware for the first RP2040-Zero <-> MachXO2 link test.
+Прошивка Waveshare RP2040-Zero: USB CDC-консоль и ведущий SPI0 для проверки
+связи с [FPGA spi_bringup](../../../fpga/targets/spi_bringup/README.md).
+[Подключение, питание и протокол](../../../docs/SPI_BRINGUP.md) описаны отдельно.
+Команд чтения и изменения Flash нет.
 
-## Wiring
+## Сборка
 
-| Signal | RP2040-Zero | Direction |
-|---|---:|---|
-| SPI_MISO | GP0 | FPGA -> RP2040 |
-| SPI_CS_N | GP1 | RP2040 -> FPGA |
-| SPI_SCK | GP2 | RP2040 -> FPGA |
-| SPI_MOSI | GP3 | RP2040 -> FPGA |
-| GND | GND | common |
+Требуются Raspberry Pi Pico SDK, CMake, компилятор ARM embedded и инструмент
+сборки, выбранный CMake. Переменная `PICO_SDK_PATH` должна указывать на SDK.
+Из корня репозитория:
 
-SPI mode 0, 8-bit, MSB first, 10 kHz. CS# is software controlled.
-
-Do not connect the 3.3 V outputs of two independently powered boards together. Both
-ends must be powered and share GND before starting the exchange.
-
-## Build
-
-Install the Raspberry Pi Pico SDK and export `PICO_SDK_PATH`, then:
-
-```bash
-cd firmware/rp2040
-cmake -S . -B build -DPICO_BOARD=waveshare_rp2040_zero
-cmake --build build -j
+```sh
+cmake -S firmware/rp2040/spi_bringup -B firmware/rp2040/spi_bringup/build -DPICO_BOARD=waveshare_rp2040_zero
+cmake --build firmware/rp2040/spi_bringup/build -j
 ```
 
-The UF2 file will be:
+Результат: `firmware/rp2040/spi_bringup/build/gb_cart_rp2040.uf2`.
+Сохранённый [UF2](../../../releases/rp2040/spi_bringup/gb_cart_rp2040.uf2)
+пока не снабжён манифестом с версией SDK и ревизией исходников;
+его аппаратная проверка не зафиксирована.
 
-```text
-build/gb_cart_rp2040.uf2
-```
+## Запуск
 
-## Use
+Загрузить UF2 через BOOTSEL и открыть USB CDC-порт платы в терминале.
+Команды отправляются строками с переводом строки:
 
-Flash the UF2, connect the RP2040-Zero over USB, and open its CDC serial port.
+| Команда | Действие |
+|---|---|
+| `version` или `v` | Один запрос версии FPGA, вывод TX/RX и результата |
+| `test [N]` | N запросов, по умолчанию 1000; итоговые счётчики и первый ошибочный ответ |
+| `help` или `?` | Справка |
 
-Commands:
+Успешный `version` заканчивается строкой
+`OK: FPGA protocol 1.0, capabilities=0x0000`.
+`test 1000` должен вывести `TEST: total=1000 pass=1000 fail=0 ...` и `PASS`.
+Серия выполняется без промежуточного вывода; 1000 кадров по 72 бита при
+10 кГц занимают не менее 7,2 секунды. Тайм-аут одиночного запроса нельзя
+применять ко всей серии.
 
-```text
-version
-test 1000
-help
-```
-
-Expected single transaction:
-
-```text
-TX: 01 00 00 00 00 00 00 00 00
-RX: 00 47 42 46 43 01 00 00 00
-OK: FPGA protocol 1.0, capabilities=0x0000
-```
-
-`test 1000` is the initial acceptance test: all 1000 frames should pass.
+Проверку ответа выполняет сама RP2040; отдельной программы автоматической
+проверки USB на ПК пока нет. Порядок фиксации результата — в
+[аппаратной приёмке](../../../docs/SPI_BRINGUP.md#аппаратная-приёмка).
