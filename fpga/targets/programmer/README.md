@@ -8,7 +8,12 @@ LPF: `constraints/programmer.lpf`; выводы сохранены, ограни
 [Сборка и стенд](../../../docs/PROGRAMMER.md),
 [протокол и временные параметры](../../../docs/PROGRAMMER_PROTOCOL.md).
 Результат Diamond: `fpga/diamond/programmer/RomEmu_programmer.jed`.
-Ресурсы, EBR inference, timing и JEDEC новой конфигурации ещё не проверены в Diamond.
+Первая сборка размещена в Diamond, но setup timing не пройден;
+[результат и исправление](../../../docs/TEST_PLAN.md#журнал-результатов).
+После обновления `rtl/programmer_block.v` повторить синтез, Map, Place & Route
+и Place & Route Trace. В `Preference` отчёта `.twr` проверить применение
+64 МГц из `constraints/programmer.lpf`. Если там снова 53,2 МГц, сохранить
+также сгенерированный `.prf` и Map report для проверки применённых ограничений.
 
 ## RTL-проверка
 

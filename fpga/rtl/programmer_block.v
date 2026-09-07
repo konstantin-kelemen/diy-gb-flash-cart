@@ -30,7 +30,15 @@ module programmer_block (
     wire [7:0] rx_byte={rx_shift[6:0],mosi_sync[1]};
     wire [10:0] byte_count=bits[13:3];
     wire [15:0] frame_length=header[23:8];
-    wire [11:0] payload_end=12'd8 + ((frame_op==8'h31 && frame_length<=1024) ? frame_length[10:0]:11'd0);
+    // Decode in separate clock stages. Header/byte counters remain stable for
+    // many clk cycles between SPI bytes; CS guards provide >=2 us before commit.
+    // Avoid header -> length mux -> two adders -> comparator -> state/EBR enable.
+    reg [10:0] payload_bytes, payload_end, frame_end;
+    reg payload_byte, crc_byte_slot, frame_complete;
+    reg crc_ok, sequence_ok, address_ok, length_ok, arm_key_ok;
+    reg block_op, read_op, known_op;
+    reg [22:0] range_end;
+    reg range_ok;
     reg armed, frame_blocked;
     reg [7:0] sequence_id, last_op, status;
     reg [15:0] last_result, completed;
@@ -40,6 +48,33 @@ module programmer_block (
     reg [7:0] op;
     localparam IDLE=0, FETCH=1, ISSUE=2, WAIT_OP=3;
     reg [1:0] state;
+    always @(posedge clk) begin
+        if(reset) begin
+            payload_bytes<=0; payload_end<=8; frame_end<=10;
+            payload_byte<=0; crc_byte_slot<=0; frame_complete<=0;
+            crc_ok<=0; sequence_ok<=0; address_ok<=0; length_ok<=0;
+            arm_key_ok<=0; block_op<=0; read_op<=0; known_op<=0;
+            range_end<=0; range_ok<=0;
+        end else begin
+            payload_bytes <= (frame_op==8'h31 && frame_length<=16'd1024) ? frame_length[10:0]:11'd0;
+            payload_end <= 11'd8 + payload_bytes;
+            frame_end <= payload_end + 11'd2;
+            payload_byte <= byte_count>=11'd8 && byte_count<payload_end;
+            crc_byte_slot <= byte_count>=payload_end && byte_count<frame_end;
+            frame_complete <= bits=={frame_end,3'b000};
+            crc_ok <= received_crc==rx_crc;
+            sequence_ok <= header[55:48]!=sequence_id;
+            address_ok <= header[47:46]==0;
+            length_ok <= frame_length!=0 && frame_length<=16'd1024;
+            range_end <= {1'b0,header[45:24]} + {7'b0,frame_length};
+            range_ok <= range_end<=23'h400000;
+            arm_key_ok <= header[47:0]==48'h0000000000a5;
+            block_op <= frame_op==8'h30 || frame_op==8'h31;
+            read_op <= frame_op==8'h30;
+            known_op <= frame_op==8'h30 || frame_op==8'h31 || frame_op==8'h12 ||
+                        frame_op==8'h13 || frame_op==8'h14;
+        end
+    end
     assign active = busy || start || state!=IDLE;
     assign spi_miso = !spi_cs_n && !reset  ?  tx_shift[7] : 1'bz;
 
@@ -52,8 +87,8 @@ module programmer_block (
         input_data <= incoming[index[9:0]];
         output_data <= outgoing[output_address];
         if (!reset && !cs_sync[1] && sck_sync[1] && !old_sck && bits[2:0]==7 &&
-            frame_op==8'h31 && byte_count>=8 && byte_count<payload_end && !active && !frame_blocked)
-            incoming[byte_count-8] <= rx_byte;
+            frame_op==8'h31 && payload_byte && !active && !frame_blocked)
+            incoming[byte_count[9:0]-10'd8] <= rx_byte;
         if (!reset && state==WAIT_OP && done && operation_status==0 && op==8'h30)
             outgoing[index[9:0]] <= result[7:0];
     end
@@ -125,25 +160,21 @@ module programmer_block (
                 header<=0; rx_crc<=16'hffff; received_crc<=0;
                 // Commit only a complete, exact-length frame after CS rises.
                 if(!old_cs && frame_op!=1 && frame_op!=2 && frame_op!=3 &&
-                    bits==((payload_end+2)<<3) && !active && !frame_blocked) begin
+                    frame_complete && !active && !frame_blocked) begin
                     sequence_id<=header[55:48]; last_op<=frame_op; completed<=0; last_result<=0;
-                    if(received_crc!=rx_crc) begin status<=7; armed<=0; end
-                    else if(header[55:48]==sequence_id) begin status<=10; armed<=0; end
-                    else if(header[47:46]!=0 ||
-                        ((frame_op==8'h30 || frame_op==8'h31) &&
-                        (frame_length==0 || frame_length>1024 ||
-                         {1'b0,header[45:24]}+frame_length>23'h400000))) begin status<=8; armed<=0; end
+                    if(!crc_ok) begin status<=7; armed<=0; end
+                    else if(!sequence_ok) begin status<=10; armed<=0; end
+                    else if(!address_ok || (block_op && (!length_ok || !range_ok))) begin status<=8; armed<=0; end
                     else if(frame_op==8'h20) begin
-                        armed<=header[47:0]==48'h0000000000a5;
-                        status<=header[47:0]==48'h0000000000a5 ? 0:9;
+                        armed<=arm_key_ok;
+                        status<=arm_key_ok ? 0:9;
                     end else if(frame_op==8'h21) begin armed<=0; status<=0; end
-                    else if(frame_op!=8'h30 && frame_op!=8'h31 && frame_op!=8'h12 &&
-                            frame_op!=8'h13 && frame_op!=8'h14) status<=2;
-                    else if(frame_op!=8'h30 && !armed) status<=9;
-                    else if(frame_op!=8'h30 && frame_op!=8'h31 && frame_length!=0) status<=8;
+                    else if(!known_op) status<=2;
+                    else if(!read_op && !armed) status<=9;
+                    else if(!block_op && frame_length!=0) status<=8;
                     else begin
                         op<=frame_op; base<=header[45:24]; index<=0;
-                        length<=(frame_op==8'h30 || frame_op==8'h31) ? frame_length[10:0]:11'd1;
+                        length<=block_op ? frame_length[10:0]:11'd1;
                         block_crc<=16'hffff; status<=1; state<=FETCH; seen<=1;
                     end
                 end
@@ -158,8 +189,8 @@ module programmer_block (
                             version_reply<=64'h4742464303000004; // v3, 1024-byte blocks (LE)
                         end
                         if(byte_count<8) header<={header[55:0],rx_byte};
-                        if(byte_count<payload_end) rx_crc<=crc_byte(rx_crc,rx_byte);
-                        else if(byte_count<payload_end+2) received_crc<={received_crc[7:0],rx_byte};
+                        if(byte_count<8 || payload_byte) rx_crc<=crc_byte(rx_crc,rx_byte);
+                        else if(crc_byte_slot) received_crc<={received_crc[7:0],rx_byte};
                     end
                 end
                 if(!sck_sync[1] && old_sck) begin

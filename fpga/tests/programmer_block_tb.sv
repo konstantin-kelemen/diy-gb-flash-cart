@@ -123,6 +123,19 @@ module programmer_block_tb #(parameter real CLOCK_HALF=9.4);
             if(miso!==1'bz) $fatal(1,"MISO not released");
         end
     endtask
+    // Reuse tx from an incomplete request, ending on either side of its CRC.
+    task malformed_bits;
+        input integer count;
+        integer bit_index;
+        begin
+            cs=0; #2000;
+            for(bit_index=0;bit_index<count;bit_index=bit_index+1) begin
+                mosi=tx[bit_index/8][7-(bit_index%8)];
+                #125; sck=1; #125; sck=0;
+            end
+            #2000; cs=1; #2000;
+        end
+    endtask
     task query;
         input [7:0] op; input integer count;
         integer k; reg [7:0] ignored;
@@ -181,6 +194,8 @@ module programmer_block_tb #(parameter real CLOCK_HALF=9.4);
         request_frame(8'h31,24'h002000,3,0,0,0); finish_op(8'h31,9);
         request_frame(8'h20,0,0,8'ha5,0,0); finish_op(8'h20,0);
         request_frame(8'h31,24'h002000,3,0,-1,0);
+        malformed_bits(13*8-1);
+        malformed_bits(13*8+1);
         request_frame(8'h31,24'h002000,3,0,1,0);
         if(writes!=before_writes) $fatal(1,"bad framing wrote Flash");
         fault=1; tx[8]=8'ha5;
