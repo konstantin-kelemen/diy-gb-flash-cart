@@ -3,7 +3,6 @@
 #include <string.h>
 
 #include "pico/stdlib.h"
-#include "pico/stdio_usb.h"
 #include "hardware/spi.h"
 
 #define FPGA_SPI                spi0
@@ -159,9 +158,7 @@ int main(void) {
     stdio_init_all();
 
     // This firmware is controlled through USB CDC, so wait until a host opens it.
-    while (!stdio_usb_connected()) {
-        sleep_ms(50);
-    }
+    sleep_ms(1500);
 
     printf("\r\nGame Boy flash cart - RP2040 SPI bring-up\r\n");
     fpga_spi_init();

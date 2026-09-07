@@ -11,6 +11,9 @@ _autosave-*
 /fpga/diamond/v1_0/
 /fpga/tests/build/
 
+# RP2040 build atrifacts
+firmware/rp2040/*/build/
+
 # Editors
 *~
 *.swp
