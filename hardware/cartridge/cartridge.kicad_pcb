@@ -7223,6 +7223,17 @@
 			(uuid "d515cd9e-8edf-4357-9aa9-81a64ef0d07c")
 		)
 		(embedded_fonts no)
+		(model "${KIPRJMOD}/3dmodels/SN74LVC8T245PWR.stp"
+			(offset
+				(xyz 0 0 0)
+			)
+			(scale
+				(xyz 1 1 1)
+			)
+			(rotate
+				(xyz 0 0 0)
+			)
+		)
 	)
 	(footprint "Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder"
 		(layer "F.Cu")
@@ -14911,6 +14922,17 @@
 			(uuid "c6c22313-f6e1-47f2-a878-c8c9d4202b14")
 		)
 		(embedded_fonts no)
+		(model "${KIPRJMOD}/3dmodels/SN74LVC8T245PWR.stp"
+			(offset
+				(xyz 0 0 0)
+			)
+			(scale
+				(xyz 1 1 1)
+			)
+			(rotate
+				(xyz 0 0 0)
+			)
+		)
 	)
 	(footprint "Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder"
 		(layer "F.Cu")
@@ -17752,6 +17774,17 @@
 			(uuid "6f8759ba-b485-4ee3-b482-55ba68e5ec6f")
 		)
 		(embedded_fonts no)
+		(model "${KIPRJMOD}/3dmodels/SN74LVC8T245PWR.stp"
+			(offset
+				(xyz 0 0 0)
+			)
+			(scale
+				(xyz 1 1 1)
+			)
+			(rotate
+				(xyz -0 -0 -0)
+			)
+		)
 	)
 	(footprint "Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder"
 		(layer "F.Cu")
