@@ -10,6 +10,7 @@ RP2040-Zero и преобразователи уровней SN74LVC8T245.
 - [План работ](docs/ROADMAP.md) — следующие этапы и критерии готовности.
 - [Документация](docs/README.md) — архитектура, испытания и приоритет источников.
 - [Первый обмен USB/SPI](docs/SPI_BRINGUP.md) — подключение стенда и протокол.
+- [Запись .gb во Flash](docs/PROGRAMMER.md) — новый программатор, сборка и проверка.
 
 ## Структура репозитория
 
@@ -19,7 +20,7 @@ RP2040-Zero и преобразователи уровней SN74LVC8T245.
 | [hardware/](hardware/README.md) | Схемы, PCB и локальные библиотеки KiCad |
 | [fpga/](fpga/README.md) | RTL, ограничения, тесты и проект Diamond |
 | [firmware/](firmware/README.md) | Прошивка RP2040 для проверки USB/SPI |
-| [host/](host/README.md) | Место для будущей программы записи и проверки |
+| [host/](host/README.md) | Утилита записи и проверки Flash |
 | [references/](references/README.md) | Техническая документация и сторонние материалы |
 | [releases/](releases/README.md) | Сохранённые сборки и производственные файлы |
 

@@ -10,6 +10,8 @@ _autosave-*
 *.run
 /fpga/diamond/v1_0/
 /fpga/tests/build/
+/fpga/diamond/programmer/
+__pycache__/
 
 # RP2040 build atrifacts
 firmware/rp2040/*/build/
