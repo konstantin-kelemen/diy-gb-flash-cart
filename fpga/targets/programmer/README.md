@@ -3,17 +3,23 @@
 Отдельная конфигурация PROGRAMMER без интерфейса Game Boy.
 `top.v` объединяет `programmer_block.v`, `mx29_programmer.v` и `mx29_bus.v`.
 Входной и выходной блоки по 1 КиБ хранятся в синхронной памяти для вывода в EBR.
-LPF: `constraints/programmer.lpf`; выводы сохранены, ограничение частоты — 64 МГц.
+LPF: `constraints/programmer.lpf`; выводы сохранены.
 
-[Сборка и стенд](../../../docs/PROGRAMMER.md),
+Готовая рабочая сборка: [JEDEC, отчёты и манифест](../../../releases/fpga/programmer-v3/MANIFEST.md).
+[Прошивка и стенд](../../../docs/PROGRAMMER.md),
 [протокол и временные параметры](../../../docs/PROGRAMMER_PROTOCOL.md).
 Результат Diamond: `fpga/diamond/programmer/RomEmu_programmer.jed`.
-Первая сборка размещена в Diamond, но setup timing не пройден;
-[результат и исправление](../../../docs/TEST_PLAN.md#журнал-результатов).
-После обновления `rtl/programmer_block.v` повторить синтез, Map, Place & Route
-и Place & Route Trace. В `Preference` отчёта `.twr` проверить применение
-64 МГц из `constraints/programmer.lpf`. Если там снова 53,2 МГц, сохранить
-также сгенерированный `.prf` и Map report для проверки применённых ограничений.
+После исправления RTL повторный TRACE пройден на 53,2 МГц;
+[результат и ограничение проверки](../../../docs/TEST_PLAN.md#журнал-результатов).
+Map отклонил FREQUENCY 64 МГц для OSCH и применил NOM_FREQ 53,20 МГц.
+Проверка timing с запасом на разброс частоты остаётся отдельной задачей.
+
+## Сборка в Diamond
+
+При изменении исходников в Windows открыть `fpga/diamond/RomEmu.ldf`,
+выбрать **programmer**, выполнить синтез, Map, Place & Route, TRACE
+и экспорт JEDEC. Проверить ресурсы, timing и выводы по
+[плану испытаний](../../../docs/TEST_PLAN.md).
 
 ## RTL-проверка
 

@@ -14,6 +14,10 @@
 
 ## FPGA
 
+- [spi_bringup](fpga/spi_bringup/MANIFEST.md) — оригинальный рабочий SPI-тест,
+  протокол 1.0, аппаратный PASS 1000/1000.
+- [programmer-v3](fpga/programmer-v3/MANIFEST.md) — рабочий блочный программатор,
+  аппаратный PASS полного цикла Flash; сохранены JEDEC и успешный TRACE.
 - [flash-bringup-pass](fpga/flash-bringup-pass/MANIFEST.md) — рабочая сборка
   Flash-теста со стартовым сбросом; PASS после прошивки и выключения/включения питания.
 - [flash-bringup-fail](fpga/flash-bringup-fail/MANIFEST.md) — прежняя сборка с FAIL.
@@ -28,8 +32,9 @@
 включая успешный повтор после выключения/включения питания. [Сборка из исходников](../firmware/rp2040/spi_bringup/README.md#сборка).
 
 [programmer-v3](rp2040/programmer-v3/MANIFEST.md) — блочный программатор,
-актуальный UF2 для протокола 3.0. Собран и проверен программно; аппаратная
-приёмка не выполнена. [programmer v2](rp2040/programmer/MANIFEST.md) —
+актуальный UF2 для протокола 3.0. Полный цикл Flash проверен с
+[FPGA programmer-v3](fpga/programmer-v3/MANIFEST.md) — PASS.
+Исторический снимок FPGA в выпуске UF2 предшествует исправлению timing. [programmer v2](rp2040/programmer/MANIFEST.md) —
 прежний несовместимый выпуск.
 
 ## Отладочная плата

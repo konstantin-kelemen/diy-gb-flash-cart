@@ -6,7 +6,8 @@ USB CDC-консоль и SPI0 для запроса версии FPGA и пов
 
 [rp2040/programmer](rp2040/programmer/README.md) — USB/SPI-мост для записи Flash,
 работающий с FPGA `programmer` и `host/gbflash.py`.
-[Полная инструкция](../docs/PROGRAMMER.md). Аппаратная приёмка не выполнена.
+[Полная инструкция](../docs/PROGRAMMER.md),
+[аппаратный результат](../docs/TEST_PLAN.md#журнал-результатов).
 
 Инструкции сборки находятся в README соответствующей конфигурации.
 [Подключение стенда](../docs/SPI_BRINGUP.md) общее для обеих конфигураций;
