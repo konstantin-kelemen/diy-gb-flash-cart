@@ -1,161 +1,146 @@
-# Запись .gb через USB → RP2040 → FPGA → Flash
+# Чтение и запись Flash с Mac
 
-Добавлена отдельная сборка `programmer`, протокол 2.0. Это стендовый
-программатор MX29LV320E в x8. Game Boy должен быть отключён; режим GAME,
-MBC и запуск игры в эту сборку не входят. Назначения SPI/Flash сохранены
-из `spi_bringup.lpf`. Питание и монтаж — по [SPI_BRINGUP.md](SPI_BRINGUP.md).
+Стенд: Mac → USB → RP2040-Zero → SPI → FPGA → MX29LV320E, 4 МиБ
+(4 194 304 байта), режим x8. Для FPGA и RP2040 используется `programmer`,
+блочный протокол 3.0. Game Boy отключён. [Подключение и питание](SPI_BRINGUP.md).
+[Текущее состояние проверок](STATUS.md), [этапы и критерии](ROADMAP.md).
 
-## Сборка
+## Подготовка FPGA в Windows
 
-FPGA: открыть `fpga/diamond/RomEmu.ldf`, выбрать **programmer**, выполнить
-синтез, Map, Place & Route, timing analysis и экспорт JEDEC. Активная
-конфигурация проекта по умолчанию не изменена. Альтернатива на Windows:
+Windows используется для Lattice Diamond и прошивки FPGA.
+Открыть `fpga/diamond/RomEmu.ldf`, выбрать **programmer**, выполнить синтез,
+Map, Place & Route, timing analysis и экспорт JEDEC. Проверить ресурсы,
+timing и назначения выводов по [плану испытаний](TEST_PLAN.md).
+Прошить `fpga/diamond/programmer/RomEmu_programmer.jed` через Diamond Programmer.
+Сборка `spi_bringup` поддерживает только запрос версии и здесь не подходит.
 
-```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File fpga/targets/programmer/build.ps1
-```
+## Подготовка Mac
 
-Перед прошивкой проверить использование ресурсов, timing и `.pad` по
-[TEST_PLAN.md](TEST_PLAN.md). Новый JEDEC пока не собран и не проверен.
-LPF прежний; внешние временные ограничения Flash по-прежнему требуют проверки.
-Встроенная частота — 2,08 МГц. Pin 82 показывает готовность/отсутствие операции,
-pin 83 — факт принятия хотя бы одной команды памяти, а не успешную запись.
-
-RP2040: установить Pico SDK, ARM GCC и CMake; задать `PICO_SDK_PATH`.
-TinyUSB submodule SDK должен быть инициализирован.
+Все команды ниже выполнять из корня проекта в одном окне Terminal.
+Установленный Python 3 должен быть доступен командой `python3`:
 
 ```sh
-cmake -S firmware/rp2040/programmer -B firmware/rp2040/programmer/build -DPICO_BOARD=waveshare_rp2040_zero
-cmake --build firmware/rp2040/programmer/build -j4
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install pyserial
 ```
 
-Загрузить `gb_cart_programmer.uf2` через BOOTSEL. Старый UF2 `spi_bringup`
-несовместим с новым протоколом. SDK 2.x использует picotool для создания UF2.
-Готовый [UF2](../releases/rp2040/programmer/gb_cart_programmer.uf2) и
-[манифест сборки](../releases/rp2040/programmer/MANIFEST.md) сохранены в releases.
-
-## Утилита ПК
-
-Требуется Python 3 и `pyserial`. Команды из корня проекта:
+Загрузить готовую прошивку RP2040: удерживая BOOTSEL, подключить плату к Mac
+по USB. После появления диска `RPI-RP2` выполнить:
 
 ```sh
-python3 -m venv /tmp/gbflash-venv
-/tmp/gbflash-venv/bin/pip install pyserial
-/tmp/gbflash-venv/bin/python host/gbflash.py --port /dev/cu.usbmodemXXXX info
-/tmp/gbflash-venv/bin/python host/gbflash.py --port /dev/cu.usbmodemXXXX read before.bin --length 0x8000
-/tmp/gbflash-venv/bin/python host/gbflash.py --port /dev/cu.usbmodemXXXX write test.gb --erase
-/tmp/gbflash-venv/bin/python host/gbflash.py --port /dev/cu.usbmodemXXXX verify test.gb
+cp releases/rp2040/programmer-v3/gb_cart_programmer.uf2 /Volumes/RPI-RP2/
 ```
 
-На Windows вместо пути к устройству указать `COM5` (или фактический порт),
-использовать Python из своего окружения. Закрыть другие программы, открывшие порт.
-`read` отказывается перезаписывать существующий файл; при обрыве остаётся
-неполный файл, а команда завершается ошибкой.
-
-`write --erase` явно разрешает стирание **полных пересекающих образ секторов**,
-включая остаток последнего сектора за концом файла. Остальные секторы не меняются.
-При необходимости сначала сохранить полный дамп через `read --length 0x400000`.
-Chip erase отсутствует. Для первого опыта размер файла ограничен 32 КиБ;
-после аппаратной приёмки `--allow-large` допускает до 4 МиБ. Утилита пишет
-байты файла без преобразования и не проверяет совместимость его MBC с картриджем.
-
-Последовательность `write`:
-
-1. Проверить версию FPGA, разрешить команды, сбросить Flash, прочитать ID.
-2. Определить геометрию Top/Bottom Boot, стереть пересекающие секторы.
-3. Прочитать каждый байт стёртых секторов и сравнить с FF.
-4. Записать байты образа; FF пропускаются после проверки стирания.
-5. Прочитать весь образ через физическую шину Flash, SPI и USB и сравнить.
-6. Заблокировать команды изменения. При несовпадении вывести адрес и оба байта.
-
-На 10 кГц один байтовый запрос занимает не менее 20,8 мс SPI: предварительный
-status, запрос и итоговый status. Запись непустого 32-КиБ образа с проверкой
-стирания и образа займёт порядка 35 минут или больше. Это консервативная
-версия для первого стенда; блочная передача и повышение частоты пока отсутствуют.
-
-## SPI 2.0
-
-Mode 0, MSB first, 10 кГц, защитные интервалы CS ≥20 мкс, как у bring-up.
-После включения выдержать ≥350 мс. Flash не получает стартовых команд.
-Отдельная сборка PROGRAMMER исключает второго владельца шины.
-После сброса разрешено только обычное чтение; остальные команды памяти требуют ARM.
-
-`01` + 8 dummy bytes → `47 42 46 43 02 00 01 00` (первый принятый байт отбросить).
-`02` + 8 dummy bytes возвращает снимок состояния, взятый после первого байта:
-
-```text
-50 sequence status result_lo result_hi command crc_hi crc_lo
-```
-
-Запрос операции — ровно 8 байт под одним CS:
-
-```text
-command sequence address_hi address_mid address_lo data crc_hi crc_lo
-```
-
-CRC-16/CCITT-FALSE: polynomial 1021, init FFFF, без отражения и xorout;
-CRC считается по первым шести байтам и передаётся старшим байтом вперёд.
-Первые два бита адреса должны быть нулевыми. Sequence увеличивается modulo 256.
-Перед первым запросом клиент читает текущий sequence; повтор предыдущего
-sequence отвергается RP2040. Автоматических повторов операций нет.
-
-| Command | Операция |
-|---|---|
-| 10 | Чтение байта, результат в result_lo |
-| 11 | Программирование байта data по address |
-| 12 | Стирание сектора, содержащего address |
-| 13 | Autoselect ID: manufacturer в result_lo, device в result_hi; затем F0 |
-| 14 | Reset/read-array, F0 |
-| 20 | ARM: address=0, data=A5 |
-| 21 | LOCK |
-
-Все числа таблицы — hex. ID ожидается C2/A7 или C2/A8. Параметры Flash,
-таблицы секторов и byte-mode команды сверены с
-[Macronix MX29LV320E v1.3](https://www.macronix.com/Lists/Datasheet/Attachments/8542/MX29LV320E%20T-B,%203V,%2032Mb,%20v1.3.pdf),
-таблицы 1a/1b, 3, алгоритм Q7/Q5 на рис. 20. Программирование опрашивает Q7,
-после Q5 делает обязательное повторное чтение. Затем отдельное чтение проверяет
-полный байт. Тайм-ауты FPGA: примерно 2 мс для байта, 3 с для сектора.
-
-Статусы: 00 success, 01 busy, 02 opcode, 03 timeout, 04 Q5 failure,
-05 readback mismatch, 06 controller fault, 07 CRC, 08 address, 09 locked.
-После ошибки операции или CRC FPGA снимает ARM. Неполные/лишние кадры не
-исполняются; запросы во время busy игнорируются. Команда запускается только
-после снятия CS, поэтому полный кадр, уже принятый FPGA, может завершиться
-после отключения USB. LOCK не прерывает активную операцию.
-
-После ошибки алгоритма выдаётся F0. При аппаратно зависшей Flash этот сброс
-может не вернуть read-array: после тайм-аута остановить опыт, проверить питание
-и перезапустить стенд. Автоматического продолжения после ошибки нет.
-При потере связи клиент не считает запись успешной; до нового опыта нужно
-установить состояние FPGA/Flash. ARM — защита от случайных команд, не аутентификация.
-
-## USB
-
-RP2040 принимает ASCII-строки без приглашения:
-
-- `v\n`: версия FPGA, 16 hex-символов + newline.
-- `s\n`: снимок состояния, тот же формат.
-- `x` + 16 hex-символов запроса + `\n`: выполнить и дождаться результата.
-
-RP2040 проверяет CRC запроса и ответов, последовательность, opcode и busy;
-ответы локальных ошибок начинаются с `ERR`. Общий тайм-аут ожидания FPGA —
-5 с, USB клиента — 7 с. Переполненные/незавершённые строки отбрасываются
-до следующего newline. Образ не буферизуется целиком на RP2040.
-
-## Проверки и ограничения
+Плата перезапустится, диск исчезнет, появится USB CDC-порт.
+[Манифест UF2](../releases/rp2040/programmer-v3/MANIFEST.md).
+Включить питание FPGA. Найти порт:
 
 ```sh
-python3 -m unittest discover -s host/tests -v
-iverilog -g2012 -s programmer_tb -o /tmp/programmer.vvp fpga/rtl/mx29_bus.v fpga/rtl/mx29_programmer.v fpga/rtl/programmer_spi.v fpga/tests/programmer_tb.sv
-vvp /tmp/programmer.vvp
+ls /dev/cu.usbmodem*
 ```
 
-В Questa из `fpga/tests/build`: `vsim -c -do ../programmer.do`.
-Модель теста проверяет внешние Flash-циклы, но не является полной моделью
-Macronix и не заменяет проверку всех timing-параметров/аналоговых состояний.
-RTL-симуляция не подтверждает размещение в MachXO2 или старт post-route netlist.
+```sh
+FLASH_PORT=/dev/cu.usbmodem1234561
+python host/gbflash.py --port "$FLASH_PORT" info
+```
 
-Порядок стенда: сначала `info` и повторное чтение без стирания, затем короткий
-известный образ и полная проверка, повтор после выключения питания. До
-реальной успешной проверки запуск на Game Boy не выполняется. Эта сборка
-вообще не предоставляет GAME; переключение на чтение внешней Flash — следующий этап.
+Ожидается `MX29LV320E: C2 A8, Bottom Boot, PROGRAMMER` либо
+`MX29LV320E: C2 A7, Top Boot, PROGRAMMER`. Команда `info` читает ID и
+возвращает Flash в режим чтения; содержимое памяти не меняется.
+При ошибке не переходить к следующим шагам.
+
+Создать отдельный каталог для этого испытания:
+
+```sh
+FLASH_RUN="$PWD/flash-test-$(date +%Y%m%d-%H%M%S)"
+mkdir "$FLASH_RUN"
+```
+
+Чтение и запись передаются блоками до 1 КиБ: бинарный USB, SPI 4 МГц.
+Полный дамп требует 4096 блоков. Передача самих 4 МиБ по SPI занимает
+8,4 секунды; с чтением Flash, служебными кадрами и USB фактическое время больше.
+Цель стендового измерения — десятки секунд; результат ещё не измерен.
+Во время чтения выводятся прогресс и средняя скорость в КиБ/с.
+
+Нужны **обе новые сборки v3**: FPGA `programmer` и UF2 `programmer-v3`.
+Прежний релиз `programmer` использует v2 и с обновлённой утилитой несовместим.
+Перед запуском на 4 МГц требуется успешный timing/Map новой FPGA-сборки.
+[Описание протокола и временных параметров](PROGRAMMER_PROTOCOL.md).
+
+## 1. Считать все 4 МиБ в файл
+
+```sh
+python host/gbflash.py --port "$FLASH_PORT" read "$FLASH_RUN/before.bin" --address 0 --length 0x400000
+```
+
+Дождаться `Read: 4194304 bytes` без ошибок. Проверить размер и сохранить SHA-256:
+
+```sh
+python -c 'import pathlib, sys; p = pathlib.Path(sys.argv[1]); n = p.stat().st_size; print(f"{p.name}: {n} bytes"); sys.exit(0 if n == 4194304 else 1)' "$FLASH_RUN/before.bin"
+shasum -a 256 "$FLASH_RUN/before.bin" > "$FLASH_RUN/before.sha256"
+```
+
+`before.bin` — исходное содержимое всего чипа перед записью.
+`read` не перезаписывает существующий файл. При ошибке остаётся неполный дамп;
+такой файл не считается успешным результатом. Для повторного запуска создать
+новый каталог испытания.
+
+## 2. Записать файл .gb
+
+Указать абсолютный путь к исходному ROM. Для первого опыта используется файл
+размером до 32 КиБ — это текущий предел утилиты до аппаратной приёмки.
+Сохранить его копию в каталоге испытания, чтобы последующее сравнение выполнялось
+с теми же байтами:
+
+```sh
+FLASH_ROM="/полный/путь/к/test.gb"
+cp "$FLASH_ROM" "$FLASH_RUN/rom.gb"
+python -c 'import pathlib, sys; n = pathlib.Path(sys.argv[1]).stat().st_size; print(f"ROM: {n} bytes"); sys.exit(0 if 0 < n <= 32768 else 1)' "$FLASH_RUN/rom.gb"
+```
+
+При размере вне указанного диапазона остановиться. После успешного полного
+чтения на шаге 1 выполнить запись с адреса 0:
+
+```sh
+python host/gbflash.py --port "$FLASH_PORT" write "$FLASH_RUN/rom.gb" --erase
+```
+
+`--erase` стирает целиком секторы, пересекающие ROM, включая остаток последнего
+сектора за концом файла. Другие секторы не меняются. Утилитой проверяется
+стирание, записывается образ, затем выполняется встроенное чтение и сравнение.
+Дождаться `Result: SUCCESS`. При ошибке остановить испытание.
+Встроенная проверка не создаёт файл дампа; он сохраняется отдельным шагом ниже.
+
+## 3. Считать все 4 МиБ повторно и сравнить с ROM
+
+```sh
+python host/gbflash.py --port "$FLASH_PORT" read "$FLASH_RUN/after.bin" --address 0 --length 0x400000
+```
+
+Дождаться `Read: 4194304 bytes` без ошибок. Проверить полный размер дампа и
+побайтово сравнить диапазон от адреса 0 до конца ROM с сохранённым `.gb`:
+
+```sh
+python - "$FLASH_RUN/rom.gb" "$FLASH_RUN/after.bin" <<'PYCOMPARE'
+from pathlib import Path
+import sys
+rom = Path(sys.argv[1]).read_bytes()
+dump = Path(sys.argv[2]).read_bytes()
+if not 0 < len(rom) <= 32768:
+    sys.exit("FAIL: неверный размер ROM для первого испытания")
+if len(dump) != 4194304:
+    sys.exit(f"FAIL: размер дампа {len(dump)}, ожидалось 4194304")
+for address, expected in enumerate(rom):
+    actual = dump[address]
+    if actual != expected:
+        sys.exit(f"FAIL: адрес 0x{address:06X}, ROM={expected:02X}, Flash={actual:02X}")
+print(f"PASS: побайтово проверено {len(rom)} байт ROM; полный дамп — {len(dump)} байт")
+PYCOMPARE
+shasum -a 256 "$FLASH_RUN/rom.gb" "$FLASH_RUN/after.bin" > "$FLASH_RUN/after.sha256"
+```
+
+Сравниваются все байты ROM с данными, повторно считанными с физической Flash.
+Остальная часть полного дампа сохраняется, но с ROM не сравнивается.
+Зафиксировать результат и контрольные суммы загруженных UF2/JEDEC в
+[журнале испытаний](TEST_PLAN.md#журнал-результатов).

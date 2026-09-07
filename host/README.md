@@ -1,11 +1,12 @@
 # Программа для компьютера
 
-`gbflash.py` реализует `info`, `read`, `write --erase` и `verify` через USB CDC
-прошивки RP2040 `programmer`. Запись включает полное чтение Flash обратно.
+`gbflash.py` — утилита macOS для работы с Flash через USB CDC прошивки RP2040
+`programmer`. [Подготовка и полный цикл чтения, записи и сравнения](../docs/PROGRAMMER.md).
 
-Требуются Python 3 и pyserial. [Инструкция и ограничения](../docs/PROGRAMMER.md).
-Аппаратная приёмка ещё не выполнена.
+Проверка утилиты из корня проекта:
 
-Для прежнего теста `spi_bringup` достаточно USB CDC-терминала и
-[команд прошивки RP2040](../firmware/rp2040/spi_bringup/README.md#запуск).
-SPI-команда версии bring-up описана в [спецификации 1.0](../docs/SPI_BRINGUP.md).
+```sh
+python3 -m unittest discover -s host/tests -v
+```
+
+Дополнительные команды доступны через `python3 host/gbflash.py --help`.

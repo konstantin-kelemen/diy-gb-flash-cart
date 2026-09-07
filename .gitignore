@@ -15,6 +15,7 @@ __pycache__/
 
 # RP2040 build atrifacts
 firmware/rp2040/*/build/
+firmware/rp2040/*/build-*/
 
 # Editors
 *~
@@ -26,3 +27,4 @@ firmware/rp2040/*/build/
 # OS
 .DS_Store
 Thumbs.db
+AGENTS.md
