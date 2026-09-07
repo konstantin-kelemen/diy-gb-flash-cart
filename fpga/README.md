@@ -7,6 +7,7 @@
 | `targets/internal_rom/` | `v1_0` | `constraints/internal_rom.lpf`; сборка ниже |
 | `targets/flash_bringup/` | `flash_bringup` (активна по умолчанию) | Общий `internal_rom.lpf`; [инструкция](targets/flash_bringup/README.md) |
 | `targets/spi_bringup/` | `spi_bringup` | `constraints/spi_bringup.lpf`; [сборка и симуляция](targets/spi_bringup/README.md) |
+| `targets/game_rom/` | `game_rom` | `constraints/game_rom.lpf`; [запуск ROM из Flash](targets/game_rom/README.md) |
 | `targets/programmer/` | `programmer` | `constraints/programmer.lpf`; [запись Flash](targets/programmer/README.md) |
 
 Каждая конфигурация содержит собственный `top` и собирается независимо.
