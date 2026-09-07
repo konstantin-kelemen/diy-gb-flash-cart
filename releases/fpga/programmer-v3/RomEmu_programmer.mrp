@@ -1,0 +1,732 @@
+
+             Lattice Mapping Report File for Design Module 'top'
+
+
+Design Information
+------------------
+
+Command line:   map -a MachXO2 -p LCMXO2-1200HC -t TQFP100 -s 4 -oc Commercial
+     RomEmu_programmer.ngd -o RomEmu_programmer_map.ncd -pr
+     RomEmu_programmer.prf -mp RomEmu_programmer.mrp -lpf C:/Users/Admin/Documen
+     ts/diy-gb-flash-cart/fpga/diamond/programmer/RomEmu_programmer.lpf -lpf
+     C:/Users/Admin/Documents/diy-gb-flash-cart/fpga/constraints/programmer.lpf
+     -c 0 -gui -msgset
+     C:/Users/Admin/Documents/diy-gb-flash-cart/fpga/diamond/promote.xml 
+Target Vendor:  LATTICE
+Target Device:  LCMXO2-1200HCTQFP100
+Target Performance:   4
+Mapper:  xo2c00,  version:  Diamond (64-bit) 3.14.0.75.2
+Mapped on:  09/07/26  23:09:43
+
+Design Summary
+--------------
+
+   Number of registers:    703 out of  1520 (46%)
+      PFU registers:          703 out of  1280 (55%)
+      PIO registers:            0 out of   240 (0%)
+   Number of SLICEs:       506 out of   640 (79%)
+      SLICEs as Logic/ROM:    506 out of   640 (79%)
+      SLICEs as RAM:            0 out of   480 (0%)
+      SLICEs as Carry:        166 out of   640 (26%)
+   Number of LUT4s:        1005 out of  1280 (79%)
+      Number used as logic LUTs:        673
+      Number used as distributed RAM:     0
+      Number used as ripple logic:      332
+      Number used as shift registers:     0
+   Number of PIO sites used: 39 + 4(JTAG) out of 80 (54%)
+   Number of block RAMs:  2 out of 7 (29%)
+   Number of GSRs:        0 out of 1 (0%)
+   EFB used :        No
+   JTAG used :       No
+   Readback used :   No
+   Oscillator used : Yes
+   Startup used :    No
+   POR :             On
+   Bandgap :         On
+   Number of Power Controller:  0 out of 1 (0%)
+   Number of Dynamic Bank Controller (BCINRD):  0 out of 4 (0%)
+   Number of Dynamic Bank Controller (BCLVDSO):  0 out of 1 (0%)
+   Number of DCCA:  0 out of 8 (0%)
+   Number of DCMA:  0 out of 2 (0%)
+   Number of PLLs:  0 out of 1 (0%)
+   Number of DQSDLLs:  0 out of 2 (0%)
+   Number of CLKDIVC:  0 out of 4 (0%)
+   Number of ECLKSYNCA:  0 out of 4 (0%)
+   Number of ECLKBRIDGECS:  0 out of 2 (0%)
+   Notes:-
+      1. Total number of LUT4s = (Number of logic LUT4s) + 2*(Number of
+     distributed RAMs) + 2*(Number of ripple logic)
+      2. Number of logic LUT4s does not include count of distributed RAM and
+     ripple logic.
+   Number of clocks:  1
+     Net clk: 386 loads, 386 rising, 0 falling (Driver: osc )
+
+                                    Page 1
+
+
+
+
+Design:  top                                           Date:  09/07/26  23:09:43
+
+Design Summary (cont)
+---------------------
+   Number of Clock Enables:  41
+     Net clk_enable_514: 25 loads, 25 LSLICEs
+     Net clk_enable_181: 4 loads, 4 LSLICEs
+     Net clk_enable_301: 1 loads, 1 LSLICEs
+     Net clk_enable_470: 4 loads, 4 LSLICEs
+     Net clk_enable_448: 5 loads, 5 LSLICEs
+     Net clk_enable_144: 1 loads, 1 LSLICEs
+     Net clk_enable_366: 8 loads, 8 LSLICEs
+     Net clk_enable_125: 4 loads, 4 LSLICEs
+     Net clk_enable_359: 4 loads, 4 LSLICEs
+     Net clk_enable_477: 19 loads, 19 LSLICEs
+     Net clk_enable_86: 1 loads, 1 LSLICEs
+     Net clk_enable_491: 4 loads, 4 LSLICEs
+     Net clk_enable_193: 2 loads, 2 LSLICEs
+     Net clk_enable_129: 2 loads, 2 LSLICEs
+     Net clk_enable_160: 8 loads, 8 LSLICEs
+     Net clk_enable_439: 15 loads, 15 LSLICEs
+     Net flash/clk_enable_118: 2 loads, 2 LSLICEs
+     Net flash/clk_enable_323: 11 loads, 11 LSLICEs
+     Net flash/clk_enable_462: 4 loads, 4 LSLICEs
+     Net flash/bus/clk_enable_344: 11 loads, 11 LSLICEs
+     Net flash/bus/clk_enable_142: 1 loads, 1 LSLICEs
+     Net flash/bus/clk_enable_488: 1 loads, 1 LSLICEs
+     Net flash/bus/clk_enable_516: 1 loads, 1 LSLICEs
+     Net protocol/clk_enable_191: 21 loads, 21 LSLICEs
+     Net protocol/clk_enable_63: 25 loads, 25 LSLICEs
+     Net protocol/clk_enable_174: 5 loads, 5 LSLICEs
+     Net protocol/clk_enable_69: 3 loads, 3 LSLICEs
+     Net protocol/clk_enable_258: 20 loads, 20 LSLICEs
+     Net protocol/clk_enable_215: 8 loads, 8 LSLICEs
+     Net protocol/clk_enable_230: 9 loads, 9 LSLICEs
+     Net protocol/clk_enable_76: 1 loads, 1 LSLICEs
+     Net protocol/clk_enable_376: 12 loads, 12 LSLICEs
+     Net protocol/clk_enable_141: 1 loads, 1 LSLICEs
+     Net protocol/clk_enable_515: 1 loads, 1 LSLICEs
+     Net protocol/clk_enable_140: 1 loads, 1 LSLICEs
+     Net protocol/clk_enable_513: 8 loads, 8 LSLICEs
+     Net protocol/clk_enable_487: 1 loads, 1 LSLICEs
+     Net protocol/clk_enable_498: 5 loads, 5 LSLICEs
+     Net protocol/clk_enable_486: 8 loads, 8 LSLICEs
+     Net protocol/clk_enable_352: 5 loads, 5 LSLICEs
+     Net protocol/clk_enable_370: 4 loads, 4 LSLICEs
+   Number of LSRs:  10
+     Net ready_3: 225 loads, 225 LSLICEs
+     Net n11889: 65 loads, 65 LSLICEs
+     Net clk_enable_366: 21 loads, 21 LSLICEs
+     Net n11840: 5 loads, 5 LSLICEs
+     Net n5649: 4 loads, 4 LSLICEs
+     Net n11910: 2 loads, 2 LSLICEs
+     Net n2542: 11 loads, 11 LSLICEs
+     Net protocol/clk_enable_191: 9 loads, 9 LSLICEs
+     Net protocol/n11000: 1 loads, 1 LSLICEs
+     Net protocol/n5584: 6 loads, 6 LSLICEs
+   Number of nets driven by tri-state buffers:  0
+   Top 10 highest fanout non-clock nets:
+     Net ready_3: 272 loads
+
+                                    Page 2
+
+
+
+
+Design:  top                                           Date:  09/07/26  23:09:43
+
+Design Summary (cont)
+---------------------
+     Net n1154: 82 loads
+     Net n11889: 70 loads
+     Net n11855: 57 loads
+     Net protocol/clk_enable_191: 42 loads
+     Net n11888: 40 loads
+     Net op_0_adj_1792: 40 loads
+     Net op_1: 39 loads
+     Net bits_6: 37 loads
+     Net bus_done: 30 loads
+
+
+
+
+   Number of warnings:  1
+   Number of errors:    0
+     
+
+Design Errors/Warnings
+----------------------
+
+WARNING - map: OSCH 'osc' has invalid FREQUENCY preference value of 64.00 MHz.
+     Valid values are 2.08,2.15,2.22,2.29,2.38,2.46,2.56,2.66,2.77,2.89,3.02,3.1
+     7,3.33,3.50,3.69,3.91,4.16,4.29,4.43,4.59,4.75,4.93,5.12,5.32,5.54,5.78,6.0
+     5,6.33,6.65,7.00,7.39,7.82,8.31,8.58,8.87,9.17,9.50,9.85,10.23,10.64,11.08,
+     11.57,12.09,12.67,13.30,14.00,14.78,15.65,16.63,17.73,19.00,20.46,22.17,24.
+     18,26.60,29.56,33.25,38.00,44.33,53.20,66.50,88.67,133.00 MHz. Using
+     NOM_FREQ value of 53.20 MHz for FREQUENCY preference.
+
+IO (PIO) Attributes
+-------------------
+
++---------------------+-----------+-----------+------------+
+| IO Name             | Direction | Levelmode | IO         |
+|                     |           |  IO_TYPE  | Register   |
++---------------------+-----------+-----------+------------+
+| flash_d[7]          | BIDIR     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_d[6]          | BIDIR     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_d[5]          | BIDIR     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_d[4]          | BIDIR     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_d[3]          | BIDIR     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_d[2]          | BIDIR     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_d[1]          | BIDIR     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_d[0]          | BIDIR     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| spi_miso            | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[21]         | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[20]         | OUTPUT    | LVCMOS33  |            |
+
+                                    Page 3
+
+
+
+
+Design:  top                                           Date:  09/07/26  23:09:43
+
+IO (PIO) Attributes (cont)
+--------------------------
++---------------------+-----------+-----------+------------+
+| flash_a[19]         | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[18]         | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[17]         | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[16]         | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[15]         | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[14]         | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[13]         | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[12]         | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[11]         | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[10]         | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[9]          | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[8]          | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[7]          | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[6]          | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[5]          | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[4]          | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[3]          | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[2]          | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[1]          | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[0]          | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_ce_n          | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_oe_n          | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_we_n          | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| spi_ready           | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| spi_seen            | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| spi_cs_n            | INPUT     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| spi_sck             | INPUT     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| spi_mosi            | INPUT     | LVCMOS33  |            |
+
+                                    Page 4
+
+
+
+
+Design:  top                                           Date:  09/07/26  23:09:43
+
+IO (PIO) Attributes (cont)
+--------------------------
++---------------------+-----------+-----------+------------+
+
+Removed logic
+-------------
+
+Block GSR_INST undriven or does not drive anything - clipped.
+Signal n3452 was merged into signal flash/bus/flash_d_drive
+Signal n11909 was merged into signal ready_3
+Signal GND_net undriven or does not drive anything - clipped.
+Signal VCC_net undriven or does not drive anything - clipped.
+Signal protocol/add_1071_9/S1 undriven or does not drive anything - clipped.
+Signal protocol/add_1071_9/CO undriven or does not drive anything - clipped.
+Signal protocol/add_1069_cout/S1 undriven or does not drive anything - clipped.
+Signal protocol/add_1069_cout/CO undriven or does not drive anything - clipped.
+Signal protocol/add_634_1/S0 undriven or does not drive anything - clipped.
+Signal protocol/add_634_1/CI undriven or does not drive anything - clipped.
+Signal protocol/equal_20_15/S1 undriven or does not drive anything - clipped.
+Signal protocol/equal_20_15/S0 undriven or does not drive anything - clipped.
+Signal protocol/equal_20_17_8027/S1 undriven or does not drive anything -
+     clipped.
+Signal protocol/equal_20_17_8027/S0 undriven or does not drive anything -
+     clipped.
+Signal protocol/bits_13__I_0_11/S1 undriven or does not drive anything -
+     clipped.
+Signal protocol/bits_13__I_0_11/S0 undriven or does not drive anything -
+     clipped.
+Signal protocol/add_164_22/CO undriven or does not drive anything - clipped.
+Signal protocol/add_340_1/S0 undriven or does not drive anything - clipped.
+Signal protocol/add_340_1/CI undriven or does not drive anything - clipped.
+Signal protocol/equal_20_17/S1 undriven or does not drive anything - clipped.
+Signal protocol/equal_20_17/CO undriven or does not drive anything - clipped.
+Signal protocol/equal_21_0/S1 undriven or does not drive anything - clipped.
+Signal protocol/equal_21_0/S0 undriven or does not drive anything - clipped.
+Signal protocol/equal_21_0/CI undriven or does not drive anything - clipped.
+Signal protocol/add_340_15/S1 undriven or does not drive anything - clipped.
+Signal protocol/add_340_15/CO undriven or does not drive anything - clipped.
+Signal protocol/sub_861_add_2_1/S1 undriven or does not drive anything -
+     clipped.
+Signal protocol/sub_861_add_2_1/S0 undriven or does not drive anything -
+     clipped.
+Signal protocol/sub_861_add_2_1/CI undriven or does not drive anything -
+     clipped.
+Signal protocol/sub_861_add_2_3/S1 undriven or does not drive anything -
+     clipped.
+Signal protocol/sub_861_add_2_3/S0 undriven or does not drive anything -
+     clipped.
+Signal protocol/sub_861_add_2_5/S1 undriven or does not drive anything -
+     clipped.
+Signal protocol/sub_861_add_2_5/S0 undriven or does not drive anything -
+     clipped.
+Signal protocol/sub_861_add_2_7/S1 undriven or does not drive anything -
+     clipped.
+Signal protocol/sub_861_add_2_7/S0 undriven or does not drive anything -
+     clipped.
+Signal protocol/sub_861_add_2_9/S1 undriven or does not drive anything -
+     clipped.
+
+                                    Page 5
+
+
+
+
+Design:  top                                           Date:  09/07/26  23:09:43
+
+Removed logic (cont)
+--------------------
+Signal protocol/sub_861_add_2_9/S0 undriven or does not drive anything -
+     clipped.
+Signal protocol/equal_21_13/S1 undriven or does not drive anything - clipped.
+Signal protocol/equal_21_13/S0 undriven or does not drive anything - clipped.
+Signal protocol/sub_861_add_2_11/S1 undriven or does not drive anything -
+     clipped.
+Signal protocol/sub_861_add_2_11/S0 undriven or does not drive anything -
+     clipped.
+Signal protocol/sub_861_add_2_cout/S1 undriven or does not drive anything -
+     clipped.
+Signal protocol/sub_861_add_2_cout/CO undriven or does not drive anything -
+     clipped.
+Signal protocol/add_1429_1/S0 undriven or does not drive anything - clipped.
+Signal protocol/add_1429_1/CI undriven or does not drive anything - clipped.
+Signal protocol/equal_21_15/S1 undriven or does not drive anything - clipped.
+Signal protocol/equal_21_15/S0 undriven or does not drive anything - clipped.
+Signal protocol/equal_21_17_8028/S1 undriven or does not drive anything -
+     clipped.
+Signal protocol/equal_21_17_8028/S0 undriven or does not drive anything -
+     clipped.
+Signal protocol/add_1429_11/S1 undriven or does not drive anything - clipped.
+Signal protocol/add_1429_11/CO undriven or does not drive anything - clipped.
+Signal protocol/equal_21_17/S1 undriven or does not drive anything - clipped.
+Signal protocol/equal_21_17/CO undriven or does not drive anything - clipped.
+Signal protocol/bits_13__I_0_13/S1 undriven or does not drive anything -
+     clipped.
+Signal protocol/bits_13__I_0_13/S0 undriven or does not drive anything -
+     clipped.
+Signal protocol/add_634_17/CO undriven or does not drive anything - clipped.
+Signal protocol/equal_22_0/S1 undriven or does not drive anything - clipped.
+Signal protocol/equal_22_0/S0 undriven or does not drive anything - clipped.
+Signal protocol/equal_22_0/CI undriven or does not drive anything - clipped.
+Signal protocol/bits_13__I_0_14/S0 undriven or does not drive anything -
+     clipped.
+Signal protocol/bits_13__I_0_14/CO undriven or does not drive anything -
+     clipped.
+Signal protocol/equal_22_9/S1 undriven or does not drive anything - clipped.
+Signal protocol/equal_22_9/S0 undriven or does not drive anything - clipped.
+Signal protocol/received_crc_15__I_0_0/S1 undriven or does not drive anything -
+     clipped.
+Signal protocol/received_crc_15__I_0_0/S0 undriven or does not drive anything -
+     clipped.
+Signal protocol/received_crc_15__I_0_0/CI undriven or does not drive anything -
+     clipped.
+Signal protocol/equal_22_11/S1 undriven or does not drive anything - clipped.
+Signal protocol/equal_22_11/S0 undriven or does not drive anything - clipped.
+Signal protocol/add_636_1/S0 undriven or does not drive anything - clipped.
+Signal protocol/add_636_1/CI undriven or does not drive anything - clipped.
+Signal protocol/bits_12__I_0_add_2_1/S0 undriven or does not drive anything -
+     clipped.
+Signal protocol/bits_12__I_0_add_2_1/CI undriven or does not drive anything -
+     clipped.
+Signal protocol/equal_22_12/S0 undriven or does not drive anything - clipped.
+Signal protocol/equal_22_12/CO undriven or does not drive anything - clipped.
+Signal protocol/header_55__I_0_8/S0 undriven or does not drive anything -
+     clipped.
+
+                                    Page 6
+
+
+
+
+Design:  top                                           Date:  09/07/26  23:09:43
+
+Removed logic (cont)
+--------------------
+Signal protocol/header_55__I_0_8/CO undriven or does not drive anything -
+     clipped.
+Signal protocol/received_crc_15__I_0_11/S1 undriven or does not drive anything -
+     clipped.
+Signal protocol/received_crc_15__I_0_11/S0 undriven or does not drive anything -
+     clipped.
+Signal protocol/add_636_cout/S1 undriven or does not drive anything - clipped.
+Signal protocol/add_636_cout/CO undriven or does not drive anything - clipped.
+Signal protocol/bits_12__I_0_add_2_11/S1 undriven or does not drive anything -
+     clipped.
+Signal protocol/bits_12__I_0_add_2_11/CO undriven or does not drive anything -
+     clipped.
+Signal protocol/sub_863_add_2_1/S1 undriven or does not drive anything -
+     clipped.
+Signal protocol/sub_863_add_2_1/S0 undriven or does not drive anything -
+     clipped.
+Signal protocol/sub_863_add_2_1/CI undriven or does not drive anything -
+     clipped.
+Signal protocol/received_crc_15__I_0_13/S1 undriven or does not drive anything -
+     clipped.
+Signal protocol/received_crc_15__I_0_13/S0 undriven or does not drive anything -
+     clipped.
+Signal protocol/sub_863_add_2_3/S1 undriven or does not drive anything -
+     clipped.
+Signal protocol/sub_863_add_2_3/S0 undriven or does not drive anything -
+     clipped.
+Signal protocol/received_crc_15__I_0_15/S1 undriven or does not drive anything -
+     clipped.
+Signal protocol/received_crc_15__I_0_15/S0 undriven or does not drive anything -
+     clipped.
+Signal protocol/sub_863_add_2_5/S1 undriven or does not drive anything -
+     clipped.
+Signal protocol/sub_863_add_2_5/S0 undriven or does not drive anything -
+     clipped.
+Signal protocol/sub_863_add_2_7/S1 undriven or does not drive anything -
+     clipped.
+Signal protocol/sub_863_add_2_7/S0 undriven or does not drive anything -
+     clipped.
+Signal protocol/sub_863_add_2_9/S1 undriven or does not drive anything -
+     clipped.
+Signal protocol/sub_863_add_2_9/S0 undriven or does not drive anything -
+     clipped.
+Signal protocol/bits_13__I_0_0/S1 undriven or does not drive anything - clipped.
+     
+Signal protocol/bits_13__I_0_0/S0 undriven or does not drive anything - clipped.
+     
+Signal protocol/bits_13__I_0_0/CI undriven or does not drive anything - clipped.
+     
+Signal protocol/equal_1333_0/S1 undriven or does not drive anything - clipped.
+Signal protocol/equal_1333_0/S0 undriven or does not drive anything - clipped.
+Signal protocol/equal_1333_0/CI undriven or does not drive anything - clipped.
+Signal protocol/equal_1333_8/S1 undriven or does not drive anything - clipped.
+Signal protocol/equal_1333_8/S0 undriven or does not drive anything - clipped.
+Signal protocol/equal_1333_10_8029/S1 undriven or does not drive anything -
+     clipped.
+Signal protocol/equal_1333_10_8029/S0 undriven or does not drive anything -
+
+                                    Page 7
+
+
+
+
+Design:  top                                           Date:  09/07/26  23:09:43
+
+Removed logic (cont)
+--------------------
+     clipped.
+Signal protocol/header_55__I_0_0/S1 undriven or does not drive anything -
+     clipped.
+Signal protocol/header_55__I_0_0/S0 undriven or does not drive anything -
+     clipped.
+Signal protocol/header_55__I_0_0/CI undriven or does not drive anything -
+     clipped.
+Signal protocol/add_1087_1/S0 undriven or does not drive anything - clipped.
+Signal protocol/add_1087_1/CI undriven or does not drive anything - clipped.
+Signal protocol/equal_1333_10/S1 undriven or does not drive anything - clipped.
+Signal protocol/equal_1333_10/CO undriven or does not drive anything - clipped.
+Signal protocol/received_crc_15__I_0_16/S0 undriven or does not drive anything -
+     clipped.
+Signal protocol/received_crc_15__I_0_16/CO undriven or does not drive anything -
+     clipped.
+Signal protocol/sub_863_add_2_11/S1 undriven or does not drive anything -
+     clipped.
+Signal protocol/sub_863_add_2_11/S0 undriven or does not drive anything -
+     clipped.
+Signal protocol/equal_20_0/S1 undriven or does not drive anything - clipped.
+Signal protocol/equal_20_0/S0 undriven or does not drive anything - clipped.
+Signal protocol/equal_20_0/CI undriven or does not drive anything - clipped.
+Signal protocol/sub_863_add_2_cout/S1 undriven or does not drive anything -
+     clipped.
+Signal protocol/sub_863_add_2_cout/CO undriven or does not drive anything -
+     clipped.
+Signal protocol/add_1069_2/S0 undriven or does not drive anything - clipped.
+Signal protocol/add_1069_2/CI undriven or does not drive anything - clipped.
+Signal protocol/equal_20_13/S1 undriven or does not drive anything - clipped.
+Signal protocol/equal_20_13/S0 undriven or does not drive anything - clipped.
+Signal protocol/add_1087_cout/S1 undriven or does not drive anything - clipped.
+Signal protocol/add_1087_cout/CO undriven or does not drive anything - clipped.
+Signal protocol/header_55__I_0_7/S1 undriven or does not drive anything -
+     clipped.
+Signal protocol/header_55__I_0_7/S0 undriven or does not drive anything -
+     clipped.
+Signal protocol/add_1071_1/S0 undriven or does not drive anything - clipped.
+Signal protocol/add_1071_1/CI undriven or does not drive anything - clipped.
+Signal protocol/add_164_2/S0 undriven or does not drive anything - clipped.
+Signal protocol/add_164_2/CI undriven or does not drive anything - clipped.
+Signal flash/bus/tick_1084_add_4_1/S0 undriven or does not drive anything -
+     clipped.
+Signal flash/bus/tick_1084_add_4_1/CI undriven or does not drive anything -
+     clipped.
+Signal flash/bus/tick_1084_add_4_9/S1 undriven or does not drive anything -
+     clipped.
+Signal flash/bus/tick_1084_add_4_9/CO undriven or does not drive anything -
+     clipped.
+Signal flash/timer__1346_add_4_1/S0 undriven or does not drive anything -
+     clipped.
+Signal flash/timer__1346_add_4_1/CI undriven or does not drive anything -
+     clipped.
+Signal flash/timer__1346_add_4_29/S1 undriven or does not drive anything -
+     clipped.
+Signal flash/timer__1346_add_4_29/CO undriven or does not drive anything -
+     clipped.
+
+                                    Page 8
+
+
+
+
+Design:  top                                           Date:  09/07/26  23:09:43
+
+Removed logic (cont)
+--------------------
+Signal flash/not_equal_124_0/S1 undriven or does not drive anything - clipped.
+Signal flash/not_equal_124_0/S0 undriven or does not drive anything - clipped.
+Signal flash/not_equal_124_0/CI undriven or does not drive anything - clipped.
+Signal flash/add_8029_2/S1 undriven or does not drive anything - clipped.
+Signal flash/add_8029_2/S0 undriven or does not drive anything - clipped.
+Signal flash/add_8029_2/CI undriven or does not drive anything - clipped.
+Signal flash/add_8029_4/S1 undriven or does not drive anything - clipped.
+Signal flash/add_8029_4/S0 undriven or does not drive anything - clipped.
+Signal flash/not_equal_124_7/S1 undriven or does not drive anything - clipped.
+Signal flash/not_equal_124_7/S0 undriven or does not drive anything - clipped.
+Signal flash/add_8029_6/S1 undriven or does not drive anything - clipped.
+Signal flash/add_8029_6/S0 undriven or does not drive anything - clipped.
+Signal flash/add_8029_8/S1 undriven or does not drive anything - clipped.
+Signal flash/add_8029_8/S0 undriven or does not drive anything - clipped.
+Signal flash/add_8029_10/S1 undriven or does not drive anything - clipped.
+Signal flash/add_8029_10/S0 undriven or does not drive anything - clipped.
+Signal flash/not_equal_124_8/S0 undriven or does not drive anything - clipped.
+Signal flash/not_equal_124_8/CO undriven or does not drive anything - clipped.
+Signal flash/add_8029_12/S1 undriven or does not drive anything - clipped.
+Signal flash/add_8029_12/S0 undriven or does not drive anything - clipped.
+Signal flash/add_8029_14/S1 undriven or does not drive anything - clipped.
+Signal flash/add_8029_14/S0 undriven or does not drive anything - clipped.
+Signal flash/add_8029_16/S1 undriven or does not drive anything - clipped.
+Signal flash/add_8029_16/S0 undriven or does not drive anything - clipped.
+Signal flash/add_8029_18/S0 undriven or does not drive anything - clipped.
+Signal flash/add_8029_18/CO undriven or does not drive anything - clipped.
+Signal sub_867_add_2_1/S1 undriven or does not drive anything - clipped.
+Signal sub_867_add_2_1/S0 undriven or does not drive anything - clipped.
+Signal sub_867_add_2_1/CI undriven or does not drive anything - clipped.
+Signal sub_867_add_2_3/S1 undriven or does not drive anything - clipped.
+Signal sub_867_add_2_3/S0 undriven or does not drive anything - clipped.
+Signal sub_867_add_2_5/S1 undriven or does not drive anything - clipped.
+Signal sub_867_add_2_5/S0 undriven or does not drive anything - clipped.
+Signal sub_867_add_2_7/S1 undriven or does not drive anything - clipped.
+Signal sub_867_add_2_7/S0 undriven or does not drive anything - clipped.
+Signal sub_867_add_2_9/S1 undriven or does not drive anything - clipped.
+Signal sub_867_add_2_9/S0 undriven or does not drive anything - clipped.
+Signal sub_867_add_2_11/S1 undriven or does not drive anything - clipped.
+Signal sub_867_add_2_11/S0 undriven or does not drive anything - clipped.
+Signal sub_867_add_2_13/S1 undriven or does not drive anything - clipped.
+Signal sub_867_add_2_13/S0 undriven or does not drive anything - clipped.
+Signal sub_867_add_2_15/S1 undriven or does not drive anything - clipped.
+Signal sub_867_add_2_15/S0 undriven or does not drive anything - clipped.
+Signal sub_867_add_2_17/S1 undriven or does not drive anything - clipped.
+Signal sub_867_add_2_17/S0 undriven or does not drive anything - clipped.
+Signal sub_867_add_2_19/S0 undriven or does not drive anything - clipped.
+Signal sub_867_add_2_19/CO undriven or does not drive anything - clipped.
+Signal sub_865_add_2_1/S1 undriven or does not drive anything - clipped.
+Signal sub_865_add_2_1/S0 undriven or does not drive anything - clipped.
+Signal sub_865_add_2_1/CI undriven or does not drive anything - clipped.
+Signal sub_865_add_2_3/S1 undriven or does not drive anything - clipped.
+Signal sub_865_add_2_3/S0 undriven or does not drive anything - clipped.
+Signal sub_865_add_2_5/S1 undriven or does not drive anything - clipped.
+Signal sub_865_add_2_5/S0 undriven or does not drive anything - clipped.
+Signal sub_865_add_2_7/S1 undriven or does not drive anything - clipped.
+Signal sub_865_add_2_7/S0 undriven or does not drive anything - clipped.
+
+                                    Page 9
+
+
+
+
+Design:  top                                           Date:  09/07/26  23:09:43
+
+Removed logic (cont)
+--------------------
+Signal sub_865_add_2_9/S1 undriven or does not drive anything - clipped.
+Signal sub_865_add_2_9/S0 undriven or does not drive anything - clipped.
+Signal sub_865_add_2_11/S1 undriven or does not drive anything - clipped.
+Signal sub_865_add_2_11/S0 undriven or does not drive anything - clipped.
+Signal sub_865_add_2_cout/S1 undriven or does not drive anything - clipped.
+Signal sub_865_add_2_cout/CO undriven or does not drive anything - clipped.
+Block flash/bus/i1505_1_lut was optimized away.
+Block ready_3__I_0_1_lut_rep_239 was optimized away.
+Block i1 was optimized away.
+Block i2 was optimized away.
+
+Memory Usage
+------------
+
+/protocol:
+    EBRs: 2
+    RAM SLICEs: 0
+    Logic SLICEs: 294
+    PFU Registers: 465
+    -Contains EBR outgoing0:  TYPE= DP8KC,  Width_B= 8,  Depth_A= 1024,
+         Depth_B= 1024,  REGMODE_A= NOREG,  REGMODE_B= NOREG,  RESETMODE= SYNC,
+         ASYNC_RESET_RELEASE= SYNC,  WRITEMODE_A= READBEFOREWRITE,  WRITEMODE_B=
+         READBEFOREWRITE,  GSR= DISABLED
+    -Contains EBR incoming0:  TYPE= DP8KC,  Width_B= 8,  Depth_A= 1024,
+         Depth_B= 1024,  REGMODE_A= NOREG,  REGMODE_B= NOREG,  RESETMODE= SYNC,
+         ASYNC_RESET_RELEASE= SYNC,  WRITEMODE_A= WRITETHROUGH,  WRITEMODE_B=
+         WRITETHROUGH,  GSR= DISABLED
+
+     
+
+OSC Summary
+-----------
+
+OSC 1:                                     Pin/Node Value
+  OSC Instance Name:                                osc
+  OSC Type:                                         OSCH
+  STDBY Input:                                      NONE
+  OSC Output:                              NODE     clk
+  OSC Nominal Frequency (MHz):                      53.20
+
+ASIC Components
+---------------
+
+Instance Name: osc
+         Type: OSCH
+Instance Name: protocol/outgoing0
+         Type: DP8KC
+Instance Name: protocol/incoming0
+         Type: DP8KC
+
+Run Time and Memory Usage
+-------------------------
+
+   Total CPU Time: 0 secs  
+   Total REAL Time: 0 secs  
+   Peak Memory Usage: 52 MB
+
+                                   Page 10
+
+
+
+
+Design:  top                                           Date:  09/07/26  23:09:43
+
+Run Time and Memory Usage (cont)
+--------------------------------
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                   Page 11
+
+
+Copyright (c) 1991-1994 by NeoCAD Inc. All rights reserved.
+     Copyright (c) 1995 AT&T Corp.   All rights reserved.
+     Copyright (c) 1995-2001 Lucent Technologies Inc.  All rights reserved.
+     Copyright (c) 2001 Agere Systems   All rights reserved.
+     Copyright (c) 2002-2024 Lattice Semiconductor Corporation,  All rights
+     reserved.
