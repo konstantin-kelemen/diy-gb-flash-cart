@@ -10,6 +10,11 @@
 | `targets/game_rom/` | `game_rom` | `constraints/game_rom.lpf`; [запуск ROM из Flash](targets/game_rom/README.md) |
 | `targets/programmer/` | `programmer` | `constraints/programmer.lpf`; [запись Flash](targets/programmer/README.md) |
 
+Для следующей GAME-сборки подготовлен `constraints/game_mbc5.lpf`,
+сверенный со [схемой подключения F-RAM](../hardware/cartridge/cartridge.kicad_sch).
+RTL-цель MBC5 пока не добавлена. Старые сборки с диагностикой на 82–83
+требуют адаптации к этому монтажу.
+
 Каждая конфигурация содержит собственный `top` и собирается независимо.
 Общие модули — в `rtl/`, тесты — в `tests/`, проект — в `diamond/`.
 
