@@ -6515,12 +6515,6 @@
 		(uuid "373f0dab-4bf5-43aa-8192-d0d21aae1cf6")
 	)
 	(junction
-		(at 260.35 212.09)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "3b013301-81de-46c7-ab8a-f48f2942636e")
-	)
-	(junction
 		(at 351.79 232.41)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -6539,7 +6533,7 @@
 		(uuid "51796f95-9cbc-47a8-96ac-77465d19dffd")
 	)
 	(junction
-		(at 135.89 139.7)
+		(at 140.97 139.7)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "563e9363-2384-4fce-9488-6d1b48de3e66")
@@ -6621,6 +6615,12 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "ae3c57d9-f4e4-478e-a372-a2fa9e9bce03")
+	)
+	(junction
+		(at 259.08 212.09)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "b08de905-8bfd-4afb-b893-612cff66c4ec")
 	)
 	(junction
 		(at 153.67 236.22)
@@ -7222,7 +7222,7 @@
 	)
 	(wire
 		(pts
-			(xy 128.27 139.7) (xy 135.89 139.7)
+			(xy 128.27 139.7) (xy 140.97 139.7)
 		)
 		(stroke
 			(width 0)
@@ -7342,7 +7342,7 @@
 	)
 	(wire
 		(pts
-			(xy 243.84 212.09) (xy 252.73 212.09)
+			(xy 243.84 212.09) (xy 259.08 212.09)
 		)
 		(stroke
 			(width 0)
@@ -8079,6 +8079,86 @@
 			(type default)
 		)
 		(uuid "fb477d5e-782e-42f0-a3cf-0ce6b4f7c150")
+	)
+	(label "SPI_MISO"
+		(at 304.8 30.48 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "a37b42cb-2930-452b-91bc-620706abc000")
+	)
+	(label "SPI_CS_N"
+		(at 304.8 33.02 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "a37b42cb-2930-452b-91bc-620706abc001")
+	)
+	(label "SPI_SCK"
+		(at 304.8 35.56 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "a37b42cb-2930-452b-91bc-620706abc002")
+	)
+	(label "SPI_MOSI"
+		(at 304.8 38.1 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "a37b42cb-2930-452b-91bc-620706abc003")
+	)
+	(label "SPI_MISO"
+		(at 128.27 124.46 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "a37b42cb-2930-452b-91bc-620706abc004")
+	)
+	(label "SPI_CS_N"
+		(at 128.27 129.54 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "a37b42cb-2930-452b-91bc-620706abc005")
+	)
+	(label "SPI_SCK"
+		(at 128.27 127 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "a37b42cb-2930-452b-91bc-620706abc006")
+	)
+	(label "SPI_MOSI"
+		(at 128.27 132.08 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "a37b42cb-2930-452b-91bc-620706abc007")
 	)
 	(symbol
 		(lib_id "power:VSSA")
@@ -10423,7 +10503,7 @@
 	)
 	(symbol
 		(lib_id "Device:C")
-		(at 135.89 135.89 180)
+		(at 140.97 135.89 180)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -10434,7 +10514,7 @@
 		(fields_autoplaced yes)
 		(uuid "161a81e0-16bc-4e85-94ca-ee2fb3183b30")
 		(property "Reference" "C12"
-			(at 139.7 134.6199 0)
+			(at 144.78 134.6199 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -10445,7 +10525,7 @@
 			)
 		)
 		(property "Value" "100nF"
-			(at 139.7 137.1599 0)
+			(at 144.78 137.1599 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -10456,7 +10536,7 @@
 			)
 		)
 		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder"
-			(at 134.9248 132.08 0)
+			(at 140.0048 132.08 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10467,7 +10547,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 135.89 135.89 0)
+			(at 140.97 135.89 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10478,7 +10558,7 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
-			(at 135.89 135.89 0)
+			(at 140.97 135.89 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -15571,7 +15651,7 @@
 	)
 	(symbol
 		(lib_id "power:VCC")
-		(at 260.35 212.09 180)
+		(at 259.08 204.47 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -15582,7 +15662,7 @@
 		(fields_autoplaced yes)
 		(uuid "4b85060c-2512-414d-a22d-c3d738e67c0b")
 		(property "Reference" "#PWR0247"
-			(at 260.35 208.28 0)
+			(at 259.08 208.28 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -15593,17 +15673,18 @@
 			)
 		)
 		(property "Value" "VCCA"
-			(at 260.35 217.17 0)
+			(at 261.62 203.1999 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(justify left)
 			)
 		)
 		(property "Footprint" ""
-			(at 260.35 212.09 0)
+			(at 259.08 204.47 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -15614,7 +15695,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 260.35 212.09 0)
+			(at 259.08 204.47 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -15625,7 +15706,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"VCC\""
-			(at 260.35 212.09 0)
+			(at 259.08 204.47 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -17225,86 +17306,6 @@
 			(project "cartridge"
 				(path "/2780facd-cffd-485a-aed1-c460c817db24"
 					(reference "#PWR0259")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:R")
-		(at 256.54 212.09 90)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "60eaf099-46f4-46c3-a14f-e1208dbfd85c")
-		(property "Reference" "R3"
-			(at 256.54 205.74 90)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "10K"
-			(at 256.54 208.28 90)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
-			(at 256.54 213.868 90)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 256.54 212.09 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "Resistor"
-			(at 256.54 212.09 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "ce0159c9-aba9-41fb-8741-531fec8e3f7e")
-		)
-		(pin "2"
-			(uuid "9a964887-f0a5-4e56-9bb2-adca6cf319ca")
-		)
-		(instances
-			(project "cartridge"
-				(path "/2780facd-cffd-485a-aed1-c460c817db24"
-					(reference "R3")
 					(unit 1)
 				)
 			)
@@ -19850,6 +19851,88 @@
 		)
 	)
 	(symbol
+		(lib_id "Device:R")
+		(at 259.08 208.28 180)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "8d122887-b9f0-415d-b66b-ace379a3d375")
+		(property "Reference" "R3"
+			(at 261.62 207.0099 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Value" "10K"
+			(at 261.62 209.5499 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
+			(at 260.858 208.28 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 259.08 208.28 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 259.08 208.28 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "784e0c57-2e04-456b-8847-94a4cb8611e0")
+		)
+		(pin "2"
+			(uuid "4ef3aa37-f1f5-4715-8f58-b44d7df5483f")
+		)
+		(instances
+			(project "cartridge"
+				(path "/2780facd-cffd-485a-aed1-c460c817db24"
+					(reference "R3")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "power:VSSA")
 		(at 135.89 246.38 270)
 		(unit 1)
@@ -21182,7 +21265,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 135.89 132.08 180)
+		(at 140.97 132.08 180)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -21193,7 +21276,7 @@
 		(fields_autoplaced yes)
 		(uuid "a03544f0-98ad-4bf6-8a63-5a3a051f8e80")
 		(property "Reference" "#PWR0296"
-			(at 135.89 125.73 0)
+			(at 140.97 125.73 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -21204,7 +21287,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 138.43 130.8099 0)
+			(at 143.51 130.8099 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -21215,7 +21298,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 135.89 132.08 0)
+			(at 140.97 132.08 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -21226,7 +21309,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 135.89 132.08 0)
+			(at 140.97 132.08 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -21237,7 +21320,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 135.89 132.08 0)
+			(at 140.97 132.08 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -24564,7 +24647,7 @@
 	)
 	(symbol
 		(lib_id "power:VSSA")
-		(at 260.35 212.09 270)
+		(at 259.08 212.09 270)
 		(mirror x)
 		(unit 1)
 		(body_style 1)
@@ -24575,7 +24658,7 @@
 		(dnp no)
 		(uuid "c42a4142-c652-495f-83c8-268697174613")
 		(property "Reference" "#PWR0237"
-			(at 256.54 212.09 0)
+			(at 255.27 212.09 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -24586,7 +24669,7 @@
 			)
 		)
 		(property "Value" "data_oe_n"
-			(at 264.16 212.0899 90)
+			(at 262.89 212.0899 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -24597,7 +24680,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 260.35 212.09 0)
+			(at 259.08 212.09 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -24608,7 +24691,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 260.35 212.09 0)
+			(at 259.08 212.09 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -24619,7 +24702,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"VSSA\""
-			(at 260.35 212.09 0)
+			(at 259.08 212.09 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -25375,7 +25458,7 @@
 	)
 	(symbol
 		(lib_id "power:+3.3V")
-		(at 135.89 139.7 270)
+		(at 140.97 139.7 270)
 		(mirror x)
 		(unit 1)
 		(body_style 1)
@@ -25386,7 +25469,7 @@
 		(dnp no)
 		(uuid "cb5e6743-fd1f-49b4-a010-a700b94accf6")
 		(property "Reference" "#PWR0126"
-			(at 132.08 139.7 0)
+			(at 137.16 139.7 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -25397,7 +25480,7 @@
 			)
 		)
 		(property "Value" "+3.3V"
-			(at 139.7 139.6999 90)
+			(at 144.78 139.6999 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -25408,7 +25491,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 135.89 139.7 0)
+			(at 140.97 139.7 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -25419,7 +25502,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 135.89 139.7 0)
+			(at 140.97 139.7 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -25430,7 +25513,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"+3.3V\""
-			(at 135.89 139.7 0)
+			(at 140.97 139.7 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -29475,46 +29558,6 @@
 				)
 			)
 		)
-	)
-	(label "SPI_MISO"
-		(at 304.8 30.48 0)
-		(effects (font (size 1.27 1.27)) (justify left bottom))
-		(uuid "a37b42cb-2930-452b-91bc-620706abc000")
-	)
-	(label "SPI_CS_N"
-		(at 304.8 33.02 0)
-		(effects (font (size 1.27 1.27)) (justify left bottom))
-		(uuid "a37b42cb-2930-452b-91bc-620706abc001")
-	)
-	(label "SPI_SCK"
-		(at 304.8 35.56 0)
-		(effects (font (size 1.27 1.27)) (justify left bottom))
-		(uuid "a37b42cb-2930-452b-91bc-620706abc002")
-	)
-	(label "SPI_MOSI"
-		(at 304.8 38.1 0)
-		(effects (font (size 1.27 1.27)) (justify left bottom))
-		(uuid "a37b42cb-2930-452b-91bc-620706abc003")
-	)
-	(label "SPI_MISO"
-		(at 128.27 124.46 0)
-		(effects (font (size 1.27 1.27)) (justify left bottom))
-		(uuid "a37b42cb-2930-452b-91bc-620706abc004")
-	)
-	(label "SPI_CS_N"
-		(at 128.27 129.54 0)
-		(effects (font (size 1.27 1.27)) (justify left bottom))
-		(uuid "a37b42cb-2930-452b-91bc-620706abc005")
-	)
-	(label "SPI_SCK"
-		(at 128.27 127 0)
-		(effects (font (size 1.27 1.27)) (justify left bottom))
-		(uuid "a37b42cb-2930-452b-91bc-620706abc006")
-	)
-	(label "SPI_MOSI"
-		(at 128.27 132.08 0)
-		(effects (font (size 1.27 1.27)) (justify left bottom))
-		(uuid "a37b42cb-2930-452b-91bc-620706abc007")
 	)
 	(sheet_instances
 		(path "/"
