@@ -6533,7 +6533,7 @@
 		(uuid "51796f95-9cbc-47a8-96ac-77465d19dffd")
 	)
 	(junction
-		(at 140.97 139.7)
+		(at 144.78 139.7)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "563e9363-2384-4fce-9488-6d1b48de3e66")
@@ -7222,7 +7222,7 @@
 	)
 	(wire
 		(pts
-			(xy 128.27 139.7) (xy 140.97 139.7)
+			(xy 128.27 139.7) (xy 144.78 139.7)
 		)
 		(stroke
 			(width 0)
@@ -8080,86 +8080,6 @@
 		)
 		(uuid "fb477d5e-782e-42f0-a3cf-0ce6b4f7c150")
 	)
-	(label "SPI_MISO"
-		(at 304.8 30.48 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "a37b42cb-2930-452b-91bc-620706abc000")
-	)
-	(label "SPI_CS_N"
-		(at 304.8 33.02 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "a37b42cb-2930-452b-91bc-620706abc001")
-	)
-	(label "SPI_SCK"
-		(at 304.8 35.56 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "a37b42cb-2930-452b-91bc-620706abc002")
-	)
-	(label "SPI_MOSI"
-		(at 304.8 38.1 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "a37b42cb-2930-452b-91bc-620706abc003")
-	)
-	(label "SPI_MISO"
-		(at 128.27 124.46 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "a37b42cb-2930-452b-91bc-620706abc004")
-	)
-	(label "SPI_CS_N"
-		(at 128.27 129.54 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "a37b42cb-2930-452b-91bc-620706abc005")
-	)
-	(label "SPI_SCK"
-		(at 128.27 127 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "a37b42cb-2930-452b-91bc-620706abc006")
-	)
-	(label "SPI_MOSI"
-		(at 128.27 132.08 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "a37b42cb-2930-452b-91bc-620706abc007")
-	)
 	(symbol
 		(lib_id "power:VSSA")
 		(at 46.99 149.86 90)
@@ -8549,6 +8469,84 @@
 			(project "cartridge"
 				(path "/2780facd-cffd-485a-aed1-c460c817db24"
 					(reference "#PWR0195")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:VSSA")
+		(at 128.27 127 270)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "07a82920-dbe3-414d-a815-d726319d8a18")
+		(property "Reference" "#PWR0314"
+			(at 124.46 127 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "SPI_SCK"
+			(at 132.08 126.9999 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 128.27 127 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 128.27 127 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"VSSA\""
+			(at 128.27 127 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "00bf5151-850c-46a1-856b-7bdec96f027e")
+		)
+		(instances
+			(project "cartridge"
+				(path "/2780facd-cffd-485a-aed1-c460c817db24"
+					(reference "#PWR0314")
 					(unit 1)
 				)
 			)
@@ -9948,6 +9946,84 @@
 	)
 	(symbol
 		(lib_id "power:VSSA")
+		(at 304.8 30.48 270)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "11286e25-f758-4d5d-99fa-fb4413d2e9d1")
+		(property "Reference" "#PWR0308"
+			(at 300.99 30.48 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "SPI_MISO"
+			(at 308.61 30.4799 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 304.8 30.48 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 304.8 30.48 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"VSSA\""
+			(at 304.8 30.48 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "afa48ac1-591d-4e8e-821c-6d808168e6f7")
+		)
+		(instances
+			(project "cartridge"
+				(path "/2780facd-cffd-485a-aed1-c460c817db24"
+					(reference "#PWR0308")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:VSSA")
 		(at 135.89 220.98 270)
 		(unit 1)
 		(body_style 1)
@@ -10179,6 +10255,84 @@
 			(project "cartridge"
 				(path "/2780facd-cffd-485a-aed1-c460c817db24"
 					(reference "#PWR0219")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:VSSA")
+		(at 304.8 35.56 270)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "13029252-845d-4ca0-9f53-50a35cd975e5")
+		(property "Reference" "#PWR0310"
+			(at 300.99 35.56 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "SPI_SCK"
+			(at 308.61 35.5599 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 304.8 35.56 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 304.8 35.56 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"VSSA\""
+			(at 304.8 35.56 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "db9aaf5b-05e9-4dae-9ef3-bc7b0563b860")
+		)
+		(instances
+			(project "cartridge"
+				(path "/2780facd-cffd-485a-aed1-c460c817db24"
+					(reference "#PWR0310")
 					(unit 1)
 				)
 			)
@@ -10503,7 +10657,7 @@
 	)
 	(symbol
 		(lib_id "Device:C")
-		(at 140.97 135.89 180)
+		(at 144.78 135.89 180)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -10514,7 +10668,7 @@
 		(fields_autoplaced yes)
 		(uuid "161a81e0-16bc-4e85-94ca-ee2fb3183b30")
 		(property "Reference" "C12"
-			(at 144.78 134.6199 0)
+			(at 148.59 134.6199 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -10525,7 +10679,7 @@
 			)
 		)
 		(property "Value" "100nF"
-			(at 144.78 137.1599 0)
+			(at 148.59 137.1599 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -10536,7 +10690,7 @@
 			)
 		)
 		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric_Pad1.08x0.95mm_HandSolder"
-			(at 140.0048 132.08 0)
+			(at 143.8148 132.08 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10547,7 +10701,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 140.97 135.89 0)
+			(at 144.78 135.89 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10558,7 +10712,7 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
-			(at 140.97 135.89 0)
+			(at 144.78 135.89 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -12649,6 +12803,84 @@
 			(project "cartridge"
 				(path "/2780facd-cffd-485a-aed1-c460c817db24"
 					(reference "#PWR0262")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:VSSA")
+		(at 128.27 124.46 270)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "2afc09a2-a599-4f1b-98b3-f9995b497f02")
+		(property "Reference" "#PWR0312"
+			(at 124.46 124.46 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "SPI_MISO"
+			(at 132.08 124.4599 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 128.27 124.46 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 128.27 124.46 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"VSSA\""
+			(at 128.27 124.46 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "3b644aec-d5bd-42e4-a562-091b6af6619e")
+		)
+		(instances
+			(project "cartridge"
+				(path "/2780facd-cffd-485a-aed1-c460c817db24"
+					(reference "#PWR0312")
 					(unit 1)
 				)
 			)
@@ -18901,6 +19133,84 @@
 	)
 	(symbol
 		(lib_id "power:VSSA")
+		(at 304.8 33.02 270)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "7b3d8bac-4d09-43af-8a06-70c04b99c8f7")
+		(property "Reference" "#PWR0309"
+			(at 300.99 33.02 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "SPI_CS_N"
+			(at 308.61 33.0199 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 304.8 33.02 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 304.8 33.02 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"VSSA\""
+			(at 304.8 33.02 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "b399b2cd-07b9-4dc8-a18a-7caf5c9edf4c")
+		)
+		(instances
+			(project "cartridge"
+				(path "/2780facd-cffd-485a-aed1-c460c817db24"
+					(reference "#PWR0309")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:VSSA")
 		(at 135.89 215.9 270)
 		(unit 1)
 		(body_style 1)
@@ -19288,6 +19598,162 @@
 			(project "cartridge"
 				(path "/2780facd-cffd-485a-aed1-c460c817db24"
 					(reference "#PWR0138")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:VSSA")
+		(at 128.27 132.08 270)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "7e50aaaf-d9e8-4376-b098-30ed46ab84e3")
+		(property "Reference" "#PWR0315"
+			(at 124.46 132.08 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "SPI_MOSI"
+			(at 132.08 132.0799 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 128.27 132.08 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 128.27 132.08 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"VSSA\""
+			(at 128.27 132.08 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "62c8de03-4652-406d-937d-81ccaef60d1a")
+		)
+		(instances
+			(project "cartridge"
+				(path "/2780facd-cffd-485a-aed1-c460c817db24"
+					(reference "#PWR0315")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:VSSA")
+		(at 128.27 129.54 270)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "820ac6ad-d555-474f-a6d3-82c899c55411")
+		(property "Reference" "#PWR0313"
+			(at 124.46 129.54 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "SPI_CS_N"
+			(at 132.08 129.5399 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 128.27 129.54 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 128.27 129.54 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"VSSA\""
+			(at 128.27 129.54 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "3fe601a9-5f96-4cfd-b66a-fa3de756cb66")
+		)
+		(instances
+			(project "cartridge"
+				(path "/2780facd-cffd-485a-aed1-c460c817db24"
+					(reference "#PWR0313")
 					(unit 1)
 				)
 			)
@@ -19927,6 +20393,84 @@
 			(project "cartridge"
 				(path "/2780facd-cffd-485a-aed1-c460c817db24"
 					(reference "R3")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:VSSA")
+		(at 304.8 38.1 270)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "8e9bbb2a-bdbe-4882-ab97-8caf117872c2")
+		(property "Reference" "#PWR0311"
+			(at 300.99 38.1 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "SPI_MOSI"
+			(at 308.61 38.0999 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 304.8 38.1 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 304.8 38.1 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"VSSA\""
+			(at 304.8 38.1 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "77164e0d-1805-4c29-a226-43244cd26dc8")
+		)
+		(instances
+			(project "cartridge"
+				(path "/2780facd-cffd-485a-aed1-c460c817db24"
+					(reference "#PWR0311")
 					(unit 1)
 				)
 			)
@@ -21265,7 +21809,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 140.97 132.08 180)
+		(at 144.78 132.08 180)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -21276,7 +21820,7 @@
 		(fields_autoplaced yes)
 		(uuid "a03544f0-98ad-4bf6-8a63-5a3a051f8e80")
 		(property "Reference" "#PWR0296"
-			(at 140.97 125.73 0)
+			(at 144.78 125.73 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -21287,7 +21831,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 143.51 130.8099 0)
+			(at 147.32 130.8099 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -21298,7 +21842,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 140.97 132.08 0)
+			(at 144.78 132.08 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -21309,7 +21853,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 140.97 132.08 0)
+			(at 144.78 132.08 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -21320,7 +21864,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 140.97 132.08 0)
+			(at 144.78 132.08 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -25458,7 +26002,7 @@
 	)
 	(symbol
 		(lib_id "power:+3.3V")
-		(at 140.97 139.7 270)
+		(at 144.78 139.7 270)
 		(mirror x)
 		(unit 1)
 		(body_style 1)
@@ -25469,7 +26013,7 @@
 		(dnp no)
 		(uuid "cb5e6743-fd1f-49b4-a010-a700b94accf6")
 		(property "Reference" "#PWR0126"
-			(at 137.16 139.7 0)
+			(at 140.97 139.7 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -25480,7 +26024,7 @@
 			)
 		)
 		(property "Value" "+3.3V"
-			(at 144.78 139.6999 90)
+			(at 148.59 139.6999 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -25491,7 +26035,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 140.97 139.7 0)
+			(at 144.78 139.7 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -25502,7 +26046,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 140.97 139.7 0)
+			(at 144.78 139.7 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -25513,7 +26057,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"+3.3V\""
-			(at 140.97 139.7 0)
+			(at 144.78 139.7 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
