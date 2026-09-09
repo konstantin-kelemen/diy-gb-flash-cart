@@ -1,0 +1,1986 @@
+
+             Lattice Mapping Report File for Design Module 'top'
+
+
+Design Information
+------------------
+
+Command line:   map -a MachXO2 -p LCMXO2-1200HC -t TQFP100 -s 4 -oc Commercial
+     RomEmu_game_programmer.ngd -o RomEmu_game_programmer_map.ncd -pr
+     RomEmu_game_programmer.prf -mp RomEmu_game_programmer.mrp -lpf C:/Users/Adm
+     in/Documents/diy-gb-flash-cart/fpga/diamond/game_programmer/RomEmu_game_pro
+     grammer.lpf -lpf C:/Users/Admin/Documents/diy-gb-flash-cart/fpga/constraint
+     s/game_programmer.lpf -c 0 -gui -msgset
+     C:/Users/Admin/Documents/diy-gb-flash-cart/fpga/diamond/promote.xml 
+Target Vendor:  LATTICE
+Target Device:  LCMXO2-1200HCTQFP100
+Target Performance:   4
+Mapper:  xo2c00,  version:  Diamond (64-bit) 3.14.0.75.2
+Mapped on:  09/09/26  23:43:59
+
+Design Summary
+--------------
+
+   Number of registers:    908 out of  1520 (60%)
+      PFU registers:          908 out of  1280 (71%)
+      PIO registers:            0 out of   240 (0%)
+   Number of SLICEs:       846 out of   640 (132%)
+      SLICEs as Logic/ROM:    846 out of   640 (132%)
+      SLICEs as RAM:            0 out of   480 (0%)
+      SLICEs as Carry:        204 out of   640 (32%)
+   Number of LUT4s:        1679 out of  1280 (131%)
+      Number used as logic LUTs:        1271
+      Number used as distributed RAM:     0
+      Number used as ripple logic:      408
+      Number used as shift registers:     0
+   Number of PIO sites used: 71 + 4(JTAG) out of 80 (94%)
+   Number of block RAMs:  2 out of 7 (29%)
+   Number of GSRs:        1 out of 1 (100%)
+   EFB used :        No
+   JTAG used :       No
+   Readback used :   No
+   Oscillator used : Yes
+   Startup used :    No
+   POR :             On
+   Bandgap :         On
+   Number of Power Controller:  0 out of 1 (0%)
+   Number of Dynamic Bank Controller (BCINRD):  0 out of 4 (0%)
+   Number of Dynamic Bank Controller (BCLVDSO):  0 out of 1 (0%)
+   Number of DCCA:  0 out of 8 (0%)
+   Number of DCMA:  0 out of 2 (0%)
+   Number of PLLs:  0 out of 1 (0%)
+   Number of DQSDLLs:  0 out of 2 (0%)
+   Number of CLKDIVC:  0 out of 4 (0%)
+   Number of ECLKSYNCA:  0 out of 4 (0%)
+   Number of ECLKBRIDGECS:  0 out of 2 (0%)
+   Notes:-
+      1. Total number of LUT4s = (Number of logic LUT4s) + 2*(Number of
+     distributed RAMs) + 2*(Number of ripple logic)
+      2. Number of logic LUT4s does not include count of distributed RAM and
+     ripple logic.
+   Number of clocks:  2
+     Net clk: 485 loads, 485 rising, 0 falling (Driver: osc )
+
+                                    Page 1
+
+
+
+
+Design:  top                                           Date:  09/09/26  23:43:59
+
+Design Summary (cont)
+---------------------
+     Net gb_wr_n_c: 27 loads, 27 rising, 0 falling (Driver: PIO gb_wr_n )
+   Number of Clock Enables:  75
+     Net clk_enable_204: 3 loads, 3 LSLICEs
+     Net clk_enable_108: 1 loads, 1 LSLICEs
+     Net clk_enable_53: 2 loads, 2 LSLICEs
+     Net clk_enable_299: 2 loads, 2 LSLICEs
+     Net clk_enable_290: 1 loads, 1 LSLICEs
+     Net clk_enable_288: 1 loads, 1 LSLICEs
+     Net clk_enable_413: 4 loads, 4 LSLICEs
+     Net clk_enable_675: 4 loads, 4 LSLICEs
+     Net clk_enable_109: 1 loads, 1 LSLICEs
+     Net clk_enable_110: 1 loads, 1 LSLICEs
+     Net clk_enable_630: 5 loads, 5 LSLICEs
+     Net clk_enable_289: 1 loads, 1 LSLICEs
+     Net clk_enable_571: 11 loads, 11 LSLICEs
+     Net clk_enable_577: 2 loads, 2 LSLICEs
+     Net clk_enable_420: 5 loads, 5 LSLICEs
+     Net gb_wr_n_c_enable_42: 1 loads, 1 LSLICEs
+     Net clk_enable_283: 27 loads, 27 LSLICEs
+     Net clk_enable_580: 2 loads, 2 LSLICEs
+     Net clk_enable_45: 1 loads, 1 LSLICEs
+     Net gb_wr_n_c_enable_34: 4 loads, 4 LSLICEs
+     Net clk_enable_667: 2 loads, 2 LSLICEs
+     Net clk_enable_287: 1 loads, 1 LSLICEs
+     Net clk_enable_640: 4 loads, 4 LSLICEs
+     Net gb_wr_n_c_enable_12: 2 loads, 2 LSLICEs
+     Net clk_enable_149: 8 loads, 8 LSLICEs
+     Net clk_enable_198: 25 loads, 25 LSLICEs
+     Net clk_enable_621: 10 loads, 10 LSLICEs
+     Net clk_enable_666: 2 loads, 2 LSLICEs
+     Net clk_enable_587: 2 loads, 2 LSLICEs
+     Net clk_enable_632: 17 loads, 17 LSLICEs
+     Net clk_enable_664: 17 loads, 17 LSLICEs
+     Net clk_enable_406: 3 loads, 3 LSLICEs
+     Net clk_enable_524: 1 loads, 1 LSLICEs
+     Net mode/clk_enable_43: 9 loads, 9 LSLICEs
+     Net mode/clk_enable_107: 2 loads, 2 LSLICEs
+     Net mode/clk_enable_606: 1 loads, 1 LSLICEs
+     Net clk_enable_528: 3 loads, 3 LSLICEs
+     Net clk_enable_535: 4 loads, 4 LSLICEs
+     Net game/clk_enable_449: 4 loads, 4 LSLICEs
+     Net game/clk_enable_683: 14 loads, 14 LSLICEs
+     Net game/clk_enable_603: 3 loads, 3 LSLICEs
+     Net game/rtc/clk_enable_428: 3 loads, 3 LSLICEs
+     Net game/rtc/clk_enable_523: 14 loads, 14 LSLICEs
+     Net game/rtc/clk_enable_291: 1 loads, 1 LSLICEs
+     Net game/mapper/gb_wr_n_c_enable_20: 3 loads, 3 LSLICEs
+     Net game/mapper/gb_wr_n_c_enable_41: 4 loads, 4 LSLICEs
+     Net game/mapper/gb_wr_n_c_enable_44: 6 loads, 6 LSLICEs
+     Net game/mapper/gb_wr_n_c_enable_16: 3 loads, 3 LSLICEs
+     Net game/mapper/gb_wr_n_c_enable_15: 1 loads, 1 LSLICEs
+     Net game/mapper/rtc_write_register_2__N_526: 2 loads, 2 LSLICEs
+     Net game/mapper/gb_wr_n_c_enable_14: 1 loads, 1 LSLICEs
+     Net game/header/clk_enable_442: 4 loads, 4 LSLICEs
+     Net game/header/clk_enable_435: 5 loads, 5 LSLICEs
+     Net game/header/clk_enable_101: 1 loads, 1 LSLICEs
+
+                                    Page 2
+
+
+
+
+Design:  top                                           Date:  09/09/26  23:43:59
+
+Design Summary (cont)
+---------------------
+     Net game/header/done_N_336: 1 loads, 1 LSLICEs
+     Net clk_enable_394: 14 loads, 14 LSLICEs
+     Net programmer/clk_enable_494: 19 loads, 19 LSLICEs
+     Net programmer/clk_enable_476: 12 loads, 12 LSLICEs
+     Net programmer/clk_enable_550: 4 loads, 4 LSLICEs
+     Net programmer/clk_enable_543: 4 loads, 4 LSLICEs
+     Net programmer/bus/clk_enable_284: 1 loads, 1 LSLICEs
+     Net programmer/bus/clk_enable_285: 1 loads, 1 LSLICEs
+     Net programmer/bus/clk_enable_286: 1 loads, 1 LSLICEs
+     Net protocol/clk_enable_423: 5 loads, 5 LSLICEs
+     Net protocol/clk_enable_401: 20 loads, 20 LSLICEs
+     Net protocol/clk_enable_367: 8 loads, 8 LSLICEs
+     Net protocol/clk_enable_352: 9 loads, 9 LSLICEs
+     Net protocol/clk_enable_600: 12 loads, 12 LSLICEs
+     Net protocol/clk_enable_104: 1 loads, 1 LSLICEs
+     Net protocol/clk_enable_298: 8 loads, 8 LSLICEs
+     Net protocol/clk_enable_282: 1 loads, 1 LSLICEs
+     Net protocol/clk_enable_684: 8 loads, 8 LSLICEs
+     Net protocol/clk_enable_584: 2 loads, 2 LSLICEs
+     Net protocol/clk_enable_649: 5 loads, 5 LSLICEs
+     Net protocol/clk_enable_614: 5 loads, 5 LSLICEs
+   Number of LSRs:  22
+     Net ready_3: 108 loads, 108 LSLICEs
+     Net n4495: 9 loads, 9 LSLICEs
+     Net n22973: 5 loads, 5 LSLICEs
+     Net n23168: 2 loads, 2 LSLICEs
+     Net n4462: 12 loads, 12 LSLICEs
+     Net n24143: 25 loads, 25 LSLICEs
+     Net n23016: 14 loads, 14 LSLICEs
+     Net n23066: 10 loads, 10 LSLICEs
+     Net n2927: 2 loads, 2 LSLICEs
+     Net clk_enable_621: 19 loads, 19 LSLICEs
+     Net clk_enable_632: 9 loads, 9 LSLICEs
+     Net n24142: 27 loads, 27 LSLICEs
+     Net n23040: 1 loads, 1 LSLICEs
+     Net n24136: 28 loads, 28 LSLICEs
+     Net n24137: 33 loads, 33 LSLICEs
+     Net n24138: 26 loads, 26 LSLICEs
+     Net n24139: 26 loads, 26 LSLICEs
+     Net n24140: 32 loads, 32 LSLICEs
+     Net game/clk_enable_603: 14 loads, 14 LSLICEs
+     Net protocol/n19426: 1 loads, 1 LSLICEs
+     Net protocol/n10211: 6 loads, 6 LSLICEs
+     Net protocol/n10303: 4 loads, 4 LSLICEs
+   Number of nets driven by tri-state buffers:  0
+   Top 10 highest fanout non-clock nets:
+     Net ready_3: 209 loads
+     Net n1720: 82 loads
+     Net n23003: 57 loads
+     Net game/header/index_3: 45 loads
+     Net game/header/index_0: 44 loads
+     Net game/header/index_2: 44 loads
+     Net game_enable: 42 loads
+     Net game/header/index_1: 41 loads
+     Net n23067: 41 loads
+     Net n23110: 40 loads
+
+                                    Page 3
+
+
+
+
+Design:  top                                           Date:  09/09/26  23:43:59
+
+
+
+
+
+   Number of warnings:  0
+   Number of errors:    1
+     
+
+Design Errors/Warnings
+----------------------
+
+ERROR - map: Design doesn't fit into device specified, refer to the Map report
+     for more details.
+
+IO (PIO) Attributes
+-------------------
+
++---------------------+-----------+-----------+------------+
+| IO Name             | Direction | Levelmode | IO         |
+|                     |           |  IO_TYPE  | Register   |
++---------------------+-----------+-----------+------------+
+| gb_d[7]             | BIDIR     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[11]         | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[12]         | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[13]         | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[14]         | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[15]         | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[16]         | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[17]         | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[18]         | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[19]         | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[20]         | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[21]         | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| spi_miso            | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| data_dir            | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| data_oe_n           | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_d[0]          | BIDIR     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_d[1]          | BIDIR     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_d[2]          | BIDIR     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_d[3]          | BIDIR     | LVCMOS33  |            |
+
+                                    Page 4
+
+
+
+
+Design:  top                                           Date:  09/09/26  23:43:59
+
+IO (PIO) Attributes (cont)
+--------------------------
++---------------------+-----------+-----------+------------+
+| flash_d[4]          | BIDIR     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_d[5]          | BIDIR     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_d[6]          | BIDIR     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_d[7]          | BIDIR     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| gb_d[0]             | BIDIR     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| gb_d[1]             | BIDIR     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| gb_d[2]             | BIDIR     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| gb_d[3]             | BIDIR     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| gb_d[4]             | BIDIR     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| gb_d[5]             | BIDIR     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| spi_mosi            | INPUT     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| spi_sck             | INPUT     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| spi_cs_n            | INPUT     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| gb_res_n            | INPUT     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| gb_cs_n             | INPUT     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| gb_wr_n             | INPUT     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| gb_rd_n             | INPUT     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| gb_a[0]             | INPUT     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| gb_a[1]             | INPUT     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| gb_a[2]             | INPUT     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| gb_a[3]             | INPUT     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| gb_a[4]             | INPUT     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| gb_a[5]             | INPUT     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| gb_a[6]             | INPUT     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| gb_a[7]             | INPUT     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| gb_a[8]             | INPUT     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| gb_a[9]             | INPUT     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| gb_a[10]            | INPUT     | LVCMOS33  |            |
+
+                                    Page 5
+
+
+
+
+Design:  top                                           Date:  09/09/26  23:43:59
+
+IO (PIO) Attributes (cont)
+--------------------------
++---------------------+-----------+-----------+------------+
+| gb_a[11]            | INPUT     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| gb_a[12]            | INPUT     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| gb_a[13]            | INPUT     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| gb_a[14]            | INPUT     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| gb_a[15]            | INPUT     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| gb_power_present    | INPUT     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| fram_we_n           | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| fram_oe_n           | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| fram_ce_n           | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_we_n          | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_oe_n          | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_ce_n          | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[0]          | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[1]          | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[2]          | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[3]          | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[4]          | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[5]          | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[6]          | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[7]          | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[8]          | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[9]          | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[10]         | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| gb_d[6]             | BIDIR     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+
+Removed logic
+-------------
+
+Signal protocol/n638 was merged into signal protocol/op_2
+Signal n23167 was merged into signal ready_3
+Signal GND_net undriven or does not drive anything - clipped.
+
+                                    Page 6
+
+
+
+
+Design:  top                                           Date:  09/09/26  23:43:59
+
+Removed logic (cont)
+--------------------
+Signal VCC_net undriven or does not drive anything - clipped.
+Signal protocol/equal_120_12/S0 undriven or does not drive anything - clipped.
+Signal protocol/equal_120_12/CO undriven or does not drive anything - clipped.
+Signal protocol/received_crc_15__I_0_11/S1 undriven or does not drive anything -
+     clipped.
+Signal protocol/received_crc_15__I_0_11/S0 undriven or does not drive anything -
+     clipped.
+Signal protocol/header_55__I_0_7/S1 undriven or does not drive anything -
+     clipped.
+Signal protocol/header_55__I_0_7/S0 undriven or does not drive anything -
+     clipped.
+Signal protocol/received_crc_15__I_0_13/S1 undriven or does not drive anything -
+     clipped.
+Signal protocol/received_crc_15__I_0_13/S0 undriven or does not drive anything -
+     clipped.
+Signal protocol/add_635_17/CO undriven or does not drive anything - clipped.
+Signal protocol/received_crc_15__I_0_15/S1 undriven or does not drive anything -
+     clipped.
+Signal protocol/received_crc_15__I_0_15/S0 undriven or does not drive anything -
+     clipped.
+Signal protocol/add_637_1/S0 undriven or does not drive anything - clipped.
+Signal protocol/add_637_1/CI undriven or does not drive anything - clipped.
+Signal protocol/received_crc_15__I_0_16/S0 undriven or does not drive anything -
+     clipped.
+Signal protocol/received_crc_15__I_0_16/CO undriven or does not drive anything -
+     clipped.
+Signal protocol/header_55__I_0_0/S1 undriven or does not drive anything -
+     clipped.
+Signal protocol/header_55__I_0_0/S0 undriven or does not drive anything -
+     clipped.
+Signal protocol/header_55__I_0_0/CI undriven or does not drive anything -
+     clipped.
+Signal protocol/equal_118_0/S1 undriven or does not drive anything - clipped.
+Signal protocol/equal_118_0/S0 undriven or does not drive anything - clipped.
+Signal protocol/equal_118_0/CI undriven or does not drive anything - clipped.
+Signal protocol/equal_118_13/S1 undriven or does not drive anything - clipped.
+Signal protocol/equal_118_13/S0 undriven or does not drive anything - clipped.
+Signal protocol/equal_118_15/S1 undriven or does not drive anything - clipped.
+Signal protocol/equal_118_15/S0 undriven or does not drive anything - clipped.
+Signal protocol/equal_2856_0/S1 undriven or does not drive anything - clipped.
+Signal protocol/equal_2856_0/S0 undriven or does not drive anything - clipped.
+Signal protocol/equal_2856_0/CI undriven or does not drive anything - clipped.
+Signal protocol/add_637_cout/S1 undriven or does not drive anything - clipped.
+Signal protocol/add_637_cout/CO undriven or does not drive anything - clipped.
+Signal protocol/sub_1940_add_2_1/S1 undriven or does not drive anything -
+     clipped.
+Signal protocol/sub_1940_add_2_1/S0 undriven or does not drive anything -
+     clipped.
+Signal protocol/sub_1940_add_2_1/CI undriven or does not drive anything -
+     clipped.
+Signal protocol/header_55__I_0_8/S0 undriven or does not drive anything -
+     clipped.
+Signal protocol/header_55__I_0_8/CO undriven or does not drive anything -
+     clipped.
+Signal protocol/sub_1940_add_2_3/S1 undriven or does not drive anything -
+     clipped.
+
+                                    Page 7
+
+
+
+
+Design:  top                                           Date:  09/09/26  23:43:59
+
+Removed logic (cont)
+--------------------
+Signal protocol/sub_1940_add_2_3/S0 undriven or does not drive anything -
+     clipped.
+Signal protocol/sub_1940_add_2_5/S1 undriven or does not drive anything -
+     clipped.
+Signal protocol/sub_1940_add_2_5/S0 undriven or does not drive anything -
+     clipped.
+Signal protocol/sub_1940_add_2_7/S1 undriven or does not drive anything -
+     clipped.
+Signal protocol/sub_1940_add_2_7/S0 undriven or does not drive anything -
+     clipped.
+Signal protocol/equal_118_17_16376/S1 undriven or does not drive anything -
+     clipped.
+Signal protocol/equal_118_17_16376/S0 undriven or does not drive anything -
+     clipped.
+Signal protocol/bits_13__I_0_0/S1 undriven or does not drive anything - clipped.
+     
+Signal protocol/bits_13__I_0_0/S0 undriven or does not drive anything - clipped.
+     
+Signal protocol/bits_13__I_0_0/CI undriven or does not drive anything - clipped.
+     
+Signal protocol/add_2471_1/S0 undriven or does not drive anything - clipped.
+Signal protocol/add_2471_1/CI undriven or does not drive anything - clipped.
+Signal protocol/equal_2856_8/S1 undriven or does not drive anything - clipped.
+Signal protocol/equal_2856_8/S0 undriven or does not drive anything - clipped.
+Signal protocol/bits_13__I_0_11/S1 undriven or does not drive anything -
+     clipped.
+Signal protocol/bits_13__I_0_11/S0 undriven or does not drive anything -
+     clipped.
+Signal protocol/sub_1940_add_2_9/S1 undriven or does not drive anything -
+     clipped.
+Signal protocol/sub_1940_add_2_9/S0 undriven or does not drive anything -
+     clipped.
+Signal protocol/equal_2856_10_16378/S1 undriven or does not drive anything -
+     clipped.
+Signal protocol/equal_2856_10_16378/S0 undriven or does not drive anything -
+     clipped.
+Signal protocol/equal_2856_10/S1 undriven or does not drive anything - clipped.
+Signal protocol/equal_2856_10/CO undriven or does not drive anything - clipped.
+Signal protocol/add_2471_cout/S1 undriven or does not drive anything - clipped.
+Signal protocol/add_2471_cout/CO undriven or does not drive anything - clipped.
+Signal protocol/add_2347_1/S0 undriven or does not drive anything - clipped.
+Signal protocol/add_2347_1/CI undriven or does not drive anything - clipped.
+Signal protocol/sub_1940_add_2_11/S1 undriven or does not drive anything -
+     clipped.
+Signal protocol/sub_1940_add_2_11/S0 undriven or does not drive anything -
+     clipped.
+Signal protocol/sub_1940_add_2_cout/S1 undriven or does not drive anything -
+     clipped.
+Signal protocol/sub_1940_add_2_cout/CO undriven or does not drive anything -
+     clipped.
+Signal protocol/equal_118_17/S1 undriven or does not drive anything - clipped.
+Signal protocol/equal_118_17/CO undriven or does not drive anything - clipped.
+Signal protocol/bits_13__I_0_13/S1 undriven or does not drive anything -
+     clipped.
+Signal protocol/bits_13__I_0_13/S0 undriven or does not drive anything -
+     clipped.
+
+                                    Page 8
+
+
+
+
+Design:  top                                           Date:  09/09/26  23:43:59
+
+Removed logic (cont)
+--------------------
+Signal protocol/add_164_2/S0 undriven or does not drive anything - clipped.
+Signal protocol/add_164_2/CI undriven or does not drive anything - clipped.
+Signal protocol/add_2347_9/S1 undriven or does not drive anything - clipped.
+Signal protocol/add_2347_9/CO undriven or does not drive anything - clipped.
+Signal protocol/bits_13__I_0_14/S0 undriven or does not drive anything -
+     clipped.
+Signal protocol/bits_13__I_0_14/CO undriven or does not drive anything -
+     clipped.
+Signal protocol/equal_119_0/S1 undriven or does not drive anything - clipped.
+Signal protocol/equal_119_0/S0 undriven or does not drive anything - clipped.
+Signal protocol/equal_119_0/CI undriven or does not drive anything - clipped.
+Signal protocol/add_164_22/CO undriven or does not drive anything - clipped.
+Signal protocol/add_341_1/S0 undriven or does not drive anything - clipped.
+Signal protocol/add_341_1/CI undriven or does not drive anything - clipped.
+Signal protocol/sub_1938_add_2_1/S1 undriven or does not drive anything -
+     clipped.
+Signal protocol/sub_1938_add_2_1/S0 undriven or does not drive anything -
+     clipped.
+Signal protocol/sub_1938_add_2_1/CI undriven or does not drive anything -
+     clipped.
+Signal protocol/sub_1938_add_2_3/S1 undriven or does not drive anything -
+     clipped.
+Signal protocol/sub_1938_add_2_3/S0 undriven or does not drive anything -
+     clipped.
+Signal protocol/equal_119_13/S1 undriven or does not drive anything - clipped.
+Signal protocol/equal_119_13/S0 undriven or does not drive anything - clipped.
+Signal protocol/equal_119_15/S1 undriven or does not drive anything - clipped.
+Signal protocol/equal_119_15/S0 undriven or does not drive anything - clipped.
+Signal protocol/received_crc_15__I_0_0/S1 undriven or does not drive anything -
+     clipped.
+Signal protocol/received_crc_15__I_0_0/S0 undriven or does not drive anything -
+     clipped.
+Signal protocol/received_crc_15__I_0_0/CI undriven or does not drive anything -
+     clipped.
+Signal protocol/equal_119_17_16377/S1 undriven or does not drive anything -
+     clipped.
+Signal protocol/equal_119_17_16377/S0 undriven or does not drive anything -
+     clipped.
+Signal protocol/sub_1938_add_2_5/S1 undriven or does not drive anything -
+     clipped.
+Signal protocol/sub_1938_add_2_5/S0 undriven or does not drive anything -
+     clipped.
+Signal protocol/sub_1938_add_2_7/S1 undriven or does not drive anything -
+     clipped.
+Signal protocol/sub_1938_add_2_7/S0 undriven or does not drive anything -
+     clipped.
+Signal protocol/sub_1938_add_2_9/S1 undriven or does not drive anything -
+     clipped.
+Signal protocol/sub_1938_add_2_9/S0 undriven or does not drive anything -
+     clipped.
+Signal protocol/sub_1938_add_2_11/S1 undriven or does not drive anything -
+     clipped.
+Signal protocol/sub_1938_add_2_11/S0 undriven or does not drive anything -
+     clipped.
+Signal protocol/sub_1938_add_2_cout/S1 undriven or does not drive anything -
+     clipped.
+
+                                    Page 9
+
+
+
+
+Design:  top                                           Date:  09/09/26  23:43:59
+
+Removed logic (cont)
+--------------------
+Signal protocol/sub_1938_add_2_cout/CO undriven or does not drive anything -
+     clipped.
+Signal protocol/add_3293_11/S1 undriven or does not drive anything - clipped.
+Signal protocol/add_3293_11/CO undriven or does not drive anything - clipped.
+Signal protocol/add_2345_2/S0 undriven or does not drive anything - clipped.
+Signal protocol/add_2345_2/CI undriven or does not drive anything - clipped.
+Signal protocol/add_341_15/S1 undriven or does not drive anything - clipped.
+Signal protocol/add_341_15/CO undriven or does not drive anything - clipped.
+Signal protocol/bits_12__I_0_add_2_1/S0 undriven or does not drive anything -
+     clipped.
+Signal protocol/bits_12__I_0_add_2_1/CI undriven or does not drive anything -
+     clipped.
+Signal protocol/bits_12__I_0_add_2_11/S1 undriven or does not drive anything -
+     clipped.
+Signal protocol/bits_12__I_0_add_2_11/CO undriven or does not drive anything -
+     clipped.
+Signal protocol/equal_119_17/S1 undriven or does not drive anything - clipped.
+Signal protocol/equal_119_17/CO undriven or does not drive anything - clipped.
+Signal protocol/equal_120_0/S1 undriven or does not drive anything - clipped.
+Signal protocol/equal_120_0/S0 undriven or does not drive anything - clipped.
+Signal protocol/equal_120_0/CI undriven or does not drive anything - clipped.
+Signal protocol/equal_120_9/S1 undriven or does not drive anything - clipped.
+Signal protocol/equal_120_9/S0 undriven or does not drive anything - clipped.
+Signal protocol/equal_120_11/S1 undriven or does not drive anything - clipped.
+Signal protocol/equal_120_11/S0 undriven or does not drive anything - clipped.
+Signal protocol/add_2345_cout/S1 undriven or does not drive anything - clipped.
+Signal protocol/add_2345_cout/CO undriven or does not drive anything - clipped.
+Signal protocol/add_635_1/S0 undriven or does not drive anything - clipped.
+Signal protocol/add_635_1/CI undriven or does not drive anything - clipped.
+Signal protocol/add_3293_1/S0 undriven or does not drive anything - clipped.
+Signal protocol/add_3293_1/CI undriven or does not drive anything - clipped.
+Signal programmer/bus/tick_2395_add_4_1/S0 undriven or does not drive anything -
+     clipped.
+Signal programmer/bus/tick_2395_add_4_1/CI undriven or does not drive anything -
+     clipped.
+Signal programmer/bus/tick_2395_add_4_9/S1 undriven or does not drive anything -
+     clipped.
+Signal programmer/bus/tick_2395_add_4_9/CO undriven or does not drive anything -
+     clipped.
+Signal programmer/not_equal_124_0/S1 undriven or does not drive anything -
+     clipped.
+Signal programmer/not_equal_124_0/S0 undriven or does not drive anything -
+     clipped.
+Signal programmer/not_equal_124_0/CI undriven or does not drive anything -
+     clipped.
+Signal programmer/not_equal_124_7/S1 undriven or does not drive anything -
+     clipped.
+Signal programmer/not_equal_124_7/S0 undriven or does not drive anything -
+     clipped.
+Signal programmer/not_equal_124_8/S0 undriven or does not drive anything -
+     clipped.
+Signal programmer/not_equal_124_8/CO undriven or does not drive anything -
+     clipped.
+Signal programmer/add_16378_2/S1 undriven or does not drive anything - clipped.
+Signal programmer/add_16378_2/S0 undriven or does not drive anything - clipped.
+Signal programmer/add_16378_2/CI undriven or does not drive anything - clipped.
+
+                                   Page 10
+
+
+
+
+Design:  top                                           Date:  09/09/26  23:43:59
+
+Removed logic (cont)
+--------------------
+Signal programmer/add_16378_4/S1 undriven or does not drive anything - clipped.
+Signal programmer/add_16378_4/S0 undriven or does not drive anything - clipped.
+Signal programmer/add_16378_6/S1 undriven or does not drive anything - clipped.
+Signal programmer/add_16378_6/S0 undriven or does not drive anything - clipped.
+Signal programmer/add_16378_8/S1 undriven or does not drive anything - clipped.
+Signal programmer/add_16378_8/S0 undriven or does not drive anything - clipped.
+Signal programmer/add_16378_10/S1 undriven or does not drive anything - clipped.
+     
+Signal programmer/add_16378_10/S0 undriven or does not drive anything - clipped.
+     
+Signal programmer/add_16378_12/S1 undriven or does not drive anything - clipped.
+     
+Signal programmer/add_16378_12/S0 undriven or does not drive anything - clipped.
+     
+Signal programmer/add_16378_14/S1 undriven or does not drive anything - clipped.
+     
+Signal programmer/add_16378_14/S0 undriven or does not drive anything - clipped.
+     
+Signal programmer/add_16378_16/S1 undriven or does not drive anything - clipped.
+     
+Signal programmer/add_16378_16/S0 undriven or does not drive anything - clipped.
+     
+Signal programmer/add_16378_18/S0 undriven or does not drive anything - clipped.
+     
+Signal programmer/add_16378_18/CO undriven or does not drive anything - clipped.
+     
+Signal programmer/add_9_1/S0 undriven or does not drive anything - clipped.
+Signal programmer/add_9_1/CI undriven or does not drive anything - clipped.
+Signal programmer/add_9_29/S1 undriven or does not drive anything - clipped.
+Signal programmer/add_9_29/CO undriven or does not drive anything - clipped.
+Signal game/header/data_7__I_0_104_0/S1 undriven or does not drive anything -
+     clipped.
+Signal game/header/data_7__I_0_104_0/S0 undriven or does not drive anything -
+     clipped.
+Signal game/header/data_7__I_0_104_0/CI undriven or does not drive anything -
+     clipped.
+Signal game/header/data_7__I_0_104_7/S1 undriven or does not drive anything -
+     clipped.
+Signal game/header/data_7__I_0_104_7/S0 undriven or does not drive anything -
+     clipped.
+Signal game/header/data_7__I_0_104_8/S0 undriven or does not drive anything -
+     clipped.
+Signal game/header/data_7__I_0_104_8/CO undriven or does not drive anything -
+     clipped.
+Signal game/header/add_7_1/S0 undriven or does not drive anything - clipped.
+Signal game/header/add_7_1/CI undriven or does not drive anything - clipped.
+Signal game/header/add_7_13/S1 undriven or does not drive anything - clipped.
+Signal game/header/add_7_13/CO undriven or does not drive anything - clipped.
+Signal game/rtc/add_8_9/CO undriven or does not drive anything - clipped.
+Signal game/rtc/divider_2394_add_4_1/S0 undriven or does not drive anything -
+     clipped.
+Signal game/rtc/divider_2394_add_4_1/CI undriven or does not drive anything -
+     clipped.
+Signal game/rtc/divider_2394_add_4_27/S1 undriven or does not drive anything -
+     clipped.
+Signal game/rtc/divider_2394_add_4_27/CO undriven or does not drive anything -
+
+                                   Page 11
+
+
+
+
+Design:  top                                           Date:  09/09/26  23:43:59
+
+Removed logic (cont)
+--------------------
+     clipped.
+Signal game/rtc/add_8_1/S0 undriven or does not drive anything - clipped.
+Signal game/rtc/add_8_1/CI undriven or does not drive anything - clipped.
+Signal mode/add_5_1/S0 undriven or does not drive anything - clipped.
+Signal mode/add_5_1/CI undriven or does not drive anything - clipped.
+Signal mode/add_5_17/CO undriven or does not drive anything - clipped.
+Signal sub_1943_add_2_1/S1 undriven or does not drive anything - clipped.
+Signal sub_1943_add_2_1/S0 undriven or does not drive anything - clipped.
+Signal sub_1943_add_2_1/CI undriven or does not drive anything - clipped.
+Signal sub_1943_add_2_3/S1 undriven or does not drive anything - clipped.
+Signal sub_1943_add_2_3/S0 undriven or does not drive anything - clipped.
+Signal sub_1943_add_2_5/S1 undriven or does not drive anything - clipped.
+Signal sub_1943_add_2_5/S0 undriven or does not drive anything - clipped.
+Signal sub_1943_add_2_7/S1 undriven or does not drive anything - clipped.
+Signal sub_1943_add_2_7/S0 undriven or does not drive anything - clipped.
+Signal sub_1943_add_2_9/S1 undriven or does not drive anything - clipped.
+Signal sub_1943_add_2_9/S0 undriven or does not drive anything - clipped.
+Signal sub_1943_add_2_11/S1 undriven or does not drive anything - clipped.
+Signal sub_1943_add_2_11/S0 undriven or does not drive anything - clipped.
+Signal sub_1943_add_2_13/S1 undriven or does not drive anything - clipped.
+Signal sub_1943_add_2_13/S0 undriven or does not drive anything - clipped.
+Signal sub_1943_add_2_15/S1 undriven or does not drive anything - clipped.
+Signal sub_1943_add_2_15/S0 undriven or does not drive anything - clipped.
+Signal sub_1943_add_2_17/S1 undriven or does not drive anything - clipped.
+Signal sub_1943_add_2_17/S0 undriven or does not drive anything - clipped.
+Signal sub_1943_add_2_19/S0 undriven or does not drive anything - clipped.
+Signal sub_1943_add_2_19/CO undriven or does not drive anything - clipped.
+Signal sub_1944_add_2_1/S1 undriven or does not drive anything - clipped.
+Signal sub_1944_add_2_1/S0 undriven or does not drive anything - clipped.
+Signal sub_1944_add_2_1/CI undriven or does not drive anything - clipped.
+Signal sub_1944_add_2_3/S1 undriven or does not drive anything - clipped.
+Signal sub_1944_add_2_3/S0 undriven or does not drive anything - clipped.
+Signal sub_1944_add_2_5/S1 undriven or does not drive anything - clipped.
+Signal sub_1944_add_2_5/S0 undriven or does not drive anything - clipped.
+Signal sub_1944_add_2_7/S1 undriven or does not drive anything - clipped.
+Signal sub_1944_add_2_7/S0 undriven or does not drive anything - clipped.
+Signal sub_1944_add_2_9/S1 undriven or does not drive anything - clipped.
+Signal sub_1944_add_2_9/S0 undriven or does not drive anything - clipped.
+Signal sub_1944_add_2_11/S1 undriven or does not drive anything - clipped.
+Signal sub_1944_add_2_11/S0 undriven or does not drive anything - clipped.
+Signal sub_1944_add_2_cout/S1 undriven or does not drive anything - clipped.
+Signal sub_1944_add_2_cout/CO undriven or does not drive anything - clipped.
+Block protocol/i11817_2_lut_1_lut was optimized away.
+Block i8897_1_lut_rep_476 was optimized away.
+Block i1 was optimized away.
+Block i2 was optimized away.
+
+Memory Usage
+------------
+
+/protocol:
+    EBRs: 2
+    RAM SLICEs: 0
+    Logic SLICEs: 269
+    PFU Registers: 443
+    -Contains EBR outgoing0:  TYPE= DP8KC,  Width_B= 8,  Depth_A= 1024,
+
+                                   Page 12
+
+
+
+
+Design:  top                                           Date:  09/09/26  23:43:59
+
+Memory Usage (cont)
+-------------------
+         Depth_B= 1024,  REGMODE_A= NOREG,  REGMODE_B= NOREG,  RESETMODE= SYNC,
+         ASYNC_RESET_RELEASE= SYNC,  WRITEMODE_A= READBEFOREWRITE,  WRITEMODE_B=
+         READBEFOREWRITE,  GSR= DISABLED
+    -Contains EBR incoming0:  TYPE= DP8KC,  Width_B= 8,  Depth_A= 1024,
+         Depth_B= 1024,  REGMODE_A= NOREG,  REGMODE_B= NOREG,  RESETMODE= SYNC,
+         ASYNC_RESET_RELEASE= SYNC,  WRITEMODE_A= WRITETHROUGH,  WRITEMODE_B=
+         WRITETHROUGH,  GSR= DISABLED
+
+OSC Summary
+-----------
+
+OSC 1:                                     Pin/Node Value
+  OSC Instance Name:                                osc
+  OSC Type:                                         OSCH
+  STDBY Input:                                      NONE
+  OSC Output:                              NODE     clk
+  OSC Nominal Frequency (MHz):                      53.20
+
+ASIC Components
+---------------
+
+Instance Name: osc
+         Type: OSCH
+Instance Name: protocol/outgoing0
+         Type: DP8KC
+Instance Name: protocol/incoming0
+         Type: DP8KC
+
+GSR Usage
+---------
+
+GSR Component:
+   The Global Set Reset (GSR) resource has been used to implement a global reset
+        of the design. The reset signal used for GSR control is
+        'rom_address_21__N_167'.
+        
+
+     GSR Property:
+   The design components with GSR property set to ENABLED will respond to global
+        set reset while the components with GSR property set to DISABLED will
+        not.
+        
+
+     Components with disabled GSR Property
+-------------------------------------
+
+     These components have the GSR property set to DISABLED. The components will
+     not respond to the reset signal 'rom_address_21__N_167' via the GSR
+     component.
+
+     Type and number of components of the type: 
+   Register = 871 
+   DP8KC = 2
+
+     Type and instance name of component: 
+   Register : mode/present_sync_i0
+
+                                   Page 13
+
+
+
+
+Design:  top                                           Date:  09/09/26  23:43:59
+
+GSR Usage (cont)
+----------------
+   Register : mode/detect_count__i0
+   Register : mode/detect_count__i16
+   Register : mode/detect_count__i15
+   Register : mode/detect_count__i14
+   Register : mode/detect_count__i13
+   Register : mode/detect_count__i12
+   Register : mode/detect_count__i11
+   Register : mode/detect_count__i10
+   Register : mode/detect_count__i9
+   Register : mode/detect_count__i8
+   Register : mode/detect_count__i7
+   Register : mode/detect_count__i6
+   Register : mode/detect_count__i5
+   Register : mode/detect_count__i4
+   Register : mode/detect_count__i3
+   Register : mode/detect_count__i2
+   Register : mode/detect_count__i1
+   Register : mode/guard_count__i0
+   Register : mode/present_stable_78
+   Register : mode/detect_valid_79
+   Register : mode/present_sync_i1
+   Register : mode/cleanup_start_83
+   Register : mode/state_FSM_i1
+   Register : mode/guard_count__i3
+   Register : mode/guard_count__i2
+   Register : mode/guard_count__i1
+   Register : mode/state_FSM_i2
+   Register : mode/state_FSM_i3
+   Register : mode/state_FSM_i4
+   Register : mode/state_FSM_i5
+   Register : mode/state_FSM_i6
+   Register : mode/state_FSM_i7
+   Register : mode/state_FSM_i8
+   Register : mode/state_FSM_i9
+   Register : game/rtc/divider_2394__i7
+   Register : game/rtc/divider_2394__i8
+   Register : game/rtc/divider_2394__i9
+   Register : game/rtc/divider_2394__i10
+   Register : game/rtc/divider_2394__i11
+   Register : game/rtc/divider_2394__i12
+   Register : game/rtc/divider_2394__i13
+   Register : game/rtc/divider_2394__i14
+   Register : game/rtc/minutes_i0_i0
+   Register : game/rtc/divider_2394__i15
+   Register : game/rtc/write_sync__i0
+   Register : game/rtc/latch_sync__i0
+   Register : game/rtc/hours_i0_i0
+   Register : game/rtc/divider_2394__i16
+   Register : game/rtc/divider_2394__i17
+   Register : game/rtc/divider_2394__i18
+   Register : game/rtc/divider_2394__i19
+   Register : game/rtc/divider_2394__i20
+   Register : game/rtc/divider_2394__i21
+   Register : game/rtc/divider_2394__i22
+   Register : game/rtc/divider_2394__i23
+   Register : game/rtc/latched_4___i1
+
+                                   Page 14
+
+
+
+
+Design:  top                                           Date:  09/09/26  23:43:59
+
+GSR Usage (cont)
+----------------
+   Register : game/rtc/seconds_i0_i0
+   Register : game/rtc/divider_2394__i24
+   Register : game/rtc/divider_2394__i25
+   Register : game/rtc/latch_seen_87
+   Register : game/rtc/write_seen_86
+   Register : game/rtc/halted_93
+   Register : game/rtc/carry_94
+   Register : game/rtc/divider_2394__i0
+   Register : game/rtc/days_i0_i0
+   Register : game/rtc/minutes_i0_i5
+   Register : game/rtc/minutes_i0_i4
+   Register : game/rtc/minutes_i0_i3
+   Register : game/rtc/minutes_i0_i2
+   Register : game/rtc/minutes_i0_i1
+   Register : game/rtc/seconds_i0_i2
+   Register : game/rtc/seconds_i0_i1
+   Register : game/rtc/latched_4___i28
+   Register : game/rtc/latched_4___i27
+   Register : game/rtc/latched_4___i26
+   Register : game/rtc/latched_4___i25
+   Register : game/rtc/latched_4___i24
+   Register : game/rtc/latched_4___i23
+   Register : game/rtc/latched_4___i22
+   Register : game/rtc/latched_4___i21
+   Register : game/rtc/latched_4___i20
+   Register : game/rtc/latched_4___i19
+   Register : game/rtc/latched_4___i18
+   Register : game/rtc/latched_4___i17
+   Register : game/rtc/latched_4___i16
+   Register : game/rtc/latched_4___i15
+   Register : game/rtc/latched_4___i14
+   Register : game/rtc/latched_4___i13
+   Register : game/rtc/latched_4___i12
+   Register : game/rtc/latched_4___i11
+   Register : game/rtc/latched_4___i10
+   Register : game/rtc/latched_4___i9
+   Register : game/rtc/latched_4___i8
+   Register : game/rtc/latched_4___i7
+   Register : game/rtc/latched_4___i6
+   Register : game/rtc/latched_4___i5
+   Register : game/rtc/latched_4___i4
+   Register : game/rtc/latched_4___i3
+   Register : game/rtc/latched_4___i2
+   Register : game/rtc/days_i0_i8
+   Register : game/rtc/hours_i0_i4
+   Register : game/rtc/hours_i0_i3
+   Register : game/rtc/hours_i0_i2
+   Register : game/rtc/hours_i0_i1
+   Register : game/rtc/latch_sync__i1
+   Register : game/rtc/write_sync__i1
+   Register : game/rtc/seconds_i0_i5
+   Register : game/rtc/seconds_i0_i4
+   Register : game/rtc/seconds_i0_i3
+   Register : game/rtc/days_i0_i1
+   Register : game/rtc/days_i0_i2
+   Register : game/rtc/days_i0_i3
+
+                                   Page 15
+
+
+
+
+Design:  top                                           Date:  09/09/26  23:43:59
+
+GSR Usage (cont)
+----------------
+   Register : game/rtc/days_i0_i4
+   Register : game/rtc/days_i0_i5
+   Register : game/rtc/days_i0_i6
+   Register : game/rtc/days_i0_i7
+   Register : game/rtc/divider_2394__i1
+   Register : game/rtc/divider_2394__i2
+   Register : game/rtc/divider_2394__i3
+   Register : game/rtc/divider_2394__i4
+   Register : game/rtc/divider_2394__i5
+   Register : game/rtc/divider_2394__i6
+   Register : game/mapper/rtc_write_data_i0_i0
+   Register : game/mapper/rtc_write_toggle_238
+   Register : game/mapper/rtc_latch_toggle_235
+   Register : game/mapper/rtc_write_register_i0_i0
+   Register : game/mapper/rtc_write_data_i0_i7
+   Register : game/mapper/rtc_write_data_i0_i6
+   Register : game/mapper/rtc_write_data_i0_i5
+   Register : game/mapper/rtc_write_data_i0_i4
+   Register : game/mapper/rtc_write_data_i0_i3
+   Register : game/mapper/rtc_write_data_i0_i2
+   Register : game/mapper/rtc_write_data_i0_i1
+   Register : game/mapper/rtc_write_register_i0_i1
+   Register : game/mapper/rtc_write_register_i0_i2
+   Register : game/header/index__i0
+   Register : game/header/cart_type_i0_i0
+   Register : game/header/rom_size_i0_i0
+   Register : game/header/ram_size_i0_i0
+   Register : game/header/wait_ticks__i0
+   Register : game/header/multicart_84
+   Register : game/header/done_80
+   Register : game/header/logo_match_85
+   Register : game/header/index__i5
+   Register : game/header/index__i4
+   Register : game/header/index__i3
+   Register : game/header/index__i2
+   Register : game/header/index__i1
+   Register : game/header/ram_size_i0_i7
+   Register : game/header/ram_size_i0_i6
+   Register : game/header/ram_size_i0_i5
+   Register : game/header/ram_size_i0_i4
+   Register : game/header/ram_size_i0_i3
+   Register : game/header/ram_size_i0_i2
+   Register : game/header/ram_size_i0_i1
+   Register : game/header/rom_size_i0_i7
+   Register : game/header/rom_size_i0_i6
+   Register : game/header/rom_size_i0_i5
+   Register : game/header/rom_size_i0_i4
+   Register : game/header/rom_size_i0_i3
+   Register : game/header/rom_size_i0_i2
+   Register : game/header/rom_size_i0_i1
+   Register : game/header/cart_type_i0_i7
+   Register : game/header/cart_type_i0_i6
+   Register : game/header/cart_type_i0_i5
+   Register : game/header/cart_type_i0_i4
+   Register : game/header/cart_type_i0_i3
+   Register : game/header/cart_type_i0_i2
+
+                                   Page 16
+
+
+
+
+Design:  top                                           Date:  09/09/26  23:43:59
+
+GSR Usage (cont)
+----------------
+   Register : game/header/cart_type_i0_i1
+   Register : game/header/wait_ticks__i3
+   Register : game/header/wait_ticks__i2
+   Register : game/header/wait_ticks__i1
+   Register : programmer/op__i0
+   Register : programmer/state_FSM_i1
+   Register : programmer/bus_data__i0
+   Register : programmer/bus_start_183
+   Register : programmer/timer__i0
+   Register : programmer/value__i0
+   Register : programmer/bus_data__i3
+   Register : programmer/target__i0
+   Register : programmer/bus_data__i2
+   Register : programmer/bus_data__i1
+   Register : programmer/status__i0
+   Register : programmer/bus_addr__i0
+   Register : programmer/result__i0
+   Register : programmer/state_FSM_i10
+   Register : programmer/state_FSM_i9
+   Register : programmer/state_FSM_i8
+   Register : programmer/state_FSM_i7
+   Register : programmer/state_FSM_i6
+   Register : programmer/state_FSM_i5
+   Register : programmer/state_FSM_i4
+   Register : programmer/state_FSM_i3
+   Register : programmer/state_FSM_i2
+   Register : programmer/step__i0
+   Register : programmer/bus_write_184
+   Register : programmer/done_175
+   Register : programmer/op__i7
+   Register : programmer/op__i6
+   Register : programmer/op__i5
+   Register : programmer/op__i4
+   Register : programmer/op__i3
+   Register : programmer/op__i2
+   Register : programmer/op__i1
+   Register : programmer/target__i5
+   Register : programmer/target__i4
+   Register : programmer/target__i3
+   Register : programmer/target__i2
+   Register : programmer/target__i1
+   Register : programmer/value__i7
+   Register : programmer/recheck_182
+   Register : programmer/bus_data__i4
+   Register : programmer/bus_data__i5
+   Register : programmer/bus_data__i6
+   Register : programmer/bus_data__i7
+   Register : programmer/value__i6
+   Register : programmer/value__i5
+   Register : programmer/value__i4
+   Register : programmer/value__i3
+   Register : programmer/value__i2
+   Register : programmer/value__i1
+   Register : programmer/timer__i27
+   Register : programmer/timer__i26
+   Register : programmer/timer__i25
+
+                                   Page 17
+
+
+
+
+Design:  top                                           Date:  09/09/26  23:43:59
+
+GSR Usage (cont)
+----------------
+   Register : programmer/timer__i24
+   Register : programmer/timer__i23
+   Register : programmer/timer__i22
+   Register : programmer/timer__i21
+   Register : programmer/timer__i20
+   Register : programmer/timer__i19
+   Register : programmer/timer__i18
+   Register : programmer/timer__i17
+   Register : programmer/timer__i16
+   Register : programmer/timer__i15
+   Register : programmer/timer__i14
+   Register : programmer/timer__i13
+   Register : programmer/timer__i12
+   Register : programmer/timer__i11
+   Register : programmer/timer__i10
+   Register : programmer/timer__i9
+   Register : programmer/timer__i8
+   Register : programmer/timer__i7
+   Register : programmer/timer__i6
+   Register : programmer/timer__i5
+   Register : programmer/timer__i4
+   Register : programmer/timer__i3
+   Register : programmer/timer__i2
+   Register : programmer/timer__i1
+   Register : programmer/bus_addr__i21
+   Register : programmer/bus_addr__i20
+   Register : programmer/bus_addr__i19
+   Register : programmer/bus_addr__i18
+   Register : programmer/bus_addr__i17
+   Register : programmer/bus_addr__i16
+   Register : programmer/bus_addr__i15
+   Register : programmer/bus_addr__i14
+   Register : programmer/bus_addr__i13
+   Register : programmer/bus_addr__i12
+   Register : programmer/bus_addr__i11
+   Register : programmer/bus_addr__i10
+   Register : programmer/bus_addr__i9
+   Register : programmer/bus_addr__i8
+   Register : programmer/bus_addr__i7
+   Register : programmer/bus_addr__i6
+   Register : programmer/bus_addr__i5
+   Register : programmer/bus_addr__i4
+   Register : programmer/bus_addr__i3
+   Register : programmer/bus_addr__i2
+   Register : programmer/bus_addr__i1
+   Register : programmer/status__i7
+   Register : programmer/status__i6
+   Register : programmer/status__i5
+   Register : programmer/status__i4
+   Register : programmer/status__i3
+   Register : programmer/status__i2
+   Register : programmer/status__i1
+   Register : programmer/target__i21
+   Register : programmer/target__i20
+   Register : programmer/target__i19
+   Register : programmer/target__i18
+
+                                   Page 18
+
+
+
+
+Design:  top                                           Date:  09/09/26  23:43:59
+
+GSR Usage (cont)
+----------------
+   Register : programmer/target__i17
+   Register : programmer/target__i16
+   Register : programmer/target__i15
+   Register : programmer/target__i14
+   Register : programmer/target__i13
+   Register : programmer/target__i12
+   Register : programmer/target__i11
+   Register : programmer/target__i10
+   Register : programmer/target__i9
+   Register : programmer/target__i8
+   Register : programmer/target__i7
+   Register : programmer/target__i6
+   Register : programmer/result__i15
+   Register : programmer/result__i14
+   Register : programmer/result__i13
+   Register : programmer/result__i12
+   Register : programmer/result__i11
+   Register : programmer/result__i10
+   Register : programmer/result__i9
+   Register : programmer/result__i8
+   Register : programmer/result__i7
+   Register : programmer/result__i6
+   Register : programmer/result__i5
+   Register : programmer/result__i4
+   Register : programmer/result__i3
+   Register : programmer/result__i2
+   Register : programmer/result__i1
+   Register : programmer/step__i2
+   Register : programmer/step__i1
+   Register : programmer/bus/rdata__i0
+   Register : programmer/bus/flash_a__i0
+   Register : programmer/bus/flash_d_out__i0
+   Register : programmer/bus/tick_2395__i0
+   Register : programmer/bus/flash_ce_n_90
+   Register : programmer/bus/flash_we_n_92
+   Register : programmer/bus/flash_oe_n_91
+   Register : programmer/bus/flash_d_drive_89
+   Register : programmer/bus/rdata__i7
+   Register : programmer/bus/rdata__i6
+   Register : programmer/bus/rdata__i5
+   Register : programmer/bus/rdata__i4
+   Register : programmer/bus/rdata__i3
+   Register : programmer/bus/rdata__i2
+   Register : programmer/bus/rdata__i1
+   Register : programmer/bus/tick_2395__i7
+   Register : programmer/bus/tick_2395__i6
+   Register : programmer/bus/tick_2395__i5
+   Register : programmer/bus/tick_2395__i4
+   Register : programmer/bus/tick_2395__i3
+   Register : programmer/bus/tick_2395__i2
+   Register : programmer/bus/tick_2395__i1
+   Register : programmer/bus/flash_d_out__i7
+   Register : programmer/bus/flash_d_out__i6
+   Register : programmer/bus/flash_d_out__i5
+   Register : programmer/bus/flash_d_out__i4
+   Register : programmer/bus/flash_d_out__i3
+
+                                   Page 19
+
+
+
+
+Design:  top                                           Date:  09/09/26  23:43:59
+
+GSR Usage (cont)
+----------------
+   Register : programmer/bus/flash_d_out__i2
+   Register : programmer/bus/flash_d_out__i1
+   Register : programmer/bus/flash_a__i21
+   Register : programmer/bus/flash_a__i20
+   Register : programmer/bus/flash_a__i19
+   Register : programmer/bus/flash_a__i18
+   Register : programmer/bus/flash_a__i17
+   Register : programmer/bus/flash_a__i16
+   Register : programmer/bus/flash_a__i15
+   Register : programmer/bus/flash_a__i14
+   Register : programmer/bus/flash_a__i13
+   Register : programmer/bus/flash_a__i12
+   Register : programmer/bus/flash_a__i11
+   Register : programmer/bus/flash_a__i10
+   Register : programmer/bus/flash_a__i9
+   Register : programmer/bus/flash_a__i8
+   Register : programmer/bus/flash_a__i7
+   Register : programmer/bus/flash_a__i6
+   Register : programmer/bus/flash_a__i5
+   Register : programmer/bus/flash_a__i4
+   Register : programmer/bus/flash_a__i3
+   Register : programmer/bus/flash_a__i2
+   Register : programmer/bus/flash_a__i1
+   Register : programmer/bus/state_FSM_i1
+   Register : programmer/bus/state_FSM_i2
+   Register : programmer/bus/state_FSM_i3
+   Register : programmer/bus/state_FSM_i4
+   Register : programmer/bus/state_FSM_i5
+   Register : programmer/bus/state_FSM_i6
+   Register : programmer/bus/state_FSM_i7
+   Register : programmer/bus/state_FSM_i8
+   Register : programmer/bus/state_FSM_i9
+   Register : programmer/bus/state_FSM_i10
+   Register : programmer/bus/done_85
+   Register : protocol/index__i1
+   Register : protocol/base__i8
+   Register : protocol/base__i7
+   Register : protocol/base__i6
+   Register : protocol/base__i5
+   Register : protocol/base__i4
+   Register : protocol/base__i3
+   Register : protocol/base__i2
+   Register : protocol/base__i1
+   Register : protocol/payload_end_i0
+   Register : protocol/frame_end_i0
+   Register : protocol/input_data_i0
+   Register : protocol/base__i21
+   Register : protocol/cs_sync_i0
+   Register : protocol/incoming_2841
+   Register : protocol/incoming_2838
+   Register : protocol/incoming_2839
+   Register : protocol/incoming_2840
+   Register : protocol/op__i0
+   Register : protocol/base__i0
+   Register : protocol/index__i0
+   Register : protocol/status_header__i0
+
+                                   Page 20
+
+
+
+
+Design:  top                                           Date:  09/09/26  23:43:59
+
+GSR Usage (cont)
+----------------
+   Register : protocol/header__i0
+   Register : protocol/received_crc__i0
+   Register : protocol/last_op__i0
+   Register : protocol/tx_shift__i0
+   Register : protocol/frame_op__i0
+   Register : protocol/command__i0
+   Register : protocol/last_result__i0
+   Register : protocol/sck_sync_i0
+   Register : protocol/mosi_sync_i0
+   Register : protocol/old_cs_537
+   Register : protocol/completed__i0
+   Register : protocol/state__i0
+   Register : protocol/incoming_2850
+   Register : protocol/data__i0
+   Register : protocol/address__i0
+   Register : protocol/incoming_2849
+   Register : protocol/op__i7
+   Register : protocol/op__i6
+   Register : protocol/op__i5
+   Register : protocol/op__i4
+   Register : protocol/op__i3
+   Register : protocol/op__i2
+   Register : protocol/op__i1
+   Register : protocol/base__i20
+   Register : protocol/base__i19
+   Register : protocol/base__i18
+   Register : protocol/base__i17
+   Register : protocol/base__i16
+   Register : protocol/base__i15
+   Register : protocol/base__i14
+   Register : protocol/base__i13
+   Register : protocol/base__i12
+   Register : protocol/base__i11
+   Register : protocol/base__i10
+   Register : protocol/base__i9
+   Register : protocol/rx_shift__i0
+   Register : protocol/cs_sync_i1
+   Register : protocol/bits__i0
+   Register : protocol/range_end__i0
+   Register : protocol/input_data_i7
+   Register : protocol/input_data_i6
+   Register : protocol/input_data_i5
+   Register : protocol/input_data_i4
+   Register : protocol/input_data_i3
+   Register : protocol/input_data_i2
+   Register : protocol/input_data_i1
+   Register : protocol/frame_end_i10
+   Register : protocol/frame_end_i9
+   Register : protocol/frame_end_i8
+   Register : protocol/frame_end_i7
+   Register : protocol/frame_end_i6
+   Register : protocol/frame_end_i5
+   Register : protocol/frame_end_i4
+   Register : protocol/frame_end_i3
+   Register : protocol/frame_end_i2
+   Register : protocol/frame_end_i1
+
+                                   Page 21
+
+
+
+
+Design:  top                                           Date:  09/09/26  23:43:59
+
+GSR Usage (cont)
+----------------
+   Register : protocol/payload_end_i10
+   Register : protocol/payload_end_i9
+   Register : protocol/payload_end_i8
+   Register : protocol/payload_end_i7
+   Register : protocol/payload_end_i6
+   Register : protocol/payload_end_i5
+   Register : protocol/payload_end_i4
+   Register : protocol/payload_end_i3
+   Register : protocol/payload_end_i2
+   Register : protocol/payload_end_i1
+   Register : protocol/payload_byte_519
+   Register : protocol/state__i1
+   Register : protocol/block_crc_i1
+   Register : protocol/incoming
+   Register : protocol/incoming_2867
+   Register : protocol/incoming_2866
+   Register : protocol/incoming_2865
+   Register : protocol/incoming_2864
+   Register : protocol/incoming_2863
+   Register : protocol/incoming_2862
+   Register : protocol/incoming_2861
+   Register : protocol/incoming_2860
+   Register : protocol/incoming_2858
+   Register : protocol/incoming_2856
+   Register : protocol/incoming_2855
+   Register : protocol/incoming_2854
+   Register : protocol/incoming_2853
+   Register : protocol/incoming_2852
+   Register : protocol/known_op_529
+   Register : protocol/start_559
+   Register : protocol/crc_byte_slot_520
+   Register : protocol/frame_complete_521
+   Register : protocol/frame_blocked_547
+   Register : protocol/crc_ok_522
+   Register : protocol/sequence_ok_523
+   Register : protocol/address_ok_524
+   Register : protocol/length_ok_525
+   Register : protocol/arm_key_ok_526
+   Register : protocol/block_op_527
+   Register : protocol/range_ok_531
+   Register : protocol/block_crc_i2
+   Register : protocol/block_crc_i3
+   Register : protocol/block_crc_i4
+   Register : protocol/block_crc_i5
+   Register : protocol/block_crc_i6
+   Register : protocol/block_crc_i7
+   Register : protocol/tx_shift__i4
+   Register : protocol/tx_shift__i3
+   Register : protocol/tx_shift__i2
+   Register : protocol/tx_shift__i1
+   Register : protocol/last_op__i7
+   Register : protocol/last_op__i6
+   Register : protocol/last_op__i5
+   Register : protocol/last_op__i4
+   Register : protocol/last_op__i3
+   Register : protocol/last_op__i2
+
+                                   Page 22
+
+
+
+
+Design:  top                                           Date:  09/09/26  23:43:59
+
+GSR Usage (cont)
+----------------
+   Register : protocol/last_op__i1
+   Register : protocol/received_crc__i15
+   Register : protocol/received_crc__i14
+   Register : protocol/received_crc__i13
+   Register : protocol/received_crc__i12
+   Register : protocol/received_crc__i11
+   Register : protocol/received_crc__i10
+   Register : protocol/received_crc__i9
+   Register : protocol/received_crc__i8
+   Register : protocol/received_crc__i7
+   Register : protocol/received_crc__i6
+   Register : protocol/received_crc__i5
+   Register : protocol/received_crc__i4
+   Register : protocol/received_crc__i3
+   Register : protocol/received_crc__i2
+   Register : protocol/received_crc__i1
+   Register : protocol/header__i55
+   Register : protocol/header__i54
+   Register : protocol/header__i53
+   Register : protocol/header__i52
+   Register : protocol/header__i51
+   Register : protocol/header__i50
+   Register : protocol/header__i49
+   Register : protocol/header__i48
+   Register : protocol/header__i47
+   Register : protocol/header__i46
+   Register : protocol/header__i45
+   Register : protocol/header__i44
+   Register : protocol/header__i43
+   Register : protocol/header__i42
+   Register : protocol/header__i41
+   Register : protocol/header__i40
+   Register : protocol/header__i39
+   Register : protocol/header__i38
+   Register : protocol/header__i37
+   Register : protocol/header__i36
+   Register : protocol/header__i35
+   Register : protocol/header__i34
+   Register : protocol/header__i33
+   Register : protocol/header__i32
+   Register : protocol/header__i31
+   Register : protocol/header__i30
+   Register : protocol/header__i29
+   Register : protocol/header__i28
+   Register : protocol/header__i27
+   Register : protocol/header__i26
+   Register : protocol/header__i25
+   Register : protocol/header__i24
+   Register : protocol/header__i23
+   Register : protocol/header__i22
+   Register : protocol/header__i21
+   Register : protocol/header__i20
+   Register : protocol/header__i19
+   Register : protocol/header__i18
+   Register : protocol/header__i17
+   Register : protocol/header__i16
+
+                                   Page 23
+
+
+
+
+Design:  top                                           Date:  09/09/26  23:43:59
+
+GSR Usage (cont)
+----------------
+   Register : protocol/header__i15
+   Register : protocol/header__i14
+   Register : protocol/header__i13
+   Register : protocol/header__i12
+   Register : protocol/header__i11
+   Register : protocol/header__i10
+   Register : protocol/header__i9
+   Register : protocol/header__i8
+   Register : protocol/header__i7
+   Register : protocol/header__i6
+   Register : protocol/header__i5
+   Register : protocol/header__i4
+   Register : protocol/header__i3
+   Register : protocol/header__i2
+   Register : protocol/header__i1
+   Register : protocol/status_header__i63
+   Register : protocol/status_header__i62
+   Register : protocol/status_header__i61
+   Register : protocol/status_header__i60
+   Register : protocol/status_header__i59
+   Register : protocol/status_header__i58
+   Register : protocol/status_header__i57
+   Register : protocol/status_header__i56
+   Register : protocol/status_header__i55
+   Register : protocol/status_header__i54
+   Register : protocol/status_header__i53
+   Register : protocol/status_header__i52
+   Register : protocol/status_header__i51
+   Register : protocol/status_header__i50
+   Register : protocol/status_header__i49
+   Register : protocol/status_header__i48
+   Register : protocol/status_header__i47
+   Register : protocol/block_crc_i8
+   Register : protocol/status_header__i46
+   Register : protocol/status_header__i45
+   Register : protocol/status_header__i44
+   Register : protocol/status_header__i43
+   Register : protocol/status_header__i42
+   Register : protocol/status_header__i41
+   Register : protocol/status_header__i40
+   Register : protocol/status_header__i39
+   Register : protocol/status_header__i38
+   Register : protocol/status_header__i37
+   Register : protocol/status_header__i36
+   Register : protocol/status_header__i35
+   Register : protocol/status_header__i34
+   Register : protocol/status_header__i33
+   Register : protocol/status_header__i32
+   Register : protocol/status_header__i31
+   Register : protocol/status_header__i30
+   Register : protocol/status_header__i29
+   Register : protocol/status_header__i28
+   Register : protocol/status_header__i27
+   Register : protocol/status_header__i26
+   Register : protocol/status_header__i25
+   Register : protocol/status_header__i24
+
+                                   Page 24
+
+
+
+
+Design:  top                                           Date:  09/09/26  23:43:59
+
+GSR Usage (cont)
+----------------
+   Register : protocol/status_header__i23
+   Register : protocol/status_header__i22
+   Register : protocol/status_header__i21
+   Register : protocol/status_header__i20
+   Register : protocol/status_header__i19
+   Register : protocol/status_header__i18
+   Register : protocol/status_header__i17
+   Register : protocol/status_header__i16
+   Register : protocol/status_header__i15
+   Register : protocol/status_header__i14
+   Register : protocol/status_header__i13
+   Register : protocol/status_header__i12
+   Register : protocol/status_header__i11
+   Register : protocol/status_header__i10
+   Register : protocol/status_header__i9
+   Register : protocol/status_header__i8
+   Register : protocol/status_header__i7
+   Register : protocol/status_header__i6
+   Register : protocol/status_header__i5
+   Register : protocol/status_header__i4
+   Register : protocol/status_header__i3
+   Register : protocol/status_header__i2
+   Register : protocol/status_header__i1
+   Register : protocol/index__i9
+   Register : protocol/index__i8
+   Register : protocol/index__i7
+   Register : protocol/index__i6
+   Register : protocol/index__i5
+   Register : protocol/index__i4
+   Register : protocol/index__i3
+   Register : protocol/block_crc_i9
+   Register : protocol/block_crc_i10
+   Register : protocol/block_crc_i11
+   Register : protocol/block_crc_i12
+   Register : protocol/block_crc_i13
+   Register : protocol/block_crc_i14
+   Register : protocol/block_crc_i15
+   Register : protocol/index__i10
+   Register : protocol/status_crc_i0_i0
+   Register : protocol/armed_546
+   Register : protocol/status__i0
+   Register : protocol/block_crc_i0
+   Register : protocol/payload_bytes__i0
+   Register : protocol/rx_crc_i0_i0
+   Register : protocol/rx_crc_i0_i1
+   Register : protocol/rx_crc_i0_i2
+   Register : protocol/address__i21
+   Register : protocol/address__i20
+   Register : protocol/address__i19
+   Register : protocol/address__i18
+   Register : protocol/address__i17
+   Register : protocol/address__i16
+   Register : protocol/address__i15
+   Register : protocol/address__i14
+   Register : protocol/address__i13
+   Register : protocol/address__i12
+
+                                   Page 25
+
+
+
+
+Design:  top                                           Date:  09/09/26  23:43:59
+
+GSR Usage (cont)
+----------------
+   Register : protocol/address__i11
+   Register : protocol/address__i10
+   Register : protocol/address__i9
+   Register : protocol/address__i8
+   Register : protocol/address__i7
+   Register : protocol/address__i6
+   Register : protocol/address__i5
+   Register : protocol/address__i4
+   Register : protocol/address__i3
+   Register : protocol/address__i2
+   Register : protocol/address__i1
+   Register : protocol/data__i7
+   Register : protocol/data__i6
+   Register : protocol/data__i5
+   Register : protocol/data__i4
+   Register : protocol/data__i3
+   Register : protocol/data__i2
+   Register : protocol/data__i1
+   Register : protocol/sequence_id__i0
+   Register : protocol/completed__i15
+   Register : protocol/completed__i14
+   Register : protocol/completed__i13
+   Register : protocol/completed__i12
+   Register : protocol/completed__i11
+   Register : protocol/completed__i10
+   Register : protocol/completed__i9
+   Register : protocol/completed__i8
+   Register : protocol/completed__i7
+   Register : protocol/completed__i6
+   Register : protocol/completed__i5
+   Register : protocol/completed__i4
+   Register : protocol/completed__i3
+   Register : protocol/completed__i2
+   Register : protocol/completed__i1
+   Register : protocol/mosi_sync_i1
+   Register : protocol/sck_sync_i1
+   Register : protocol/last_result__i15
+   Register : protocol/last_result__i14
+   Register : protocol/last_result__i13
+   Register : protocol/last_result__i12
+   Register : protocol/last_result__i11
+   Register : protocol/last_result__i10
+   Register : protocol/last_result__i9
+   Register : protocol/last_result__i8
+   Register : protocol/last_result__i7
+   Register : protocol/last_result__i6
+   Register : protocol/last_result__i5
+   Register : protocol/last_result__i4
+   Register : protocol/last_result__i3
+   Register : protocol/last_result__i2
+   Register : protocol/last_result__i1
+   Register : protocol/payload_bytes__i10
+   Register : protocol/payload_bytes__i9
+   Register : protocol/payload_bytes__i8
+   Register : protocol/payload_bytes__i7
+   Register : protocol/payload_bytes__i6
+
+                                   Page 26
+
+
+
+
+Design:  top                                           Date:  09/09/26  23:43:59
+
+GSR Usage (cont)
+----------------
+   Register : protocol/payload_bytes__i5
+   Register : protocol/payload_bytes__i4
+   Register : protocol/payload_bytes__i3
+   Register : protocol/payload_bytes__i2
+   Register : protocol/payload_bytes__i1
+   Register : protocol/command__i7
+   Register : protocol/command__i6
+   Register : protocol/command__i5
+   Register : protocol/command__i4
+   Register : protocol/command__i3
+   Register : protocol/command__i2
+   Register : protocol/command__i1
+   Register : protocol/frame_op__i7
+   Register : protocol/frame_op__i6
+   Register : protocol/frame_op__i5
+   Register : protocol/frame_op__i4
+   Register : protocol/frame_op__i3
+   Register : protocol/frame_op__i2
+   Register : protocol/frame_op__i1
+   Register : protocol/tx_shift__i7
+   Register : protocol/tx_shift__i6
+   Register : protocol/tx_shift__i5
+   Register : protocol/rx_shift__i6
+   Register : protocol/rx_shift__i5
+   Register : protocol/rx_shift__i4
+   Register : protocol/rx_shift__i3
+   Register : protocol/rx_shift__i2
+   Register : protocol/rx_shift__i1
+   Register : protocol/rx_crc_i0_i3
+   Register : protocol/rx_crc_i0_i4
+   Register : protocol/rx_crc_i0_i5
+   Register : protocol/rx_crc_i0_i6
+   Register : protocol/rx_crc_i0_i7
+   Register : protocol/rx_crc_i0_i8
+   Register : protocol/range_end__i22
+   Register : protocol/range_end__i21
+   Register : protocol/range_end__i20
+   Register : protocol/range_end__i19
+   Register : protocol/range_end__i18
+   Register : protocol/range_end__i17
+   Register : protocol/range_end__i16
+   Register : protocol/range_end__i15
+   Register : protocol/range_end__i14
+   Register : protocol/range_end__i13
+   Register : protocol/range_end__i12
+   Register : protocol/range_end__i11
+   Register : protocol/range_end__i10
+   Register : protocol/range_end__i9
+   Register : protocol/range_end__i8
+   Register : protocol/range_end__i7
+   Register : protocol/range_end__i6
+   Register : protocol/range_end__i5
+   Register : protocol/range_end__i4
+   Register : protocol/range_end__i3
+   Register : protocol/range_end__i2
+   Register : protocol/range_end__i1
+
+                                   Page 27
+
+
+
+
+Design:  top                                           Date:  09/09/26  23:43:59
+
+GSR Usage (cont)
+----------------
+   Register : protocol/status__i7
+   Register : protocol/status__i6
+   Register : protocol/status__i5
+   Register : protocol/status__i4
+   Register : protocol/bits__i13
+   Register : protocol/bits__i12
+   Register : protocol/bits__i11
+   Register : protocol/bits__i10
+   Register : protocol/bits__i9
+   Register : protocol/bits__i8
+   Register : protocol/bits__i7
+   Register : protocol/bits__i6
+   Register : protocol/bits__i5
+   Register : protocol/bits__i4
+   Register : protocol/bits__i3
+   Register : protocol/bits__i2
+   Register : protocol/bits__i1
+   Register : protocol/incoming_2848
+   Register : protocol/length__i0
+   Register : protocol/incoming_2847
+   Register : protocol/incoming_2846
+   Register : protocol/incoming_2845
+   Register : protocol/incoming_2844
+   Register : protocol/incoming_2843
+   Register : protocol/incoming_2842
+   Register : protocol/incoming_2851
+   Register : protocol/rx_crc_i0_i9
+   Register : protocol/read_op_528
+   Register : protocol/old_sck_538
+   Register : protocol/version_reply__i8
+   Register : protocol/version_reply__i10
+   Register : protocol/version_reply__i12
+   Register : protocol/version_reply__i13
+   Register : protocol/version_reply__i16
+   Register : protocol/version_reply__i19
+   Register : protocol/version_reply__i20
+   Register : protocol/version_reply__i21
+   Register : protocol/sequence_id__i1
+   Register : protocol/sequence_id__i2
+   Register : protocol/sequence_id__i3
+   Register : protocol/sequence_id__i4
+   Register : protocol/sequence_id__i5
+   Register : protocol/sequence_id__i6
+   Register : protocol/sequence_id__i7
+   Register : protocol/length__i1
+   Register : protocol/length__i2
+   Register : protocol/length__i3
+   Register : protocol/length__i4
+   Register : protocol/length__i5
+   Register : protocol/length__i6
+   Register : protocol/length__i7
+   Register : protocol/length__i8
+   Register : protocol/length__i9
+   Register : protocol/length__i10
+   Register : protocol/rx_crc_i0_i10
+   Register : protocol/rx_crc_i0_i11
+
+                                   Page 28
+
+
+
+
+Design:  top                                           Date:  09/09/26  23:43:59
+
+GSR Usage (cont)
+----------------
+   Register : protocol/version_reply__i17
+   Register : protocol/version_reply__i15
+   Register : protocol/version_reply__i11
+   Register : protocol/version_reply__i9
+   Register : protocol/version_reply__i6
+   Register : protocol/version_reply__i3
+   Register : protocol/version_reply__i2
+   Register : protocol/status_crc_i0_i15
+   Register : protocol/status_crc_i0_i14
+   Register : protocol/status_crc_i0_i13
+   Register : protocol/status_crc_i0_i12
+   Register : protocol/status_crc_i0_i11
+   Register : protocol/status_crc_i0_i10
+   Register : protocol/status_crc_i0_i9
+   Register : protocol/status_crc_i0_i8
+   Register : protocol/status_crc_i0_i7
+   Register : protocol/status_crc_i0_i6
+   Register : protocol/status_crc_i0_i5
+   Register : protocol/status_crc_i0_i4
+   Register : protocol/status_crc_i0_i3
+   Register : protocol/status_crc_i0_i2
+   Register : protocol/status_crc_i0_i1
+   Register : protocol/status__i1
+   Register : protocol/status__i2
+   Register : protocol/status__i3
+   Register : protocol/rx_crc_i0_i12
+   Register : protocol/rx_crc_i0_i13
+   Register : protocol/rx_crc_i0_i15
+   Register : protocol/index__i2
+   Register : protocol/rx_crc_i0_i14
+   DP8KC : protocol/outgoing0
+   DP8KC : protocol/incoming0
+
+     Components with synchronous local reset also reset by asynchronous GSR
+----------------------------------------------------------------------
+
+     These components have the GSR property set to ENABLED and the local reset
+     is synchronous. The components will respond to the synchronous local reset
+     and to the unrelated asynchronous reset signal 'rom_address_21__N_167' via
+     the GSR component.
+
+     Type and number of components of the type: 
+   Register = 4 
+
+     Type and instance name of component: 
+   Register : game/mapper/bank_i4
+   Register : game/mapper/bank_i5
+   Register : game/mapper/bank_i6
+   Register : game/mapper/bank_i7
+
+Run Time and Memory Usage
+-------------------------
+
+   Total CPU Time: 0 secs  
+   Total REAL Time: 0 secs  
+   Peak Memory Usage: 54 MB
+
+                                   Page 29
+
+
+
+
+Design:  top                                           Date:  09/09/26  23:43:59
+
+Run Time and Memory Usage (cont)
+--------------------------------
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                   Page 30
+
+
+Copyright (c) 1991-1994 by NeoCAD Inc. All rights reserved.
+     Copyright (c) 1995 AT&T Corp.   All rights reserved.
+     Copyright (c) 1995-2001 Lucent Technologies Inc.  All rights reserved.
+     Copyright (c) 2001 Agere Systems   All rights reserved.
+     Copyright (c) 2002-2024 Lattice Semiconductor Corporation,  All rights
+     reserved.

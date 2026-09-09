@@ -1,0 +1,311 @@
+
+Loading design for application trce from file romemu_game_mbc5.ncd.
+Design name: top
+NCD version: 3.3
+Vendor:      LATTICE
+Device:      LCMXO2-1200HC
+Package:     TQFP100
+Performance: 4
+Loading device for application trce from file 'xo2c1200.nph' in environment: C:/lscc/diamond/3.14/ispfpga.
+Package Status:                     Final          Version 1.44.
+Performance Hardware Data Status:   Final          Version 36.4.
+Setup and Hold Report
+
+--------------------------------------------------------------------------------
+Lattice TRACE Report - Setup, Version Diamond (64-bit) 3.14.0.75.2
+Wed Sep 09 23:42:09 2026
+
+Copyright (c) 1991-1994 by NeoCAD Inc. All rights reserved.
+Copyright (c) 1995 AT&T Corp.   All rights reserved.
+Copyright (c) 1995-2001 Lucent Technologies Inc.  All rights reserved.
+Copyright (c) 2001 Agere Systems   All rights reserved.
+Copyright (c) 2002-2024 Lattice Semiconductor Corporation,  All rights reserved.
+
+Report Information
+------------------
+Command line:    trce -v 10 -gt -sethld -sp 4 -sphld m -o RomEmu_game_mbc5.twr -gui -msgset C:/Users/Admin/Documents/diy-gb-flash-cart/fpga/diamond/promote.xml RomEmu_game_mbc5.ncd RomEmu_game_mbc5.prf 
+Design file:     romemu_game_mbc5.ncd
+Preference file: romemu_game_mbc5.prf
+Device,speed:    LCMXO2-1200HC,4
+Report level:    verbose report, limited to 10 items per preference
+--------------------------------------------------------------------------------
+
+
+
+================================================================================
+Preference: Default path enumeration
+            345 items scored, 0 timing errors detected.
+--------------------------------------------------------------------------------
+
+Report:   13.771ns delay gb_a[13] to flash_d[3]
+
+   Name    Fanout   Delay (ns)          Site               Resource
+PADI_DEL    ---     1.132         41.PAD to       41.PADDI gb_a[13]
+ROUTE         6     2.547       41.PADDI to      R8C18C.A1 gb_a_c_13
+CTOF_DEL    ---     0.495      R8C18C.A1 to      R8C18C.F1 SLICE_6
+ROUTE         8     1.067      R8C18C.F1 to      R7C18A.A0 n1034
+CTOF_DEL    ---     0.495      R7C18A.A0 to      R7C18A.F0 SLICE_9
+ROUTE         2     1.019      R7C18A.F0 to      R7C18B.B0 n1031
+CTOF_DEL    ---     0.495      R7C18B.B0 to      R7C18B.F0 SLICE_15
+ROUTE         9     2.341      R7C18B.F0 to       70.PADDT ram_write
+TDTS_DEL    ---     4.180       70.PADDT to         70.PAD flash_d[3]
+                  --------
+                   13.771   (49.4% logic, 50.6% route), 5 logic levels.
+
+Report:   13.771ns delay gb_a[13] to flash_d[4]
+
+   Name    Fanout   Delay (ns)          Site               Resource
+PADI_DEL    ---     1.132         41.PAD to       41.PADDI gb_a[13]
+ROUTE         6     2.547       41.PADDI to      R8C18C.A1 gb_a_c_13
+CTOF_DEL    ---     0.495      R8C18C.A1 to      R8C18C.F1 SLICE_6
+ROUTE         8     1.067      R8C18C.F1 to      R7C18A.A0 n1034
+CTOF_DEL    ---     0.495      R7C18A.A0 to      R7C18A.F0 SLICE_9
+ROUTE         2     1.019      R7C18A.F0 to      R7C18B.B0 n1031
+CTOF_DEL    ---     0.495      R7C18B.B0 to      R7C18B.F0 SLICE_15
+ROUTE         9     2.341      R7C18B.F0 to       71.PADDT ram_write
+TDTS_DEL    ---     4.180       71.PADDT to         71.PAD flash_d[4]
+                  --------
+                   13.771   (49.4% logic, 50.6% route), 5 logic levels.
+
+Report:   13.771ns delay gb_a[13] to flash_d[5]
+
+   Name    Fanout   Delay (ns)          Site               Resource
+PADI_DEL    ---     1.132         41.PAD to       41.PADDI gb_a[13]
+ROUTE         6     2.547       41.PADDI to      R8C18C.A1 gb_a_c_13
+CTOF_DEL    ---     0.495      R8C18C.A1 to      R8C18C.F1 SLICE_6
+ROUTE         8     1.067      R8C18C.F1 to      R7C18A.A0 n1034
+CTOF_DEL    ---     0.495      R7C18A.A0 to      R7C18A.F0 SLICE_9
+ROUTE         2     1.019      R7C18A.F0 to      R7C18B.B0 n1031
+CTOF_DEL    ---     0.495      R7C18B.B0 to      R7C18B.F0 SLICE_15
+ROUTE         9     2.341      R7C18B.F0 to       74.PADDT ram_write
+TDTS_DEL    ---     4.180       74.PADDT to         74.PAD flash_d[5]
+                  --------
+                   13.771   (49.4% logic, 50.6% route), 5 logic levels.
+
+Report:   13.771ns delay gb_a[13] to flash_d[6]
+
+   Name    Fanout   Delay (ns)          Site               Resource
+PADI_DEL    ---     1.132         41.PAD to       41.PADDI gb_a[13]
+ROUTE         6     2.547       41.PADDI to      R8C18C.A1 gb_a_c_13
+CTOF_DEL    ---     0.495      R8C18C.A1 to      R8C18C.F1 SLICE_6
+ROUTE         8     1.067      R8C18C.F1 to      R7C18A.A0 n1034
+CTOF_DEL    ---     0.495      R7C18A.A0 to      R7C18A.F0 SLICE_9
+ROUTE         2     1.019      R7C18A.F0 to      R7C18B.B0 n1031
+CTOF_DEL    ---     0.495      R7C18B.B0 to      R7C18B.F0 SLICE_15
+ROUTE         9     2.341      R7C18B.F0 to       75.PADDT ram_write
+TDTS_DEL    ---     4.180       75.PADDT to         75.PAD flash_d[6]
+                  --------
+                   13.771   (49.4% logic, 50.6% route), 5 logic levels.
+
+Report:   13.325ns delay gb_a[13] to flash_d[0]
+
+   Name    Fanout   Delay (ns)          Site               Resource
+PADI_DEL    ---     1.132         41.PAD to       41.PADDI gb_a[13]
+ROUTE         6     2.547       41.PADDI to      R8C18C.A1 gb_a_c_13
+CTOF_DEL    ---     0.495      R8C18C.A1 to      R8C18C.F1 SLICE_6
+ROUTE         8     1.067      R8C18C.F1 to      R7C18A.A0 n1034
+CTOF_DEL    ---     0.495      R7C18A.A0 to      R7C18A.F0 SLICE_9
+ROUTE         2     1.019      R7C18A.F0 to      R7C18B.B0 n1031
+CTOF_DEL    ---     0.495      R7C18B.B0 to      R7C18B.F0 SLICE_15
+ROUTE         9     1.895      R7C18B.F0 to       67.PADDT ram_write
+TDTS_DEL    ---     4.180       67.PADDT to         67.PAD flash_d[0]
+                  --------
+                   13.325   (51.0% logic, 49.0% route), 5 logic levels.
+
+Report:   13.325ns delay gb_a[13] to flash_d[1]
+
+   Name    Fanout   Delay (ns)          Site               Resource
+PADI_DEL    ---     1.132         41.PAD to       41.PADDI gb_a[13]
+ROUTE         6     2.547       41.PADDI to      R8C18C.A1 gb_a_c_13
+CTOF_DEL    ---     0.495      R8C18C.A1 to      R8C18C.F1 SLICE_6
+ROUTE         8     1.067      R8C18C.F1 to      R7C18A.A0 n1034
+CTOF_DEL    ---     0.495      R7C18A.A0 to      R7C18A.F0 SLICE_9
+ROUTE         2     1.019      R7C18A.F0 to      R7C18B.B0 n1031
+CTOF_DEL    ---     0.495      R7C18B.B0 to      R7C18B.F0 SLICE_15
+ROUTE         9     1.895      R7C18B.F0 to       68.PADDT ram_write
+TDTS_DEL    ---     4.180       68.PADDT to         68.PAD flash_d[1]
+                  --------
+                   13.325   (51.0% logic, 49.0% route), 5 logic levels.
+
+Report:   13.325ns delay gb_a[13] to flash_d[2]
+
+   Name    Fanout   Delay (ns)          Site               Resource
+PADI_DEL    ---     1.132         41.PAD to       41.PADDI gb_a[13]
+ROUTE         6     2.547       41.PADDI to      R8C18C.A1 gb_a_c_13
+CTOF_DEL    ---     0.495      R8C18C.A1 to      R8C18C.F1 SLICE_6
+ROUTE         8     1.067      R8C18C.F1 to      R7C18A.A0 n1034
+CTOF_DEL    ---     0.495      R7C18A.A0 to      R7C18A.F0 SLICE_9
+ROUTE         2     1.019      R7C18A.F0 to      R7C18B.B0 n1031
+CTOF_DEL    ---     0.495      R7C18B.B0 to      R7C18B.F0 SLICE_15
+ROUTE         9     1.895      R7C18B.F0 to       69.PADDT ram_write
+TDTS_DEL    ---     4.180       69.PADDT to         69.PAD flash_d[2]
+                  --------
+                   13.325   (51.0% logic, 49.0% route), 5 logic levels.
+
+Report:   13.114ns delay gb_cs_n to flash_d[3]
+
+   Name    Fanout   Delay (ns)          Site               Resource
+PADI_DEL    ---     1.132         61.PAD to       61.PADDI gb_cs_n
+ROUTE         2     1.890       61.PADDI to      R8C18C.C1 gb_cs_n_c
+CTOF_DEL    ---     0.495      R8C18C.C1 to      R8C18C.F1 SLICE_6
+ROUTE         8     1.067      R8C18C.F1 to      R7C18A.A0 n1034
+CTOF_DEL    ---     0.495      R7C18A.A0 to      R7C18A.F0 SLICE_9
+ROUTE         2     1.019      R7C18A.F0 to      R7C18B.B0 n1031
+CTOF_DEL    ---     0.495      R7C18B.B0 to      R7C18B.F0 SLICE_15
+ROUTE         9     2.341      R7C18B.F0 to       70.PADDT ram_write
+TDTS_DEL    ---     4.180       70.PADDT to         70.PAD flash_d[3]
+                  --------
+                   13.114   (51.8% logic, 48.2% route), 5 logic levels.
+
+Report:   13.114ns delay gb_cs_n to flash_d[4]
+
+   Name    Fanout   Delay (ns)          Site               Resource
+PADI_DEL    ---     1.132         61.PAD to       61.PADDI gb_cs_n
+ROUTE         2     1.890       61.PADDI to      R8C18C.C1 gb_cs_n_c
+CTOF_DEL    ---     0.495      R8C18C.C1 to      R8C18C.F1 SLICE_6
+ROUTE         8     1.067      R8C18C.F1 to      R7C18A.A0 n1034
+CTOF_DEL    ---     0.495      R7C18A.A0 to      R7C18A.F0 SLICE_9
+ROUTE         2     1.019      R7C18A.F0 to      R7C18B.B0 n1031
+CTOF_DEL    ---     0.495      R7C18B.B0 to      R7C18B.F0 SLICE_15
+ROUTE         9     2.341      R7C18B.F0 to       71.PADDT ram_write
+TDTS_DEL    ---     4.180       71.PADDT to         71.PAD flash_d[4]
+                  --------
+                   13.114   (51.8% logic, 48.2% route), 5 logic levels.
+
+Report:   13.114ns delay gb_cs_n to flash_d[5]
+
+   Name    Fanout   Delay (ns)          Site               Resource
+PADI_DEL    ---     1.132         61.PAD to       61.PADDI gb_cs_n
+ROUTE         2     1.890       61.PADDI to      R8C18C.C1 gb_cs_n_c
+CTOF_DEL    ---     0.495      R8C18C.C1 to      R8C18C.F1 SLICE_6
+ROUTE         8     1.067      R8C18C.F1 to      R7C18A.A0 n1034
+CTOF_DEL    ---     0.495      R7C18A.A0 to      R7C18A.F0 SLICE_9
+ROUTE         2     1.019      R7C18A.F0 to      R7C18B.B0 n1031
+CTOF_DEL    ---     0.495      R7C18B.B0 to      R7C18B.F0 SLICE_15
+ROUTE         9     2.341      R7C18B.F0 to       74.PADDT ram_write
+TDTS_DEL    ---     4.180       74.PADDT to         74.PAD flash_d[5]
+                  --------
+                   13.114   (51.8% logic, 48.2% route), 5 logic levels.
+
+Report:  137.646MHz is the maximum frequency for this preference.
+
+Report:   13.771ns is the maximum delay for this preference.
+
+
+================================================================================
+Preference: Default net enumeration
+            80 items scored, 0 timing errors detected.
+--------------------------------------------------------------------------------
+
+Report:    5.342ns maximum delay on gb_res_n_c
+
+           Delays             Connection(s)
+           5.342ns         62.PADDI to GSR.GSR         
+           1.995ns         62.PADDI to R8C21A.C1       
+           3.606ns         62.PADDI to R7C18B.A1       
+           3.606ns         62.PADDI to R7C18B.A0       
+           3.250ns         62.PADDI to R7C18A.D1       
+           1.995ns         62.PADDI to R8C21B.C1       
+
+Report:    4.359ns maximum delay on gb_wr_n_c
+
+           Delays             Connection(s)
+           4.359ns         59.PADDI to R7C18B.B1       
+           4.102ns         59.PADDI to R7C18B.C0       
+           3.358ns         59.PADDI to R8C18D.CLK      
+           3.358ns         59.PADDI to R8C18A.CLK      
+           3.358ns         59.PADDI to R7C18A.CLK      
+           4.359ns         59.PADDI to R7C18A.B1       
+           1.569ns         59.PADDI to R8C21B.A1       
+           3.358ns         59.PADDI to R8C18C.CLK      
+           3.358ns         59.PADDI to R7C19D.CLK      
+           3.358ns         59.PADDI to R7C18C.CLK      
+
+Report:    3.476ns maximum delay on flash_a_c_8_c
+
+           Delays             Connection(s)
+           3.476ns         36.PADDI to 14.PADDO        
+
+Report:    3.441ns maximum delay on flash_a_c_2_c
+
+           Delays             Connection(s)
+           3.441ns         29.PADDI to 7.PADDO         
+
+Report:    3.389ns maximum delay on flash_a_c_9_c
+
+           Delays             Connection(s)
+           3.389ns         37.PADDI to 15.PADDO        
+
+Report:    3.386ns maximum delay on gb_d_out_0
+
+           Delays             Connection(s)
+           3.386ns         45.PADDI to 67.PADDO        
+           1.635ns         45.PADDI to R8C18D.M0       
+           2.032ns         45.PADDI to R8C18C.M0       
+           1.693ns         45.PADDI to R7C18C.D0       
+
+Report:    3.379ns maximum delay on flash_a_c_12_c
+
+           Delays             Connection(s)
+           3.379ns         40.PADDI to 18.PADDO        
+           2.551ns         40.PADDI to R8C18A.A0       
+
+Report:    3.342ns maximum delay on flash_a_c_1_c
+
+           Delays             Connection(s)
+           3.342ns         28.PADDI to 4.PADDO         
+
+Report:    3.329ns maximum delay on rom_read
+
+           Delays             Connection(s)
+           3.329ns        R7C18B.F1 to 78.PADDO        
+           2.475ns        R7C18B.F1 to 77.PADDO        
+
+Report:    3.329ns maximum delay on gb_rd_n_c
+
+           Delays             Connection(s)
+           2.988ns         60.PADDI to R7C18B.D1       
+           2.988ns         60.PADDI to R7C18B.D0       
+           2.144ns         60.PADDI to R8C18D.C1       
+           2.144ns         60.PADDI to R8C18D.C0       
+           2.144ns         60.PADDI to R8C18A.C1       
+           3.329ns         60.PADDI to R7C18A.A1       
+           1.242ns         60.PADDI to R8C21B.D1       
+
+Report:    5.342ns is the maximum delay for this preference.
+
+Report Summary
+--------------
+----------------------------------------------------------------------------
+Preference                              |   Constraint|       Actual|Levels
+----------------------------------------------------------------------------
+                                        |             |             |
+Default path enumeration                |     0.000 ns|    13.771 ns|   0  
+                                        |             |             |
+Default net enumeration                 |     0.000 ns|     5.342 ns|   0  
+                                        |             |             |
+----------------------------------------------------------------------------
+
+
+All preferences were met.
+
+
+Clock Domains Analysis
+------------------------
+
+Found 1 clocks:
+
+Clock Domain: gb_wr_n_c   Source: gb_wr_n.PAD   Loads: 10
+   No transfer within this clock domain is found
+
+
+Timing summary (Setup):
+---------------
+
+Timing errors: 0  Score: 0
+Cumulative negative slack: 0
+
+Constraints cover 374 paths, 80 nets, and 200 connections (100.00% coverage)
+
+--------------------------------------------------------------------------------
+

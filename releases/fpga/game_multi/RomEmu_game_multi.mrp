@@ -1,0 +1,600 @@
+
+             Lattice Mapping Report File for Design Module 'top'
+
+
+Design Information
+------------------
+
+Command line:   map -a MachXO2 -p LCMXO2-1200HC -t TQFP100 -s 4 -oc Commercial
+     RomEmu_game_multi.ngd -o RomEmu_game_multi_map.ncd -pr
+     RomEmu_game_multi.prf -mp RomEmu_game_multi.mrp -lpf C:/Users/Admin/Documen
+     ts/diy-gb-flash-cart/fpga/diamond/game_multi/RomEmu_game_multi.lpf -lpf
+     C:/Users/Admin/Documents/diy-gb-flash-cart/fpga/constraints/game_multi.lpf
+     -c 0 -gui -msgset
+     C:/Users/Admin/Documents/diy-gb-flash-cart/fpga/diamond/promote.xml 
+Target Vendor:  LATTICE
+Target Device:  LCMXO2-1200HCTQFP100
+Target Performance:   4
+Mapper:  xo2c00,  version:  Diamond (64-bit) 3.14.0.75.2
+Mapped on:  09/09/26  23:43:02
+
+Design Summary
+--------------
+
+   Number of registers:    175 out of  1520 (12%)
+      PFU registers:          175 out of  1280 (14%)
+      PIO registers:            0 out of   240 (0%)
+   Number of SLICEs:       264 out of   640 (41%)
+      SLICEs as Logic/ROM:    264 out of   640 (41%)
+      SLICEs as RAM:            0 out of   480 (0%)
+      SLICEs as Carry:         29 out of   640 (5%)
+   Number of LUT4s:        522 out of  1280 (41%)
+      Number used as logic LUTs:        464
+      Number used as distributed RAM:     0
+      Number used as ripple logic:       58
+      Number used as shift registers:     0
+   Number of PIO sites used: 66 + 4(JTAG) out of 80 (88%)
+   Number of block RAMs:  0 out of 7 (0%)
+   Number of GSRs:        1 out of 1 (100%)
+   EFB used :        No
+   JTAG used :       No
+   Readback used :   No
+   Oscillator used : Yes
+   Startup used :    No
+   POR :             On
+   Bandgap :         On
+   Number of Power Controller:  0 out of 1 (0%)
+   Number of Dynamic Bank Controller (BCINRD):  0 out of 4 (0%)
+   Number of Dynamic Bank Controller (BCLVDSO):  0 out of 1 (0%)
+   Number of DCCA:  0 out of 8 (0%)
+   Number of DCMA:  0 out of 2 (0%)
+   Number of PLLs:  0 out of 1 (0%)
+   Number of DQSDLLs:  0 out of 2 (0%)
+   Number of CLKDIVC:  0 out of 4 (0%)
+   Number of ECLKSYNCA:  0 out of 4 (0%)
+   Number of ECLKBRIDGECS:  0 out of 2 (0%)
+   Notes:-
+      1. Total number of LUT4s = (Number of logic LUT4s) + 2*(Number of
+     distributed RAMs) + 2*(Number of ripple logic)
+      2. Number of logic LUT4s does not include count of distributed RAM and
+     ripple logic.
+   Number of clocks:  2
+     Net clk: 73 loads, 73 rising, 0 falling (Driver: osc )
+
+                                    Page 1
+
+
+
+
+Design:  top                                           Date:  09/09/26  23:43:02
+
+Design Summary (cont)
+---------------------
+     Net gb_wr_n_c: 28 loads, 28 rising, 0 falling (Driver: PIO gb_wr_n )
+   Number of Clock Enables:  28
+     Net running: 2 loads, 2 LSLICEs
+     Net clk_enable_114: 3 loads, 3 LSLICEs
+     Net gb_wr_n_c_enable_12: 2 loads, 2 LSLICEs
+     Net game/rtc_write_register_2__N_393: 2 loads, 2 LSLICEs
+     Net game/gb_wr_n_c_enable_27: 6 loads, 6 LSLICEs
+     Net game/rtc/clk_enable_105: 4 loads, 4 LSLICEs
+     Net game/rtc/clk_enable_112: 14 loads, 14 LSLICEs
+     Net game/rtc/clk_enable_45: 3 loads, 3 LSLICEs
+     Net game/rtc/clk_enable_58: 3 loads, 3 LSLICEs
+     Net game/rtc/clk_enable_11: 1 loads, 1 LSLICEs
+     Net game/rtc/clk_enable_50: 3 loads, 3 LSLICEs
+     Net game/rtc/clk_enable_85: 14 loads, 14 LSLICEs
+     Net game/rtc/clk_enable_46: 1 loads, 1 LSLICEs
+     Net game/rtc/clk_enable_53: 1 loads, 1 LSLICEs
+     Net game/rtc/clk_enable_82: 1 loads, 1 LSLICEs
+     Net game/rtc/clk_enable_113: 1 loads, 1 LSLICEs
+     Net game/mapper/gb_wr_n_c_enable_42: 1 loads, 1 LSLICEs
+     Net game/mapper/gb_wr_n_c_enable_41: 4 loads, 4 LSLICEs
+     Net game/mapper/gb_wr_n_c_enable_34: 4 loads, 4 LSLICEs
+     Net game/mapper/gb_wr_n_c_enable_44: 4 loads, 4 LSLICEs
+     Net game/mapper/gb_wr_n_c_enable_43: 3 loads, 3 LSLICEs
+     Net game/mapper/gb_wr_n_c_enable_17: 1 loads, 1 LSLICEs
+     Net game/mapper/gb_wr_n_c_enable_18: 1 loads, 1 LSLICEs
+     Net game/header/clk_enable_81: 5 loads, 5 LSLICEs
+     Net game/header/clk_enable_74: 4 loads, 4 LSLICEs
+     Net game/header/clk_enable_67: 4 loads, 4 LSLICEs
+     Net game/header/done_N_203: 1 loads, 1 LSLICEs
+     Net game/header/clk_enable_83: 1 loads, 1 LSLICEs
+   Number of LSRs:  4
+     Net ready_3: 24 loads, 24 LSLICEs
+     Net n1243: 2 loads, 2 LSLICEs
+     Net n10727: 10 loads, 10 LSLICEs
+     Net game/rtc/clk_enable_45: 14 loads, 14 LSLICEs
+   Number of nets driven by tri-state buffers:  0
+   Top 10 highest fanout non-clock nets:
+     Net game/header/index_2: 54 loads
+     Net ready_3: 49 loads
+     Net game/header/index_3: 48 loads
+     Net game/index_0: 42 loads
+     Net game/header/index_1: 40 loads
+     Net configured: 31 loads
+     Net game/header/index_5: 29 loads
+     Net game/header/index_4: 26 loads
+     Net n48: 23 loads
+     Net gb_a_c_14: 21 loads
+
+
+
+
+   Number of warnings:  0
+   Number of errors:    0
+     
+
+
+
+                                    Page 2
+
+
+
+
+Design:  top                                           Date:  09/09/26  23:43:02
+
+Design Errors/Warnings
+----------------------
+
+   No errors or warnings present.
+
+IO (PIO) Attributes
+-------------------
+
++---------------------+-----------+-----------+------------+
+| IO Name             | Direction | Levelmode | IO         |
+|                     |           |  IO_TYPE  | Register   |
++---------------------+-----------+-----------+------------+
+| gb_res_n            | INPUT     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| gb_cs_n             | INPUT     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| gb_wr_n             | INPUT     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| gb_rd_n             | INPUT     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| gb_a[0]             | INPUT     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| gb_a[1]             | INPUT     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| gb_a[2]             | INPUT     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| gb_a[3]             | INPUT     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| gb_a[4]             | INPUT     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| gb_a[5]             | INPUT     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| gb_a[6]             | INPUT     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| gb_a[7]             | INPUT     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| gb_a[8]             | INPUT     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| gb_a[9]             | INPUT     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| gb_a[10]            | INPUT     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| gb_a[11]            | INPUT     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| gb_a[12]            | INPUT     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| gb_a[13]            | INPUT     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| gb_a[14]            | INPUT     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| gb_a[15]            | INPUT     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| fram_we_n           | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| fram_oe_n           | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| fram_ce_n           | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+
+                                    Page 3
+
+
+
+
+Design:  top                                           Date:  09/09/26  23:43:02
+
+IO (PIO) Attributes (cont)
+--------------------------
+| flash_we_n          | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_oe_n          | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_ce_n          | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[0]          | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[1]          | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[2]          | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[3]          | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[4]          | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[5]          | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[6]          | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[7]          | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[8]          | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[9]          | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[10]         | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[11]         | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[12]         | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[13]         | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[14]         | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[15]         | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[16]         | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[17]         | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[18]         | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[19]         | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[20]         | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[21]         | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| data_dir            | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| data_oe_n           | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_d[0]          | BIDIR     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+
+                                    Page 4
+
+
+
+
+Design:  top                                           Date:  09/09/26  23:43:02
+
+IO (PIO) Attributes (cont)
+--------------------------
+| flash_d[1]          | BIDIR     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_d[2]          | BIDIR     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_d[3]          | BIDIR     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_d[4]          | BIDIR     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_d[5]          | BIDIR     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_d[6]          | BIDIR     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_d[7]          | BIDIR     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| gb_d[0]             | BIDIR     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| gb_d[1]             | BIDIR     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| gb_d[2]             | BIDIR     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| gb_d[3]             | BIDIR     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| gb_d[4]             | BIDIR     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| gb_d[5]             | BIDIR     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| gb_d[6]             | BIDIR     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| gb_d[7]             | BIDIR     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+
+Removed logic
+-------------
+
+Signal game/rtc/n10728 was merged into signal ready_3
+Signal GND_net undriven or does not drive anything - clipped.
+Signal game/header/data_7__I_0_104_8/S0 undriven or does not drive anything -
+     clipped.
+Signal game/header/data_7__I_0_104_8/CO undriven or does not drive anything -
+     clipped.
+Signal game/header/data_7__I_0_104_7/S1 undriven or does not drive anything -
+     clipped.
+Signal game/header/data_7__I_0_104_7/S0 undriven or does not drive anything -
+     clipped.
+Signal game/header/add_7_13/S1 undriven or does not drive anything - clipped.
+Signal game/header/add_7_13/CO undriven or does not drive anything - clipped.
+Signal game/header/add_7_1/S0 undriven or does not drive anything - clipped.
+Signal game/header/add_7_1/CI undriven or does not drive anything - clipped.
+Signal game/header/data_7__I_0_104_0/S1 undriven or does not drive anything -
+     clipped.
+Signal game/header/data_7__I_0_104_0/S0 undriven or does not drive anything -
+     clipped.
+Signal game/header/data_7__I_0_104_0/CI undriven or does not drive anything -
+     clipped.
+Signal game/rtc/divider_1082_add_4_1/S0 undriven or does not drive anything -
+     clipped.
+
+                                    Page 5
+
+
+
+
+Design:  top                                           Date:  09/09/26  23:43:02
+
+Removed logic (cont)
+--------------------
+Signal game/rtc/divider_1082_add_4_1/CI undriven or does not drive anything -
+     clipped.
+Signal game/rtc/add_8_9/CO undriven or does not drive anything - clipped.
+Signal game/rtc/divider_1082_add_4_27/S1 undriven or does not drive anything -
+     clipped.
+Signal game/rtc/divider_1082_add_4_27/CO undriven or does not drive anything -
+     clipped.
+Signal game/rtc/add_8_1/S0 undriven or does not drive anything - clipped.
+Signal game/rtc/add_8_1/CI undriven or does not drive anything - clipped.
+Block game/rtc/i17_1_lut_rep_190 was optimized away.
+Block i1 was optimized away.
+
+     
+
+OSC Summary
+-----------
+
+OSC 1:                                     Pin/Node Value
+  OSC Instance Name:                                osc
+  OSC Type:                                         OSCH
+  STDBY Input:                                      NONE
+  OSC Output:                              NODE     clk
+  OSC Nominal Frequency (MHz):                      53.20
+
+ASIC Components
+---------------
+
+Instance Name: osc
+         Type: OSCH
+
+GSR Usage
+---------
+
+GSR Component:
+   The Global Set Reset (GSR) resource has been used to implement a global reset
+        of the design. The reset signal used for GSR control is 'gb_res_n_c'.
+        
+
+     GSR Property:
+   The design components with GSR property set to ENABLED will respond to global
+        set reset while the components with GSR property set to DISABLED will
+        not.
+        
+
+     Components with disabled GSR Property
+-------------------------------------
+
+     These components have the GSR property set to DISABLED. The components will
+     not respond to the reset signal 'gb_res_n_c' via the GSR component.
+
+     Type and number of components of the type: 
+   Register = 138 
+
+     Type and instance name of component: 
+   Register : game/rtc/days_i0_i2
+   Register : game/rtc/latch_sync__i1
+
+                                    Page 6
+
+
+
+
+Design:  top                                           Date:  09/09/26  23:43:02
+
+GSR Usage (cont)
+----------------
+   Register : game/rtc/latch_sync__i0
+   Register : game/rtc/divider_1082__i18
+   Register : game/rtc/minutes_i0_i0
+   Register : game/rtc/latch_seen_87
+   Register : game/rtc/write_sync__i0
+   Register : game/rtc/hours_i0_i0
+   Register : game/rtc/seconds_i0_i0
+   Register : game/rtc/latched_4___i28
+   Register : game/rtc/latched_4___i27
+   Register : game/rtc/latched_4___i26
+   Register : game/rtc/latched_4___i25
+   Register : game/rtc/latched_4___i24
+   Register : game/rtc/latched_4___i23
+   Register : game/rtc/latched_4___i22
+   Register : game/rtc/latched_4___i21
+   Register : game/rtc/latched_4___i20
+   Register : game/rtc/latched_4___i19
+   Register : game/rtc/latched_4___i18
+   Register : game/rtc/latched_4___i17
+   Register : game/rtc/latched_4___i16
+   Register : game/rtc/latched_4___i15
+   Register : game/rtc/latched_4___i14
+   Register : game/rtc/latched_4___i13
+   Register : game/rtc/latched_4___i12
+   Register : game/rtc/latched_4___i11
+   Register : game/rtc/latched_4___i10
+   Register : game/rtc/latched_4___i9
+   Register : game/rtc/latched_4___i8
+   Register : game/rtc/latched_4___i7
+   Register : game/rtc/latched_4___i6
+   Register : game/rtc/latched_4___i5
+   Register : game/rtc/latched_4___i4
+   Register : game/rtc/latched_4___i3
+   Register : game/rtc/latched_4___i2
+   Register : game/rtc/seconds_i0_i5
+   Register : game/rtc/seconds_i0_i4
+   Register : game/rtc/seconds_i0_i3
+   Register : game/rtc/seconds_i0_i2
+   Register : game/rtc/seconds_i0_i1
+   Register : game/rtc/days_i0_i8
+   Register : game/rtc/hours_i0_i4
+   Register : game/rtc/hours_i0_i3
+   Register : game/rtc/hours_i0_i2
+   Register : game/rtc/hours_i0_i1
+   Register : game/rtc/write_sync__i1
+   Register : game/rtc/minutes_i0_i5
+   Register : game/rtc/divider_1082__i0
+   Register : game/rtc/carry_94
+   Register : game/rtc/days_i0_i1
+   Register : game/rtc/minutes_i0_i4
+   Register : game/rtc/minutes_i0_i3
+   Register : game/rtc/minutes_i0_i2
+   Register : game/rtc/minutes_i0_i1
+   Register : game/rtc/divider_1082__i19
+   Register : game/rtc/divider_1082__i20
+   Register : game/rtc/write_seen_86
+
+                                    Page 7
+
+
+
+
+Design:  top                                           Date:  09/09/26  23:43:02
+
+GSR Usage (cont)
+----------------
+   Register : game/rtc/divider_1082__i21
+   Register : game/rtc/latched_4___i1
+   Register : game/rtc/days_i0_i3
+   Register : game/rtc/days_i0_i4
+   Register : game/rtc/divider_1082__i5
+   Register : game/rtc/days_i0_i5
+   Register : game/rtc/divider_1082__i6
+   Register : game/rtc/divider_1082__i7
+   Register : game/rtc/divider_1082__i8
+   Register : game/rtc/divider_1082__i9
+   Register : game/rtc/divider_1082__i22
+   Register : game/rtc/divider_1082__i10
+   Register : game/rtc/days_i0_i6
+   Register : game/rtc/divider_1082__i11
+   Register : game/rtc/days_i0_i7
+   Register : game/rtc/divider_1082__i12
+   Register : game/rtc/divider_1082__i13
+   Register : game/rtc/divider_1082__i23
+   Register : game/rtc/divider_1082__i24
+   Register : game/rtc/divider_1082__i25
+   Register : game/rtc/divider_1082__i1
+   Register : game/rtc/days_i0_i0
+   Register : game/rtc/divider_1082__i14
+   Register : game/rtc/divider_1082__i15
+   Register : game/rtc/divider_1082__i16
+   Register : game/rtc/divider_1082__i2
+   Register : game/rtc/divider_1082__i3
+   Register : game/rtc/divider_1082__i4
+   Register : game/rtc/divider_1082__i17
+   Register : game/rtc/halted_93
+   Register : game/mapper/rtc_write_register_i0_i0
+   Register : game/mapper/rtc_write_data_i0_i0
+   Register : game/mapper/rtc_write_data_i0_i7
+   Register : game/mapper/rtc_write_data_i0_i6
+   Register : game/mapper/rtc_write_data_i0_i5
+   Register : game/mapper/rtc_write_data_i0_i4
+   Register : game/mapper/rtc_write_data_i0_i3
+   Register : game/mapper/rtc_write_data_i0_i2
+   Register : game/mapper/rtc_write_data_i0_i1
+   Register : game/mapper/rtc_write_register_i0_i2
+   Register : game/mapper/rtc_write_register_i0_i1
+   Register : game/mapper/rtc_write_toggle_238
+   Register : game/mapper/rtc_latch_toggle_235
+   Register : game/header/index__i4
+   Register : game/header/index__i3
+   Register : game/header/index__i2
+   Register : game/header/index__i1
+   Register : game/header/index__i0
+   Register : game/header/cart_type_i0_i0
+   Register : game/header/rom_size_i0_i0
+   Register : game/header/ram_size_i0_i0
+   Register : game/header/done_80
+   Register : game/header/wait_ticks__i3
+   Register : game/header/wait_ticks__i2
+   Register : game/header/wait_ticks__i1
+   Register : game/header/ram_size_i0_i7
+
+                                    Page 8
+
+
+
+
+Design:  top                                           Date:  09/09/26  23:43:02
+
+GSR Usage (cont)
+----------------
+   Register : game/header/ram_size_i0_i6
+   Register : game/header/ram_size_i0_i5
+   Register : game/header/ram_size_i0_i4
+   Register : game/header/ram_size_i0_i3
+   Register : game/header/ram_size_i0_i2
+   Register : game/header/ram_size_i0_i1
+   Register : game/header/rom_size_i0_i7
+   Register : game/header/rom_size_i0_i6
+   Register : game/header/rom_size_i0_i5
+   Register : game/header/rom_size_i0_i4
+   Register : game/header/rom_size_i0_i3
+   Register : game/header/rom_size_i0_i2
+   Register : game/header/rom_size_i0_i1
+   Register : game/header/cart_type_i0_i7
+   Register : game/header/cart_type_i0_i6
+   Register : game/header/cart_type_i0_i5
+   Register : game/header/cart_type_i0_i4
+   Register : game/header/cart_type_i0_i3
+   Register : game/header/cart_type_i0_i2
+   Register : game/header/cart_type_i0_i1
+   Register : game/header/multicart_84
+   Register : game/header/wait_ticks__i0
+   Register : game/header/logo_match_85
+   Register : game/header/index__i5
+
+     Components with synchronous local reset also reset by asynchronous GSR
+----------------------------------------------------------------------
+
+     These components have the GSR property set to ENABLED and the local reset
+     is synchronous. The components will respond to the synchronous local reset
+     and to the unrelated asynchronous reset signal 'gb_res_n_c' via the GSR
+     component.
+
+     Type and number of components of the type: 
+   Register = 4 
+
+     Type and instance name of component: 
+   Register : game/mapper/bank_i4
+   Register : game/mapper/bank_i5
+   Register : game/mapper/bank_i6
+   Register : game/mapper/bank_i7
+
+Run Time and Memory Usage
+-------------------------
+
+   Total CPU Time: 0 secs  
+   Total REAL Time: 0 secs  
+   Peak Memory Usage: 48 MB
+        
+
+
+
+
+
+
+
+
+                                    Page 9
+
+
+Copyright (c) 1991-1994 by NeoCAD Inc. All rights reserved.
+     Copyright (c) 1995 AT&T Corp.   All rights reserved.
+     Copyright (c) 1995-2001 Lucent Technologies Inc.  All rights reserved.
+     Copyright (c) 2001 Agere Systems   All rights reserved.
+     Copyright (c) 2002-2024 Lattice Semiconductor Corporation,  All rights
+     reserved.
