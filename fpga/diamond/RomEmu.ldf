@@ -4,6 +4,7 @@
     <Implementation title="game_multi" dir="game_multi" description="ROM header selected multi-mapper GAME" synthesis="lse" default_strategy="Strategy1">
         <Options def_top="top"/>
         <Source name="../targets/game_multi/top.v" type="Verilog" type_short="Verilog"><Options top_module="top"/></Source>
+        <Source name="../rtl/game_multi_core.v" type="Verilog" type_short="Verilog"><Options/></Source>
         <Source name="../rtl/cart_header.v" type="Verilog" type_short="Verilog"><Options/></Source>
         <Source name="../rtl/cart_mapper.v" type="Verilog" type_short="Verilog"><Options/></Source>
         <Source name="../rtl/mbc_rtc.v" type="Verilog" type_short="Verilog"><Options/></Source>

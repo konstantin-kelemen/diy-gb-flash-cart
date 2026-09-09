@@ -1,12 +1,12 @@
 // Single-operation MX29LV320E x8 sequencer. Defaults are for 2.08 MHz.
 // The block target supplies timers and bus ticks for 53.20 MHz.
 // Commands: 10 read, 11 program byte, 12 sector erase, 13 ID, 14 reset.
-// No Game Boy interface: use only in the separate PROGRAMMER build.
+// Владение шиной задаётся target; SPLIT_DATA используется с внешним арбитром.
 module mx29_programmer #(
     parameter POWER_CYCLES = 520000,
     parameter PROGRAM_CYCLES = 4160,
     parameter ERASE_CYCLES = 6240000,
-    parameter READ_TICKS = 1, WRITE_TICKS = 1
+    parameter READ_TICKS = 1, WRITE_TICKS = 1, SPLIT_DATA = 0
 ) (
     input wire clk, reset, start,
     input wire [7:0] command,
@@ -18,7 +18,10 @@ module mx29_programmer #(
     output reg [15:0] result,
     output wire [21:0] flash_a,
     inout wire [7:0] flash_d,
-    output wire flash_ce_n, flash_oe_n, flash_we_n
+    output wire flash_ce_n, flash_oe_n, flash_we_n,
+    input wire [7:0] memory_data_in,
+    output wire [7:0] memory_data_out,
+    output wire memory_data_drive
 );
     localparam POWER=0, IDLE=1, ISSUE=2, WAIT_BUS=3,
                POLL=4, WAIT_POLL=5, RESET_FLASH=6, WAIT_RESET=7,
@@ -35,11 +38,12 @@ module mx29_programmer #(
     wire bus_done;
     wire [7:0] bus_result;
     assign busy = state != IDLE;
-    mx29_bus #(.READ_TICKS(READ_TICKS), .WRITE_TICKS(WRITE_TICKS)) bus(.clk(clk), .reset(reset), .start(bus_start),
+    mx29_bus #(.READ_TICKS(READ_TICKS), .WRITE_TICKS(WRITE_TICKS), .SPLIT_DATA(SPLIT_DATA)) bus(.clk(clk), .reset(reset), .start(bus_start),
         .write_cycle(bus_write), .addr(bus_addr), .wdata(bus_data),
         .busy(), .done(bus_done), .rdata(bus_result),
         .flash_a(flash_a), .flash_d(flash_d), .flash_ce_n(flash_ce_n),
-        .flash_oe_n(flash_oe_n), .flash_we_n(flash_we_n));
+        .flash_oe_n(flash_oe_n), .flash_we_n(flash_we_n),
+        .memory_data_in(memory_data_in), .memory_data_out(memory_data_out), .memory_data_drive(memory_data_drive));
 
     always @(posedge clk) begin
         if (reset) begin

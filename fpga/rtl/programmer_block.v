@@ -1,7 +1,8 @@
 // Protocol 3: CRC protected requests, 1..1024 byte blocks, Mode 0 SPI.
 // All logic uses clk (53.20 MHz). SPI <=4 MHz, CS guards >=2 us.
-module programmer_block (
+module programmer_block #(parameter CONTROLLED=0) (
     input wire clk, reset, spi_cs_n, spi_sck, spi_mosi,
+    input wire accept_requests,
     output wire spi_miso,
     input wire busy, done,
     input wire [7:0] operation_status,
@@ -12,6 +13,7 @@ module programmer_block (
     output reg seen,
     output wire active
 );
+    wire accepting=!CONTROLLED || accept_requests;
     function [15:0] crc_byte;
         input [15:0] crc; input [7:0] value;
         reg [15:0] c; integer j;
@@ -160,7 +162,7 @@ module programmer_block (
                 header<=0; rx_crc<=16'hffff; received_crc<=0;
                 // Commit only a complete, exact-length frame after CS rises.
                 if(!old_cs && frame_op!=1 && frame_op!=2 && frame_op!=3 &&
-                    frame_complete && !active && !frame_blocked) begin
+                    frame_complete && !active && !frame_blocked && accepting) begin
                     sequence_id<=header[55:48]; last_op<=frame_op; completed<=0; last_result<=0;
                     if(!crc_ok) begin status<=7; armed<=0; end
                     else if(!sequence_ok) begin status<=10; armed<=0; end

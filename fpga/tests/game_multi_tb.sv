@@ -71,8 +71,8 @@ module game_multi_tb;
         begin idle(); gb_res_n=0; cart_type=t; rom_size=r; ram_size=s; secondary_logo=multi;
             #200; if(!fram_ce_n || !flash_ce_n || !data_oe_n) $fatal(1,"reset isolation");
             gb_res_n=1;
-            wait(dut.configured); #100;
-            if(dut.cart_type!==t || dut.rom_size!==r || dut.ram_size!==s) $fatal(1,"header scan");
+            wait(dut.game.configured); #100;
+            if(dut.game.cart_type!==t || dut.game.rom_size!==r || dut.game.ram_size!==s) $fatal(1,"header scan");
         end
     endtask
     task rtc_write(input [7:0] r,input [7:0] d);
@@ -90,13 +90,13 @@ module game_multi_tb;
         for(b=0;b<4;b=b+1) begin wr('h4000,b); wr('hbfff,b+64); end
         for(b=0;b<4;b=b+1) begin wr('h4000,b); rd('hbfff,b+64); end
         boot(1,5,0,1);
-        if(!dut.multicart) $fatal(1,"MBC1M logo");
+        if(!dut.game.multicart) $fatal(1,"MBC1M logo");
         wr('h4000,2); wr('h6000,1); wr('h2000,0); rd('h0000,32); rd('h4000,33);
         wr('h2000,16); rd('h4000,32);
         for(i=0;i<48;i=i+1) begin
-            corrupt_logo=i; boot(1,5,0,1); if(dut.multicart) $fatal(1,"partial MBC1M logo");
+            corrupt_logo=i; boot(1,5,0,1); if(dut.game.multicart) $fatal(1,"partial MBC1M logo");
         end
-        corrupt_logo=-1; boot(1,5,0,0); if(dut.multicart) $fatal(1,"false MBC1M");
+        corrupt_logo=-1; boot(1,5,0,0); if(dut.game.multicart) $fatal(1,"false MBC1M");
         boot(6,3,0,0); wr('h0000,'ha); wr('ha123,'hab); rd('hb323,'hfb);
         wr('h2100,9); rd('h4000,9); wr('h2000,0); rd('ha123,'hff);
         boot('h1b,7,4,0); wr('h2000,255); rd('h7fff,0); wr('h3000,1); rd('h4000,255);
@@ -126,8 +126,8 @@ module game_multi_tb;
         if(writes!=old_writes) $fatal(1,"invalid RTC select touched F-RAM");
         boot('h1e,7,5,0); wr(0,'ha); wr('h4000,1); wr('ha000,'h73); wr('h4000,9); rd('ha000,'h73);
         boot('h1b,8,4,0); rd('h4000,'hff); wr(0,'ha); old_writes=writes; wr('ha000,0);
-        if(dut.supported || writes!=old_writes) $fatal(1,"oversize active");
-        boot('h22,3,0,0); rd('h4000,'hff); if(dut.supported) $fatal(1,"unsupported type active");
+        if(dut.game.supported || writes!=old_writes) $fatal(1,"oversize active");
+        boot('h22,3,0,0); rd('h4000,'hff); if(dut.game.supported) $fatal(1,"unsupported type active");
         $display("PASS game_multi: auto header/MBC1M, delayed buses, 128 KiB F-RAM, MBC2 nibble, RTC mailbox/reset/latch, isolation");
         $finish;
     end

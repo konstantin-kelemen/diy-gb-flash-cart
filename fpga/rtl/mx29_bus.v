@@ -12,7 +12,7 @@
 // This avoids multiple-driver problems in synthesis.
 // ============================================================================
 
-module mx29_bus #(parameter READ_TICKS=1, WRITE_TICKS=1) (
+module mx29_bus #(parameter READ_TICKS=1, WRITE_TICKS=1, SPLIT_DATA=0) (
     input wire clk,
     input wire reset,
 
@@ -30,18 +30,23 @@ module mx29_bus #(parameter READ_TICKS=1, WRITE_TICKS=1) (
 
     output reg flash_ce_n,
     output reg flash_oe_n,
-    output reg flash_we_n
+    output reg flash_we_n,
+    input wire [7:0] memory_data_in,
+    output wire [7:0] memory_data_out,
+    output wire memory_data_drive
 );
 
     reg [7:0] flash_d_out;
     reg flash_d_drive;
 
     assign flash_d =
-        flash_d_drive ?
+        !SPLIT_DATA && flash_d_drive ?
         flash_d_out :
         8'bz;
 
-    wire [7:0] flash_d_in = flash_d;
+    assign memory_data_out=flash_d_out;
+    assign memory_data_drive=flash_d_drive;
+    wire [7:0] flash_d_in = SPLIT_DATA ? memory_data_in : flash_d;
 
 
     reg [3:0] state;
