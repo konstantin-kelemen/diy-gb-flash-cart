@@ -4,14 +4,10 @@ LOCATE COMP "spi_mosi" SITE "96" ;
 LOCATE COMP "spi_cs_n" SITE "97" ;
 LOCATE COMP "spi_sck" SITE "98" ;
 LOCATE COMP "spi_miso" SITE "99" ;
-LOCATE COMP "spi_ready" SITE "82" ;
-LOCATE COMP "spi_seen" SITE "83" ;
 IOBUF PORT "spi_mosi" IO_TYPE=LVCMOS33 PULLMODE=DOWN ;
 IOBUF PORT "spi_cs_n" IO_TYPE=LVCMOS33 PULLMODE=UP ;
 IOBUF PORT "spi_sck" IO_TYPE=LVCMOS33 PULLMODE=DOWN ;
 IOBUF PORT "spi_miso" IO_TYPE=LVCMOS33 PULLMODE=NONE ;
-IOBUF PORT "spi_ready" IO_TYPE=LVCMOS33 ;
-IOBUF PORT "spi_seen" IO_TYPE=LVCMOS33 ;
 LOCATE COMP "flash_a[0]" SITE "3" ;
 LOCATE COMP "flash_a[1]" SITE "4" ;
 LOCATE COMP "flash_a[2]" SITE "7" ;
@@ -81,3 +77,10 @@ IOBUF PORT "flash_d[7]" IO_TYPE=LVCMOS33 PULLMODE=NONE ;
 
 # 53.20 MHz nominal OSCH; close timing at 64 MHz for oscillator tolerance.
 FREQUENCY NET "clk" 64 MHz ;
+
+LOCATE COMP "fram_ce_n" SITE "82" ;
+IOBUF PORT "fram_ce_n" IO_TYPE=LVCMOS33 PULLMODE=UP ;
+LOCATE COMP "fram_oe_n" SITE "83" ;
+IOBUF PORT "fram_oe_n" IO_TYPE=LVCMOS33 PULLMODE=UP ;
+LOCATE COMP "fram_we_n" SITE "84" ;
+IOBUF PORT "fram_we_n" IO_TYPE=LVCMOS33 PULLMODE=UP ;

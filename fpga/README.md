@@ -8,18 +8,20 @@
 | `targets/flash_bringup/` | `flash_bringup` (активна по умолчанию) | Общий `internal_rom.lpf`; [инструкция](targets/flash_bringup/README.md) |
 | `targets/spi_bringup/` | `spi_bringup` | `constraints/spi_bringup.lpf`; [сборка и симуляция](targets/spi_bringup/README.md) |
 | `targets/game_rom/` | `game_rom` | `constraints/game_rom.lpf`; [запуск ROM из Flash](targets/game_rom/README.md) |
+| `targets/game_mbc5/` | `game_mbc5` | `constraints/game_mbc5.lpf`; [LSDj и F-RAM](targets/game_mbc5/README.md) |
 | `targets/programmer/` | `programmer` | `constraints/programmer.lpf`; [запись Flash](targets/programmer/README.md) |
 
-Для следующей GAME-сборки подготовлен `constraints/game_mbc5.lpf`,
-сверенный со [схемой подключения F-RAM](../hardware/cartridge/cartridge.kicad_sch).
-RTL-цель MBC5 пока не добавлена. Старые сборки с диагностикой на 82–83
-требуют адаптации к этому монтажу.
+Добавлена GAME-конфигурация MBC5 для LSDj 1 МиБ / RAM 128 КиБ.
+RTL и адаптация PROGRAMMER к F-RAM проверены в симуляции; новые JEDEC
+ещё не собраны. Старые выпуски PROGRAMMER с диагностикой на 82–83
+несовместимы с подключённой F-RAM. Назначения — в
+[схеме KiCad](../hardware/cartridge/cartridge.kicad_sch).
 
 Каждая конфигурация содержит собственный `top` и собирается независимо.
 Общие модули — в `rtl/`, тесты — в `tests/`, проект — в `diamond/`.
 
-`examples/Hello_World.v` — минимальный пример выхода FPGA,
-`examples/FRAM_test.v` — ранний автономный тест F-RAM. Они не подключены
+`examples/hello_world.v` — минимальный пример выхода FPGA,
+`examples/fram_test.v` — ранний автономный тест F-RAM. Они не подключены
 к проекту Diamond. Перед использованием нужны отдельная конфигурация,
 проверенный LPF и испытания.
 

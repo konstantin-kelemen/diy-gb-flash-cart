@@ -12,6 +12,7 @@ _autosave-*
 /fpga/tests/build/
 /fpga/diamond/programmer/
 /fpga/diamond/game_rom/
+/fpga/diamond/game_mbc5/
 __pycache__/
 
 # RP2040 build atrifacts

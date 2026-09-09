@@ -169,7 +169,6 @@ def main():
         if name == 'write':
             p.add_argument('--erase', action='store_true', required=True,
                            help='erase complete overlapping sectors, including their unused tails')
-            p.add_argument('--allow-large', action='store_true', help='allow images over 32 KiB after bench acceptance')
     p = sub.add_parser('read')
     p.add_argument('file', type=pathlib.Path)
     p.add_argument('--length', type=lambda s: int(s, 0), required=True)
@@ -181,8 +180,6 @@ def main():
             image = args.file.read_bytes()
             if not 0 < len(image) <= SIZE:
                 raise ValueError('Image size must be between 1 byte and 4 MiB')
-            if args.command == 'write' and len(image) > 32768 and not args.allow_large:
-                raise ValueError('Initial bring-up is limited to 32 KiB; use --allow-large after bench acceptance')
         if args.command == 'read' and not (0 <= args.address < SIZE and 0 < args.length <= SIZE - args.address):
             raise ValueError('Read range exceeds Flash capacity')
         import serial

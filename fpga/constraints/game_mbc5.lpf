@@ -1,6 +1,6 @@
-# Назначения для будущей GAME-сборки MBC5; RTL-цель пока не добавлена.
+# GAME MBC5 для LSDj 1 МиБ.
 # flash_a[16:0] и flash_d[7:0] — общие шины Flash / F-RAM.
-# flash_d и gb_d должны быть inout. Временные ограничения добавляются с RTL.
+# Асинхронные пути и WR# требуют отдельного post-route анализа setup/hold.
 SYSCONFIG JTAG_PORT=ENABLE ;
 LOCATE COMP "gb_a[0]" SITE "27" ;
 IOBUF PORT "gb_a[0]" IO_TYPE=LVCMOS33 ;

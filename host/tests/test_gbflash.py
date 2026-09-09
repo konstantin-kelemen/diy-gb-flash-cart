@@ -3,7 +3,7 @@ import io
 import sys
 import unittest
 from pathlib import Path
-from unittest.mock import patch
+from unittest.mock import MagicMock, patch
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import gbflash
@@ -13,6 +13,7 @@ class Bridge:
     """Binary USB/FPGA protocol model, deliberately returns fragmented reads."""
     def __init__(self):
         self.memory = bytearray(b'\xff' * gbflash.SIZE)
+        self.device = 0xa8
         self.sequence = 254
         self.armed = False
         self.output = b''
@@ -56,7 +57,7 @@ class Bridge:
             elif op != 0x30 and not self.armed:
                 code = 9
             elif op == 0x13:
-                result = 0xa8c2
+                result = (self.device << 8) | 0xc2
             elif op == 0x14:
                 pass
             elif op == 0x30:
@@ -70,7 +71,7 @@ class Bridge:
                     self.memory[address + offset] &= value
                 count = length
             elif op == 0x12:
-                size = dict(gbflash.sectors(0xa8))[address]
+                size = dict(gbflash.sectors(self.device))[address]
                 self.memory[address:address + size] = b'\xff' * size
                 self.erased.append(address)
             else:
@@ -97,6 +98,40 @@ class Tests(unittest.TestCase):
         with patch('gbflash.time.sleep'):
             programmer = gbflash.Programmer(bridge)
         return programmer, bridge
+
+    def test_cli_image_capacity(self):
+        for command in ('write', 'verify'):
+            for size in (0, 1, 32769, 1048576, gbflash.SIZE, gbflash.SIZE + 1):
+                with self.subTest(command=command, size=size):
+                    image = b'\x55' * size
+                    argv = ['gbflash', '--port', 'test-port', command, 'test.gb']
+                    if command == 'write':
+                        argv.append('--erase')
+                    serial = MagicMock()
+                    with patch.object(sys, 'argv', argv), \
+                         patch.object(Path, 'read_bytes', return_value=image), \
+                         patch.dict(sys.modules, {'serial': serial}), \
+                         patch('gbflash.Programmer') as programmer, \
+                         patch('gbflash.write_image') as write, \
+                         patch('gbflash.verify') as verify, \
+                         contextlib.redirect_stdout(io.StringIO()), \
+                         contextlib.redirect_stderr(io.StringIO()):
+                        programmer.return_value.identify.return_value = 0xa8
+                        result = gbflash.main()
+                        if 0 < size <= gbflash.SIZE:
+                            self.assertEqual(result, 0)
+                            serial.Serial.assert_called_once()
+                            operation = write if command == 'write' else verify
+                            expected = [programmer.return_value, image]
+                            if command == 'write':
+                                expected.append(0xa8)
+                            operation.assert_called_once_with(*expected)
+                            programmer.return_value.operation.assert_called_once_with(0x21)
+                        else:
+                            self.assertEqual(result, 1)
+                            serial.Serial.assert_not_called()
+                            write.assert_not_called()
+                            verify.assert_not_called()
 
     def test_crc_standard_vector_and_corruption(self):
         self.assertEqual(gbflash.packet(b'123456789')[-2:], b'\x29\xb1')
@@ -171,6 +206,38 @@ class Tests(unittest.TestCase):
         with contextlib.redirect_stdout(io.StringIO()):
             with self.assertRaisesRegex(RuntimeError, '0x002000: expected A5, read A4'):
                 gbflash.verify(programmer, image)
+
+    def test_lsdj_full_cycle_both_boot_variants(self):
+        rom_path = Path(__file__).resolve().parents[2] / 'roms/lsdj9_4_2.gb'
+        if rom_path.exists():
+            image = rom_path.read_bytes()
+        else:
+            # ROM не распространяется с репозиторием.
+            data = bytearray((i ^ (i >> 14)) & 255 for i in range(1048576))
+            data[0x147:0x14a] = bytes.fromhex('1b0504')
+            image = bytes(data)
+        self.assertEqual(len(image), 1048576)
+        self.assertEqual(image[0x147:0x14a], bytes.fromhex('1b0504'))
+        for device in (0xa7, 0xa8):
+            with self.subTest(device=device):
+                programmer, bridge = self.make_programmer()
+                bridge.device = device
+                bridge.memory[:] = b'\x55' * gbflash.SIZE
+                before = b''.join(programmer.read_block(a, 1024)
+                                  for a in range(0, gbflash.SIZE, 1024))
+                with contextlib.redirect_stdout(io.StringIO()):
+                    self.assertEqual(programmer.identify(), device)
+                    gbflash.write_image(programmer, image, device)
+                after = b''.join(programmer.read_block(a, 1024)
+                                 for a in range(0, gbflash.SIZE, 1024))
+                self.assertEqual(len(before), gbflash.SIZE)
+                self.assertEqual(len(after), gbflash.SIZE)
+                self.assertEqual(after[:len(image)], image)
+                self.assertEqual(after[len(image):], before[len(image):])
+                self.assertEqual(bridge.erased, [a for a, n in gbflash.sectors(device)
+                                                if a < len(image)])
+                self.assertTrue(all(n == 1024 for op, a, n in bridge.operations
+                                    if op in (0x30, 0x31)))
 
     def test_ff_blocks_are_skipped_only_after_erase_check(self):
         programmer, bridge = self.make_programmer()

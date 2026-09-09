@@ -114,9 +114,3 @@ program timeout 128 тыс., erase timeout 192 млн. При 53,20 МГц эт�
 Алгоритм и параметры: [Macronix MX29LV320E v1.3](https://www.macronix.com/Lists/Datasheet/Attachments/8542/MX29LV320E%20T-B,%203V,%2032Mb,%20v1.3.pdf),
 таблицы AC и Q7/Q5 polling на рис. 20;
 [настройки OSCH MachXO2](https://www.latticesemi.com/-/media/LatticeSemi/Documents/ApplicationNotes/MO/FPGA-TN-02157-3-0-MachXO2-sysCLOCK-PLL-Design-and-User-Guide.ashx?document_id=39080).
-
-Для полного дампа передаются 4096 блоков; только данные на SPI занимают
-8,39 с. Это нижняя граница, без USB, ожидания чтения и служебных кадров.
-Время записи дополнительно зависит от стирания и внутреннего byte programming
-Flash. Аппаратное время полного чтения приведено в
-[журнале испытаний](TEST_PLAN.md#журнал-результатов); время записи отдельно не измерено.

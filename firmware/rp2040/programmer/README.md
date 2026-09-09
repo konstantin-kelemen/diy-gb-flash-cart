@@ -1,8 +1,8 @@
 # RP2040 programmer
 
 Прошивка Waveshare RP2040-Zero для [программатора Flash](../../../docs/PROGRAMMER.md).
-Бинарный USB CDC передаёт блоки протокола 3.0 с CRC; SPI0: GP0 MISO, GP1 CS,
-GP2 SCK, GP3 MOSI, Mode 0, 4 МГц. UART отключён.
+Бинарный USB CDC, протокол 3.0 с CRC; SPI0 Mode 0, 4 МГц. UART отключён.
+Подключение — по [схеме KiCad](../../../hardware/cartridge/cartridge.kicad_sch).
 
 ## Сборка на macOS при изменении прошивки
 

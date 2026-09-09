@@ -31772,7 +31772,7 @@
 				)
 			)
 		)
-		(property "Value" "fram_a10"
+		(property "Value" "flash_a10"
 			(at 181.61 85.0899 90)
 			(show_name no)
 			(do_not_autoplace no)
