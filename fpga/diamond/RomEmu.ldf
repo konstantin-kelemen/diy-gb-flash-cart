@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <BaliProject version="3.2" title="RomEmu" device="LCMXO2-1200HC-4TG100C" default_implementation="flash_bringup">
     <Options/>
+    <Implementation title="game_multi" dir="game_multi" description="ROM header selected multi-mapper GAME" synthesis="lse" default_strategy="Strategy1">
+        <Options def_top="top"/>
+        <Source name="../targets/game_multi/top.v" type="Verilog" type_short="Verilog"><Options top_module="top"/></Source>
+        <Source name="../rtl/cart_header.v" type="Verilog" type_short="Verilog"><Options/></Source>
+        <Source name="../rtl/cart_mapper.v" type="Verilog" type_short="Verilog"><Options/></Source>
+        <Source name="../rtl/mbc_rtc.v" type="Verilog" type_short="Verilog"><Options/></Source>
+        <Source name="../constraints/game_multi.lpf" type="Logic Preference" type_short="LPF"><Options/></Source>
+    </Implementation>
     <Implementation title="game_mbc5" dir="game_mbc5" description="LSDj 1 MiB MBC5 and 128 KiB F-RAM" synthesis="lse" default_strategy="Strategy1">
         <Options def_top="top"/>
         <Source name="../targets/game_mbc5/top.v" type="Verilog" type_short="Verilog"><Options top_module="top"/></Source>
