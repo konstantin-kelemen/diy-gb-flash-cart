@@ -649,7 +649,7 @@
         "uuid": "2780facd-cffd-485a-aed1-c460c817db24"
       }
     ],
-    "used_designators": "R3-4,C11-20,#PWR294-360,U8",
+    "used_designators": "#PWR361-366",
     "variants": []
   },
   "sheets": [

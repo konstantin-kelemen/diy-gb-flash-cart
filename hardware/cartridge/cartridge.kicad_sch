@@ -6477,6 +6477,17 @@
 		)
 		(uuid "3ded74d2-14bf-4efe-acd6-5a1d3be219fc")
 	)
+	(text "U4 B5 -> A5: детектор питания. R11 задаёт LOW при Hi-Z U4;"
+		(exclude_from_sim no)
+		(at 336.042 113.792 0)
+		(effects
+			(font
+				(size 1 1)
+			)
+			(justify left bottom)
+		)
+		(uuid "4a1109d2-49d5-41da-8020-0fe75f065cf7")
+	)
 	(text "Подтяжки 10 кОм к 3,3 В: память отключена при Hi-Z FPGA"
 		(exclude_from_sim no)
 		(at 267.716 20.066 0)
@@ -6663,12 +6674,6 @@
 		(uuid "b8c8c1bb-232d-4909-a48d-cb635c8525f3")
 	)
 	(junction
-		(at 351.79 227.33)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "bf293e91-9442-4bdb-bca1-281cfd6d215d")
-	)
-	(junction
 		(at 351.79 229.87)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -6679,12 +6684,6 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "d1aec905-0a06-4d8f-984e-d77b19f8f034")
-	)
-	(junction
-		(at 290.83 224.79)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "d50ba062-c460-49e2-b554-4d30e1587147")
 	)
 	(junction
 		(at 24.13 246.38)
@@ -7061,16 +7060,6 @@
 			(type default)
 		)
 		(uuid "3b031b53-99ac-4f11-9af6-22b8f6b9273f")
-	)
-	(wire
-		(pts
-			(xy 351.79 224.79) (xy 351.79 227.33)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "3c25e386-e8dd-4936-80d7-253edb039fc6")
 	)
 	(wire
 		(pts
@@ -7554,16 +7543,6 @@
 	)
 	(wire
 		(pts
-			(xy 290.83 222.25) (xy 290.83 224.79)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "96317454-e5c7-4200-b242-b1a70f31ed5b")
-	)
-	(wire
-		(pts
 			(xy 49.53 76.2) (xy 57.15 76.2)
 		)
 		(stroke
@@ -7801,6 +7780,16 @@
 			(type default)
 		)
 		(uuid "c7a05260-27ff-46ff-9877-47360fd5c9ec")
+	)
+	(wire
+		(pts
+			(xy 128.27 160.02) (xy 138.43 160.02)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "cbe0198b-3b58-404b-9270-1b72d1bcaf2e")
 	)
 	(wire
 		(pts
@@ -8131,6 +8120,16 @@
 			(type default)
 		)
 		(uuid "fb477d5e-782e-42f0-a3cf-0ce6b4f7c150")
+	)
+	(label "gb_power_present"
+		(at 138.43 160.02 0)
+		(effects
+			(font
+				(size 1 1)
+			)
+			(justify left bottom)
+		)
+		(uuid "bb85f219-28c0-4d8e-a776-dba8d3106130")
 	)
 	(symbol
 		(lib_id "power:VSSA")
@@ -12775,6 +12774,84 @@
 			(project "cartridge"
 				(path "/2780facd-cffd-485a-aed1-c460c817db24"
 					(reference "#PWR0113")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:GND")
+		(at 369.57 124.46 90)
+		(mirror x)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "22bb09c2-f446-4330-b0de-f8e6fa020c78")
+		(property "Reference" "#PWR0364"
+			(at 375.92 124.46 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "GND"
+			(at 375.412 124.46 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 369.57 124.46 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 369.57 124.46 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+			(at 369.57 124.46 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "3fef5fe5-34cd-4f45-95eb-b7c48a6d85f3")
+		)
+		(instances
+			(project "cartridge"
+				(path "/2780facd-cffd-485a-aed1-c460c817db24"
+					(reference "#PWR0364")
 					(unit 1)
 				)
 			)
@@ -21954,6 +22031,86 @@
 		)
 	)
 	(symbol
+		(lib_id "Device:R")
+		(at 365.76 124.46 270)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "812d7496-3563-4dfc-b28d-6e0bfb11d897")
+		(property "Reference" "R11"
+			(at 365.76 118.11 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "10K"
+			(at 365.76 120.65 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
+			(at 365.76 122.682 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 365.76 124.46 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 365.76 124.46 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "35a33681-4060-4ec8-9d56-84d416ff9f90")
+		)
+		(pin "2"
+			(uuid "5a35e8ce-008e-4152-98d9-5aea905644b7")
+		)
+		(instances
+			(project "cartridge"
+				(path "/2780facd-cffd-485a-aed1-c460c817db24"
+					(reference "R11")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "power:VSSA")
 		(at 128.27 129.54 270)
 		(unit 1)
@@ -23617,6 +23774,85 @@
 			(project "cartridge"
 				(path "/2780facd-cffd-485a-aed1-c460c817db24"
 					(reference "#PWR0317")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:VCC")
+		(at 351.79 224.79 270)
+		(mirror x)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "9512a435-3a46-4e01-9871-7e3deeed4b46")
+		(property "Reference" "#PWR0361"
+			(at 347.98 224.79 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "VCCB"
+			(at 355.6 224.7899 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 351.79 224.79 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 351.79 224.79 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"VCC\""
+			(at 351.79 224.79 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "f331e845-51fe-499a-8bec-cbad58b4736f")
+		)
+		(instances
+			(project "cartridge"
+				(path "/2780facd-cffd-485a-aed1-c460c817db24"
+					(reference "#PWR0361")
 					(unit 1)
 				)
 			)
@@ -28485,6 +28721,85 @@
 			(project "cartridge"
 				(path "/2780facd-cffd-485a-aed1-c460c817db24"
 					(reference "#PWR0304")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:VSSA")
+		(at 290.83 222.25 90)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "c0aa3b1d-205c-418e-ab4d-5badc6eb0374")
+		(property "Reference" "#PWR0362"
+			(at 294.64 222.25 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "gb_power_present"
+			(at 287.02 222.2499 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 290.83 222.25 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 290.83 222.25 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"VSSA\""
+			(at 290.83 222.25 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "dd9cbc02-f2b7-4cab-942b-c934f81fd698")
+		)
+		(instances
+			(project "cartridge"
+				(path "/2780facd-cffd-485a-aed1-c460c817db24"
+					(reference "#PWR0362")
 					(unit 1)
 				)
 			)
@@ -33550,6 +33865,85 @@
 			(project "cartridge"
 				(path "/2780facd-cffd-485a-aed1-c460c817db24"
 					(reference "#PWR0163")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:VSSA")
+		(at 361.95 124.46 90)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "f9bdd17c-4aac-4384-9c7e-3de755d3004d")
+		(property "Reference" "#PWR0363"
+			(at 365.76 124.46 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "gb_power_present"
+			(at 358.14 124.4599 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 361.95 124.46 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 361.95 124.46 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"VSSA\""
+			(at 361.95 124.46 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "b41a7ffd-c34c-4d33-a538-8d132c804d15")
+		)
+		(instances
+			(project "cartridge"
+				(path "/2780facd-cffd-485a-aed1-c460c817db24"
+					(reference "#PWR0363")
 					(unit 1)
 				)
 			)

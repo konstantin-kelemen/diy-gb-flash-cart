@@ -15,8 +15,10 @@ module cart_mode #(
 );
     (* syn_preserve=1 *) reg [1:0] present_sync=0;
     reg present_stable=0, detect_valid=0;
-    reg [31:0] detect_count=0;
-    reg [31:0] guard_count=0;
+    localparam DETECT_WIDTH=DETECT_TICKS<2 ? 1 : $clog2(DETECT_TICKS);
+    localparam GUARD_WIDTH=GUARD_TICKS<2 ? 1 : $clog2(GUARD_TICKS);
+    reg [DETECT_WIDTH-1:0] detect_count=0;
+    reg [GUARD_WIDTH-1:0] guard_count=0;
     localparam WAIT_DETECT=0, GAME_GAP=1, GAME=2, PROGRAM_GAP=3,
                PROGRAM=4, DRAIN=5, CLEAN_START=6, CLEAN_WAIT=7, FAILED=8;
     reg [3:0] state=WAIT_DETECT;
