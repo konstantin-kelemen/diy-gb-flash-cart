@@ -6,7 +6,7 @@
 LPF: `constraints/programmer.lpf`. Диагностические выходы удалены;
 CE#/OE#/WE# F-RAM постоянно HIGH. Протокол v3 и прошивка RP2040 не изменены.
 
-Старый выпуск для стенда без F-RAM: [JEDEC, отчёты и манифест](../../../releases/fpga/programmer-v3/MANIFEST.md).
+Старый выпуск для стенда без F-RAM: [JEDEC и отчёты](../../../releases/fpga/programmer-v3/).
 [Прошивка и стенд](../../../docs/PROGRAMMER.md),
 [протокол и временные параметры](../../../docs/PROGRAMMER_PROTOCOL.md).
 Новая адаптация ещё не собрана в Diamond. Путь результата: `fpga/diamond/programmer/RomEmu_programmer.jed`.

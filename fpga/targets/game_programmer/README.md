@@ -16,7 +16,7 @@ powershell -ExecutionPolicy Bypass -File fpga/targets/game_programmer/build.ps1
 
 Использовать с [новой прошивкой RP2040](../../../firmware/rp2040/programmer/README.md).
 Старый UF2 для SPI v3 не подходит. [SPI v4 и переключение режимов](../../../docs/PROGRAMMER_SPI_V4.md).
-[Готовая пара и отчёты](../../../releases/fpga/game_programmer/MANIFEST.md).
+[Готовая FPGA-прошивка](../../../releases/fpga/game_programmer/RomEmu_game_programmer.jed).
 
 Проверки:
 

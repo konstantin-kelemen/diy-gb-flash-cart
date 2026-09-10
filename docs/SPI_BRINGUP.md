@@ -55,8 +55,8 @@ CRC на фиксированном ответе не используется. 
 
 ## Аппаратная приёмка
 
-1. Использовать готовые выпуски [FPGA spi_bringup](../releases/fpga/spi_bringup/MANIFEST.md)
-   и [RP2040 spi_bringup](../releases/rp2040/spi_bringup/MANIFEST.md).
+1. Использовать готовые выпуски [FPGA spi_bringup](../releases/fpga/spi_bringup/)
+   и [RP2040 spi_bringup](../releases/rp2040/spi_bringup/).
 2. Сверить монтаж и назначения выводов в отчёте Diamond по
    [процедуре LPF](TEST_PLAN.md#сверка-lpf).
 3. Загрузить обе сборки, включить стенд и выполнить `version` в USB CDC-консоли.

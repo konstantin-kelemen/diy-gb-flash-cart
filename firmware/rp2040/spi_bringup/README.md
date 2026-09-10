@@ -19,7 +19,7 @@ cmake --build firmware/rp2040/spi_bringup/build -j
 Результат: `firmware/rp2040/spi_bringup/build/gb_cart_rp2040.uf2`.
 Сохранённый [UF2](../../../releases/rp2040/spi_bringup/gb_cart_rp2040.uf2)
 обновлён последней локальной сборкой; метаданные и SHA-256 — в
-[манифесте](../../../releases/rp2040/spi_bringup/MANIFEST.md).
+[каталоге выпуска](../../../releases/rp2040/spi_bringup/).
 
 ## Запуск
 

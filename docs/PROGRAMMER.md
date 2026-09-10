@@ -10,7 +10,7 @@
 Для монтажа с F-RAM собрать обновлённый **programmer** по
 [инструкции](../fpga/targets/programmer/README.md#сборка-в-diamond), проверить
 назначения и timing, сохранить выпуск и прошить полученный JEDEC.
-Новая сборка ещё не выполнена. [Старый JEDEC и манифест](../releases/fpga/programmer-v3/MANIFEST.md)
+Новая сборка ещё не выполнена. [Старый JEDEC и отчёты](../releases/fpga/programmer-v3/)
 сохраняются для прежнего стенда без F-RAM.
 
 ## Подготовка Mac
@@ -31,7 +31,7 @@ cp releases/rp2040/programmer-v3/gb_cart_programmer.uf2 /Volumes/RPI-RP2/
 ```
 
 Плата перезапустится, диск исчезнет, появится USB CDC-порт.
-[Манифест UF2](../releases/rp2040/programmer-v3/MANIFEST.md).
+[Выпуск UF2](../releases/rp2040/programmer-v3/).
 Включить питание FPGA. Найти порт:
 
 ```sh

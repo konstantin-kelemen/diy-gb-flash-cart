@@ -1,6 +1,6 @@
 # SPI bring-up
 
-Готовая рабочая сборка: [JEDEC, отчёты и манифест](../../../releases/fpga/spi_bringup/MANIFEST.md).
+Готовая рабочая сборка: [JEDEC и отчёты](../../../releases/fpga/spi_bringup/).
 
 
 Отдельная конфигурация MachXO2 для запроса версии с RP2040-Zero.

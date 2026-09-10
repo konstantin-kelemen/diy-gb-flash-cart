@@ -6,7 +6,7 @@
 | Подсистема | Состояние | Подробности |
 |---|---|---|
 | Прошивка MachXO2, внутреннее ПЗУ, автономный Flash-тест, SPI bring-up | Результаты ранних этапов сохранены | [Журнал](TEST_PLAN.md#журнал-результатов) |
-| Программатор Flash v3 | Аппаратный PASS: два дампа 4 МиБ и запись ROM 32 КиБ; TRACE пройден на 53,2 МГц | [Выпуск](../releases/fpga/programmer-v3/MANIFEST.md), [инструкция](PROGRAMMER.md) |
+| Программатор Flash v3 | Аппаратный PASS: два дампа 4 МиБ и запись ROM 32 КиБ; TRACE пройден на 53,2 МГц | [Выпуск](../releases/fpga/programmer-v3/), [инструкция](PROGRAMMER.md) |
 | GAME ROM ONLY 32 КиБ | Игра из Flash работает стабильно — аппаратный PASS | [Конфигурация](../fpga/targets/game_rom/README.md) |
 | MBC5 / F-RAM | RTL PASS: ROM 1 МиБ, RAM 128 КиБ; PROGRAMMER отключает F-RAM. Новые сборки Diamond и аппаратная проверка не выполнены | [Конфигурация](../fpga/targets/game_mbc5/README.md) |
 | Отладочная PCB | Разведена, производственный архив сохранён; манифест не подготовлен | [Выпуски](../releases/README.md) |
