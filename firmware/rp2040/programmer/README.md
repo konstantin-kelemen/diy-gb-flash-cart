@@ -13,16 +13,15 @@ RP2040 обрабатывает блоки по 1024 байта, FPGA выпол
 `PICO_SDK_PATH` должен указывать на каталог SDK. Из корня проекта:
 
 ```sh
-cmake -S firmware/rp2040/programmer -B firmware/rp2040/programmer/build-v3 -DPICO_BOARD=waveshare_rp2040_zero
-cmake --build firmware/rp2040/programmer/build-v3 -j4
+cmake -S firmware/rp2040/programmer -B firmware/rp2040/programmer/build-offload -DPICO_BOARD=waveshare_rp2040_zero
+cmake --build firmware/rp2040/programmer/build-offload -j4
 ```
 
-Выход: `firmware/rp2040/programmer/build-v3/gb_cart_programmer.uf2`.
+Выход: `firmware/rp2040/programmer/build-offload/gb_cart_programmer.uf2`.
 Для стендового опыта с готовым UF2 использовать общую инструкцию выше.
 
 Проверенная новая сборка использует Pico SDK 2.2.0, ARM GNU 14.3.Rel1,
-плату `waveshare_rp2040_zero` и Release. Можно выбрать каталог `build-offload`
-вместо `build-v3`. На Windows доступны те же команды с генератором `-G Ninja`.
+плату `waveshare_rp2040_zero` и Release. На Windows доступны те же команды с генератором `-G Ninja`.
 Если нет picotool/нативного C++ компилятора, добавьте `-DPICO_NO_PICOTOOL=1`:
 SDK соберёт `.bin`, а скрипт `tools/bin_to_uf2.py` сформирует RP2040 UF2.
 

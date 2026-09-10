@@ -1,17 +1,16 @@
 # Чтение и запись Flash с Mac
 
 Стенд: Mac → USB → RP2040-Zero → SPI → FPGA → MX29LV320E, 4 МиБ
-(4 194 304 байта), режим x8. Для FPGA и RP2040 используется `programmer`,
-блочный протокол 3.0. Game Boy отключён. [Подключение и питание](SPI_BRINGUP.md).
+(4 194 304 байта), режим x8. FPGA — `game_programmer`, RP2040 — `programmer-v4`.
+Внешний USB-протокол — 3.0, внутренний SPI — v4. Game Boy отключён. [Подключение и питание](SPI_BRINGUP.md).
 [Текущее состояние проверок](STATUS.md), [этапы и критерии](ROADMAP.md).
 
 ## Подготовка FPGA в Windows
 
-Для монтажа с F-RAM собрать обновлённый **programmer** по
-[инструкции](../fpga/targets/programmer/README.md#сборка-в-diamond), проверить
-назначения и timing, сохранить выпуск и прошить полученный JEDEC.
-Новая сборка ещё не выполнена. [Старый JEDEC и отчёты](../releases/fpga/programmer-v3/)
-сохраняются для прежнего стенда без F-RAM.
+Использовать [JEDEC game_programmer](../releases/fpga/game_programmer/RomEmu_game_programmer.jed)
+с [RP2040 programmer-v4](../releases/rp2040/programmer-v4/). Обновлять оба устройства
+парой. Сборка и симуляции пройдены, аппаратное испытание этой пары ещё не выполнено.
+[Сборка FPGA из исходников](../fpga/targets/game_programmer/README.md).
 
 ## Подготовка Mac
 
@@ -27,11 +26,11 @@ python -m pip install pyserial
 по USB. После появления диска `RPI-RP2` выполнить:
 
 ```sh
-cp releases/rp2040/programmer-v3/gb_cart_programmer.uf2 /Volumes/RPI-RP2/
+cp releases/rp2040/programmer-v4/gb_cart_programmer.uf2 /Volumes/RPI-RP2/
 ```
 
 Плата перезапустится, диск исчезнет, появится USB CDC-порт.
-[Выпуск UF2](../releases/rp2040/programmer-v3/).
+[Выпуск UF2](../releases/rp2040/programmer-v4/).
 Включить питание FPGA. Найти порт:
 
 ```sh
@@ -55,10 +54,9 @@ FLASH_RUN="$PWD/flash-test-$(date +%Y%m%d-%H%M%S)"
 mkdir "$FLASH_RUN"
 ```
 
-Обновлённый FPGA PROGRAMMER совместим с RP2040 `programmer-v3` и текущей
-утилитой Mac; блочный протокол остаётся 3.0.
-Прежний релиз `programmer` использует v2 и с обновлённой утилитой несовместим.
-[Описание протокола и временных параметров](PROGRAMMER_PROTOCOL.md).
+Утилита Mac использует блочный USB-протокол 3.0. RP2040 выполняет обработку
+блоков и обменивается короткими командами SPI v4 с FPGA.
+[Описание протокола и переключения режимов](PROGRAMMER_SPI_V4.md).
 
 ## 1. Считать все 4 МиБ в файл
 

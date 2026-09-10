@@ -55,9 +55,9 @@ Host-тест выполняет два полных чтения 4 МиБ и з
 Открыть `fpga/diamond/RomEmu.ldf`, выбрать **game_mbc5**, верхний модуль `top`.
 Выполнить синтез, Map, Place & Route, TRACE и экспорт JEDEC.
 Ожидаемый путь — `fpga/diamond/game_mbc5/RomEmu_game_mbc5.jed`.
-Для записи Flash отдельно собрать обновлённый **programmer**;
-RP2040 `programmer-v3` и текущая утилита Mac совместимы без изменения протокола.
-Старый JEDEC `releases/fpga/programmer-v3/` не подходит для подключённой F-RAM.
+Для записи Flash использовать [game_programmer](../game_programmer/README.md)
+с RP2040 `programmer-v4`; [порядок записи](../../../docs/PROGRAMMER.md).
+Эта пара прошла сборку и симуляции, но ещё требует аппаратной проверки.
 
 LPF фиксирует выводы и электрические стандарты. Временные требования пока
 не закрыты; отсутствие ошибок TRACE без заданных внешних требований

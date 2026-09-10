@@ -14,10 +14,8 @@
   Эти три сборки предшествуют оптимизации game_programmer; аппаратный PASS
   для сохранённых JEDEC не зафиксирован. Внешние тайминги покрыты не полностью.
 - [spi_bringup](fpga/spi_bringup/) — SPI 1.0, аппаратный PASS 1000/1000.
-- [programmer-v3](fpga/programmer-v3/) — аппаратный PASS полного цикла Flash.
 - [flash-bringup-pass](fpga/flash-bringup-pass/) — аппаратный PASS после прошивки
   и перезапуска питания.
-- [flash-bringup-fail](fpga/flash-bringup-fail/) — историческая сборка с FAIL.
 - [internal-rom-baseline](fpga/internal-rom-baseline/) — проверенная база с внутренним ПЗУ.
 
 Успешные MAP/TRACE не заменяют испытание внешней шины на плате.
@@ -26,8 +24,6 @@
 
 - [programmer-v4](rp2040/programmer-v4/) — для FPGA game_programmer с SPI v4;
   обновлять оба устройства парой. Аппаратного испытания ещё нет.
-- [programmer-v3](rp2040/programmer-v3/) — для FPGA programmer-v3, аппаратный PASS.
-- [programmer](rp2040/programmer/) — прежний несовместимый программатор v2.
 - [spi_bringup](rp2040/spi_bringup/) — аппаратный PASS 1000/1000 с FPGA spi_bringup.
 
 ## Плата
