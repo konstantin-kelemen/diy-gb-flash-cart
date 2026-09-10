@@ -1,0 +1,864 @@
+
+             Lattice Mapping Report File for Design Module 'top'
+
+
+Design Information
+------------------
+
+Command line:   map -a MachXO2 -p LCMXO2-1200HC -t TQFP100 -s 4 -oc Commercial
+     RomEmu_game_programmer.ngd -o RomEmu_game_programmer_map.ncd -pr
+     RomEmu_game_programmer.prf -mp RomEmu_game_programmer.mrp -lpf C:/Users/Adm
+     in/Documents/diy-gb-flash-cart/fpga/diamond/game_programmer/RomEmu_game_pro
+     grammer.lpf -lpf C:/Users/Admin/Documents/diy-gb-flash-cart/fpga/constraint
+     s/game_programmer.lpf -c 0 -noinferGSR -gui -msgset
+     C:/Users/Admin/Documents/diy-gb-flash-cart/fpga/diamond/promote.xml 
+Target Vendor:  LATTICE
+Target Device:  LCMXO2-1200HCTQFP100
+Target Performance:   4
+Mapper:  xo2c00,  version:  Diamond (64-bit) 3.14.0.75.2
+Mapped on:  09/10/26  19:09:04
+
+Design Summary
+--------------
+
+   Number of registers:   2767 out of  1520 (182%)
+      PFU registers:         2748 out of  1280 (215%)
+      PIO registers:           19 out of   240 (8%)
+   Number of SLICEs:      2574 out of   640 (402%)
+      SLICEs as Logic/ROM:   2574 out of   640 (402%)
+      SLICEs as RAM:            0 out of   480 (0%)
+      SLICEs as Carry:        114 out of   640 (18%)
+   Number of LUT4s:        5134 out of  1280 (401%)
+      Number used as logic LUTs:        4906
+      Number used as distributed RAM:     0
+      Number used as ripple logic:      228
+      Number used as shift registers:     0
+   Number of PIO sites used: 71 + 4(JTAG) out of 80 (94%)
+   Number of block RAMs:  0 out of 7 (0%)
+   Number of GSRs:        0 out of 1 (0%)
+   EFB used :        No
+   JTAG used :       No
+   Readback used :   No
+   Oscillator used : Yes
+   Startup used :    No
+   POR :             On
+   Bandgap :         On
+   Number of Power Controller:  0 out of 1 (0%)
+   Number of Dynamic Bank Controller (BCINRD):  0 out of 4 (0%)
+   Number of Dynamic Bank Controller (BCLVDSO):  0 out of 1 (0%)
+   Number of DCCA:  0 out of 8 (0%)
+   Number of DCMA:  0 out of 2 (0%)
+   Number of PLLs:  0 out of 1 (0%)
+   Number of DQSDLLs:  0 out of 2 (0%)
+   Number of CLKDIVC:  0 out of 4 (0%)
+   Number of ECLKSYNCA:  0 out of 4 (0%)
+   Number of ECLKBRIDGECS:  0 out of 2 (0%)
+   Notes:-
+      1. Total number of LUT4s = (Number of logic LUT4s) + 2*(Number of
+     distributed RAMs) + 2*(Number of ripple logic)
+      2. Number of logic LUT4s does not include count of distributed RAM and
+     ripple logic.
+   Number of clocks:  2
+     Net clk: 1413 loads, 1413 rising, 0 falling (Driver: osc )
+
+                                    Page 1
+
+
+
+
+Design:  top                                           Date:  09/10/26  19:09:04
+
+Design Summary (cont)
+---------------------
+     Net gb_wr_n_c: 34 loads, 34 rising, 0 falling (Driver: PIO gb_wr_n )
+   Number of Clock Enables:  325
+     Net clk_enable_2373: 2 loads, 2 LSLICEs
+     Net clk_enable_2460: 9 loads, 9 LSLICEs
+     Net mode/clk_enable_328: 2 loads, 2 LSLICEs
+     Net mode/clk_enable_2467: 1 loads, 1 LSLICEs
+     Net advance: 5 loads, 5 LSLICEs
+     Net running: 2 loads, 2 LSLICEs
+     Net clk_enable_2210: 28 loads, 28 LSLICEs
+     Net clk_enable_2312: 4 loads, 4 LSLICEs
+     Net clk_enable_2231: 4 loads, 4 LSLICEs
+     Net clk_enable_2461: 16 loads, 16 LSLICEs
+     Net clk_enable_2224: 5 loads, 5 LSLICEs
+     Net clk_enable_2139: 8 loads, 0 LSLICEs
+     Net clk_enable_2549: 3 loads, 3 LSLICEs
+     Net clk_enable_2466: 3 loads, 3 LSLICEs
+     Net clk_enable_2473: 11 loads, 11 LSLICEs
+     Net clk_enable_2389: 4 loads, 4 LSLICEs
+     Net clk_enable_2482: 5 loads, 5 LSLICEs
+     Net protocol/clk_enable_2561: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_454: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_165: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_348: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_2361: 8 loads, 8 LSLICEs
+     Net protocol/clk_enable_1390: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_414: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_306: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_350: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_59: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_409: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_742: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_399: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1766: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_299: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_45: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_2117: 11 loads, 11 LSLICEs
+     Net protocol/clk_enable_1198: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_2246: 8 loads, 8 LSLICEs
+     Net protocol/clk_enable_1534: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_2547: 2 loads, 2 LSLICEs
+     Net protocol/clk_enable_1262: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_2155: 2 loads, 2 LSLICEs
+     Net protocol/clk_enable_72: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_117: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_2552: 6 loads, 6 LSLICEs
+     Net protocol/clk_enable_1022: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_185: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_82: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_102: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1478: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_2558: 1 loads, 1 LSLICEs
+     Net protocol/clk_enable_112: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_134: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_734: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1758: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_291: 4 loads, 4 LSLICEs
+
+                                    Page 2
+
+
+
+
+Design:  top                                           Date:  09/10/26  19:09:04
+
+Design Summary (cont)
+---------------------
+     Net protocol/clk_enable_1206: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_150: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_2432: 22 loads, 22 LSLICEs
+     Net protocol/clk_enable_1254: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_160: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_726: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1750: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_173: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1462: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_283: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_181: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_190: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_358: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_198: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_934: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_210: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_718: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_313: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1742: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1246: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_218: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_227: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_226: 1 loads, 1 LSLICEs
+     Net protocol/clk_enable_235: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_243: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_251: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_259: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_267: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_275: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_317: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_329: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1238: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_406: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_339: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_349: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_367: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_375: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_383: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_391: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1222: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_422: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_430: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_438: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_446: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_462: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_470: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_478: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_486: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_494: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_502: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_510: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_518: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_526: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_534: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_542: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_550: 4 loads, 4 LSLICEs
+
+                                    Page 3
+
+
+
+
+Design:  top                                           Date:  09/10/26  19:09:04
+
+Design Summary (cont)
+---------------------
+     Net protocol/clk_enable_558: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_566: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_574: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_582: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_590: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_598: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_606: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_614: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_622: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_630: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_638: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_646: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_654: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_662: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_670: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_678: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_686: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_694: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_702: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_710: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_750: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_758: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_766: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_774: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_782: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_790: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_798: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_806: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_814: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_822: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_830: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_838: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_846: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_854: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_862: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_870: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_878: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_886: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_894: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_902: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_910: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_918: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_926: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_942: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_950: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_958: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_966: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_974: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_982: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_990: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_998: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1006: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1014: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1030: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1038: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1046: 4 loads, 4 LSLICEs
+
+                                    Page 4
+
+
+
+
+Design:  top                                           Date:  09/10/26  19:09:04
+
+Design Summary (cont)
+---------------------
+     Net protocol/clk_enable_1054: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1062: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1070: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1078: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1086: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1094: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1102: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1110: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1118: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1126: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1134: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1142: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1150: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1158: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1166: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1174: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1182: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1190: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1214: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1230: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1270: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1278: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1286: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1294: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1302: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1310: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1318: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1326: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1334: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1342: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1350: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1358: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1366: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1374: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1382: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1398: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1406: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1414: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1422: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1430: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1438: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1446: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1454: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1470: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1486: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1494: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1502: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1510: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1518: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1526: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1542: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1550: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1558: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1566: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1574: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1582: 4 loads, 4 LSLICEs
+
+                                    Page 5
+
+
+
+
+Design:  top                                           Date:  09/10/26  19:09:04
+
+Design Summary (cont)
+---------------------
+     Net protocol/clk_enable_1590: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1598: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1606: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1614: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1622: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1630: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1638: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1646: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1654: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1662: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1670: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1678: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1686: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1694: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1702: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1710: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1718: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1726: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1734: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1774: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1782: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1790: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1798: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1806: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1814: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1822: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1830: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1838: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1846: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1854: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1862: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1870: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1878: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1886: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1894: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1902: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1910: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1918: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1926: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1934: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1942: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1950: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1958: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1966: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1974: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1982: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1990: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_1998: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_2006: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_2014: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_2022: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_2030: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_2038: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_2046: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_2054: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_2062: 4 loads, 4 LSLICEs
+
+                                    Page 6
+
+
+
+
+Design:  top                                           Date:  09/10/26  19:09:04
+
+Design Summary (cont)
+---------------------
+     Net protocol/clk_enable_2070: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_2078: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_2086: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_2094: 4 loads, 4 LSLICEs
+     Net protocol/clk_enable_2545: 2 loads, 2 LSLICEs
+     Net protocol/clk_enable_2557: 9 loads, 9 LSLICEs
+     Net clk_enable_2370: 2 loads, 2 LSLICEs
+     Net clk_enable_2305: 2 loads, 2 LSLICEs
+     Net game/rtc/clk_enable_2551: 14 loads, 14 LSLICEs
+     Net game/rtc/clk_enable_2554: 1 loads, 1 LSLICEs
+     Net game/rtc/clk_enable_2366: 3 loads, 3 LSLICEs
+     Net game/rtc/clk_enable_2377: 3 loads, 3 LSLICEs
+     Net game/rtc/clk_enable_2382: 4 loads, 4 LSLICEs
+     Net game/rtc/clk_enable_162: 1 loads, 1 LSLICEs
+     Net game/rtc/latch_seen_N_885: 14 loads, 14 LSLICEs
+     Net game/rtc/clk_enable_2559: 4 loads, 4 LSLICEs
+     Net game/rtc/clk_enable_332: 1 loads, 1 LSLICEs
+     Net game/rtc/clk_enable_333: 1 loads, 1 LSLICEs
+     Net game/rtc/clk_enable_2556: 1 loads, 1 LSLICEs
+     Net game/mapper/gb_wr_n_c_enable_36: 1 loads, 1 LSLICEs
+     Net game/mapper/gb_wr_n_c_enable_10: 5 loads, 0 LSLICEs
+     Net game/mapper/gb_wr_n_c_enable_11: 1 loads, 1 LSLICEs
+     Net game/mapper/gb_wr_n_c_enable_18: 6 loads, 3 LSLICEs
+     Net game/mapper/gb_wr_n_c_enable_25: 4 loads, 4 LSLICEs
+     Net game/mapper/gb_wr_n_c_enable_35: 6 loads, 6 LSLICEs
+     Net game/mapper/rtc_write_register_2__N_558: 2 loads, 2 LSLICEs
+     Net game/mapper/gb_wr_n_c_enable_33: 1 loads, 1 LSLICEs
+     Net game/header/clk_enable_2319: 5 loads, 5 LSLICEs
+     Net game/header/clk_enable_2326: 4 loads, 4 LSLICEs
+     Net game/header/clk_enable_2333: 4 loads, 4 LSLICEs
+     Net game/header/clk_enable_302: 1 loads, 1 LSLICEs
+     Net game/header/clk_enable_322: 1 loads, 1 LSLICEs
+     Net game/header/done_N_345: 1 loads, 1 LSLICEs
+     Net game/header/clk_enable_340: 1 loads, 1 LSLICEs
+     Net game/header/clk_enable_362: 1 loads, 1 LSLICEs
+     Net game/header/clk_enable_2096: 1 loads, 1 LSLICEs
+     Net programmer/clk_enable_2154: 4 loads, 4 LSLICEs
+     Net programmer/clk_enable_2560: 17 loads, 17 LSLICEs
+     Net programmer/clk_enable_2146: 4 loads, 4 LSLICEs
+     Net programmer/clk_enable_2303: 11 loads, 11 LSLICEs
+     Net programmer/clk_enable_2367: 2 loads, 2 LSLICEs
+     Net programmer/clk_enable_2555: 1 loads, 1 LSLICEs
+     Net programmer/bus/clk_enable_2497: 1 loads, 1 LSLICEs
+     Net programmer/bus/clk_enable_2550: 1 loads, 1 LSLICEs
+     Net programmer/bus/clk_enable_2354: 11 loads, 11 LSLICEs
+     Net programmer/bus/clk_enable_2125: 1 loads, 1 LSLICEs
+     Net programmer/bus/clk_enable_2553: 1 loads, 1 LSLICEs
+   Number of LSRs:  23
+     Net n4953: 9 loads, 9 LSLICEs
+     Net ready_3: 115 loads, 106 LSLICEs
+     Net scan_reset_N_197: 15 loads, 15 LSLICEs
+     Net n1655: 48 loads, 48 LSLICEs
+     Net command_7__N_35: 63 loads, 61 LSLICEs
+     Net protocol/clk_enable_2361: 14 loads, 14 LSLICEs
+     Net protocol/n27000: 2 loads, 2 LSLICEs
+     Net protocol/n29533: 1 loads, 1 LSLICEs
+
+                                    Page 7
+
+
+
+
+Design:  top                                           Date:  09/10/26  19:09:04
+
+Design Summary (cont)
+---------------------
+     Net protocol/n4898: 11 loads, 11 LSLICEs
+     Net protocol/n23010: 2 loads, 2 LSLICEs
+     Net protocol/n4896: 2 loads, 2 LSLICEs
+     Net protocol/n30143: 1 loads, 1 LSLICEs
+     Net protocol/n23079: 9 loads, 9 LSLICEs
+     Net protocol/n17847: 5 loads, 5 LSLICEs
+     Net protocol/n17860: 11 loads, 11 LSLICEs
+     Net game/rtc/clk_enable_2382: 14 loads, 14 LSLICEs
+     Net game/rtc/n17900: 4 loads, 4 LSLICEs
+     Net game/mapper/rom_address_21__N_163: 26 loads, 18 LSLICEs
+     Net programmer/n17869: 10 loads, 10 LSLICEs
+     Net programmer/n4914: 11 loads, 11 LSLICEs
+     Net programmer/n2972: 2 loads, 2 LSLICEs
+     Net programmer/n30415: 1 loads, 1 LSLICEs
+     Net programmer/bus/n4843: 3 loads, 3 LSLICEs
+   Number of nets driven by tri-state buffers:  0
+   Top 10 highest fanout non-clock nets:
+     Net protocol/read_index_0: 1024 loads
+     Net protocol/completed_7: 1000 loads
+     Net protocol/maxfan_replicated_net_540: 541 loads
+     Net protocol/read_index_1: 512 loads
+     Net protocol/mosi_sync_1: 260 loads
+     Net protocol/rx_shift_0: 260 loads
+     Net protocol/rx_shift_1: 260 loads
+     Net protocol/rx_shift_2: 260 loads
+     Net protocol/rx_shift_3: 260 loads
+     Net protocol/rx_shift_4: 260 loads
+
+
+
+
+   Number of warnings:  0
+   Number of errors:    1
+     
+
+Design Errors/Warnings
+----------------------
+
+ERROR - map: Design doesn't fit into device specified, refer to the Map report
+     for more details.
+
+IO (PIO) Attributes
+-------------------
+
++---------------------+-----------+-----------+------------+
+| IO Name             | Direction | Levelmode | IO         |
+|                     |           |  IO_TYPE  | Register   |
++---------------------+-----------+-----------+------------+
+| gb_d[6]             | BIDIR     | LVCMOS33  | IN         |
++---------------------+-----------+-----------+------------+
+| gb_d[7]             | BIDIR     | LVCMOS33  | IN         |
++---------------------+-----------+-----------+------------+
+| spi_mosi            | INPUT     | LVCMOS33  | IN         |
++---------------------+-----------+-----------+------------+
+| spi_sck             | INPUT     | LVCMOS33  | IN         |
++---------------------+-----------+-----------+------------+
+
+                                    Page 8
+
+
+
+
+Design:  top                                           Date:  09/10/26  19:09:04
+
+IO (PIO) Attributes (cont)
+--------------------------
+| spi_cs_n            | INPUT     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| gb_res_n            | INPUT     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| gb_cs_n             | INPUT     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| gb_wr_n             | INPUT     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| gb_rd_n             | INPUT     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| gb_a[0]             | INPUT     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| gb_a[1]             | INPUT     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| gb_a[2]             | INPUT     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| gb_a[3]             | INPUT     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| gb_a[4]             | INPUT     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| gb_a[5]             | INPUT     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| gb_a[6]             | INPUT     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| gb_a[7]             | INPUT     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| gb_a[8]             | INPUT     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| gb_a[9]             | INPUT     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| gb_a[10]            | INPUT     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| gb_a[11]            | INPUT     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| gb_a[12]            | INPUT     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| gb_a[13]            | INPUT     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| gb_a[14]            | INPUT     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| gb_a[15]            | INPUT     | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| gb_power_present    | INPUT     | LVCMOS33  | IN         |
++---------------------+-----------+-----------+------------+
+| fram_we_n           | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| fram_oe_n           | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| fram_ce_n           | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_we_n          | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_oe_n          | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_ce_n          | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+
+                                    Page 9
+
+
+
+
+Design:  top                                           Date:  09/10/26  19:09:04
+
+IO (PIO) Attributes (cont)
+--------------------------
+| flash_a[0]          | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[1]          | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[2]          | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[3]          | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[4]          | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[5]          | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[6]          | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[7]          | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[8]          | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[9]          | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[10]         | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[11]         | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[12]         | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[13]         | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[14]         | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[15]         | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[16]         | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[17]         | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[18]         | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[19]         | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[20]         | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_a[21]         | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| spi_miso            | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| data_dir            | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| data_oe_n           | OUTPUT    | LVCMOS33  |            |
++---------------------+-----------+-----------+------------+
+| flash_d[0]          | BIDIR     | LVCMOS33  | IN         |
++---------------------+-----------+-----------+------------+
+| flash_d[1]          | BIDIR     | LVCMOS33  | IN         |
++---------------------+-----------+-----------+------------+
+| flash_d[2]          | BIDIR     | LVCMOS33  | IN         |
++---------------------+-----------+-----------+------------+
+
+                                   Page 10
+
+
+
+
+Design:  top                                           Date:  09/10/26  19:09:04
+
+IO (PIO) Attributes (cont)
+--------------------------
+| flash_d[3]          | BIDIR     | LVCMOS33  | IN         |
++---------------------+-----------+-----------+------------+
+| flash_d[4]          | BIDIR     | LVCMOS33  | IN         |
++---------------------+-----------+-----------+------------+
+| flash_d[5]          | BIDIR     | LVCMOS33  | IN         |
++---------------------+-----------+-----------+------------+
+| flash_d[6]          | BIDIR     | LVCMOS33  | IN         |
++---------------------+-----------+-----------+------------+
+| flash_d[7]          | BIDIR     | LVCMOS33  | IN         |
++---------------------+-----------+-----------+------------+
+| gb_d[0]             | BIDIR     | LVCMOS33  | IN         |
++---------------------+-----------+-----------+------------+
+| gb_d[1]             | BIDIR     | LVCMOS33  | IN         |
++---------------------+-----------+-----------+------------+
+| gb_d[2]             | BIDIR     | LVCMOS33  | IN         |
++---------------------+-----------+-----------+------------+
+| gb_d[3]             | BIDIR     | LVCMOS33  | IN         |
++---------------------+-----------+-----------+------------+
+| gb_d[4]             | BIDIR     | LVCMOS33  | IN         |
++---------------------+-----------+-----------+------------+
+| gb_d[5]             | BIDIR     | LVCMOS33  | IN         |
++---------------------+-----------+-----------+------------+
+
+Removed logic
+-------------
+
+Block i2 undriven or does not drive anything - clipped.
+Block GSR_INST undriven or does not drive anything - clipped.
+Signal protocol/n6_adj_2592 was merged into signal command_7__N_35
+Signal GND_net undriven or does not drive anything - clipped.
+Signal VCC_net undriven or does not drive anything - clipped.
+Signal programmer/sub_9_add_2_29/S1 undriven or does not drive anything -
+     clipped.
+Signal programmer/sub_9_add_2_29/CO undriven or does not drive anything -
+     clipped.
+Signal programmer/sub_9_add_2_1/S0 undriven or does not drive anything -
+     clipped.
+Signal programmer/sub_9_add_2_1/CI undriven or does not drive anything -
+     clipped.
+Signal game/header/index_5__I_0_130_1/S0 undriven or does not drive anything -
+     clipped.
+Signal game/header/index_5__I_0_130_1/CI undriven or does not drive anything -
+     clipped.
+Signal game/header/index_5__I_0_130_7/S1 undriven or does not drive anything -
+     clipped.
+Signal game/header/index_5__I_0_130_7/CO undriven or does not drive anything -
+     clipped.
+Signal game/rtc/add_8_1/S0 undriven or does not drive anything - clipped.
+Signal game/rtc/add_8_1/CI undriven or does not drive anything - clipped.
+Signal game/rtc/add_8_9/CO undriven or does not drive anything - clipped.
+Signal game/rtc/add_15_1/S0 undriven or does not drive anything - clipped.
+Signal game/rtc/add_15_1/CI undriven or does not drive anything - clipped.
+Signal game/rtc/add_15_7/S1 undriven or does not drive anything - clipped.
+Signal game/rtc/add_15_7/CO undriven or does not drive anything - clipped.
+Signal game/rtc/add_20_1/S0 undriven or does not drive anything - clipped.
+Signal game/rtc/add_20_1/CI undriven or does not drive anything - clipped.
+
+                                   Page 11
+
+
+
+
+Design:  top                                           Date:  09/10/26  19:09:04
+
+Removed logic (cont)
+--------------------
+Signal game/rtc/divider_2811_add_4_1/S0 undriven or does not drive anything -
+     clipped.
+Signal game/rtc/divider_2811_add_4_1/CI undriven or does not drive anything -
+     clipped.
+Signal game/rtc/add_20_7/S1 undriven or does not drive anything - clipped.
+Signal game/rtc/add_20_7/CO undriven or does not drive anything - clipped.
+Signal game/rtc/divider_2811_add_4_27/S1 undriven or does not drive anything -
+     clipped.
+Signal game/rtc/divider_2811_add_4_27/CO undriven or does not drive anything -
+     clipped.
+Signal protocol/add_2763_10/CO undriven or does not drive anything - clipped.
+Signal protocol/sub_88_add_2_9/S1 undriven or does not drive anything - clipped.
+     
+Signal protocol/sub_88_add_2_9/CO undriven or does not drive anything - clipped.
+     
+Signal protocol/add_3434_1/S0 undriven or does not drive anything - clipped.
+Signal protocol/add_3434_1/CI undriven or does not drive anything - clipped.
+Signal protocol/add_2762_9/S1 undriven or does not drive anything - clipped.
+Signal protocol/add_2762_9/CO undriven or does not drive anything - clipped.
+Signal protocol/add_177_1/S0 undriven or does not drive anything - clipped.
+Signal protocol/add_177_1/CI undriven or does not drive anything - clipped.
+Signal protocol/add_212_1/S0 undriven or does not drive anything - clipped.
+Signal protocol/add_212_1/CI undriven or does not drive anything - clipped.
+Signal protocol/add_3434_9/S1 undriven or does not drive anything - clipped.
+Signal protocol/add_3434_9/CO undriven or does not drive anything - clipped.
+Signal protocol/add_177_9/CO undriven or does not drive anything - clipped.
+Signal protocol/add_2764_1/S0 undriven or does not drive anything - clipped.
+Signal protocol/add_2764_1/CI undriven or does not drive anything - clipped.
+Signal protocol/add_2764_7/S1 undriven or does not drive anything - clipped.
+Signal protocol/add_2764_7/CO undriven or does not drive anything - clipped.
+Signal protocol/lease_timer_2809_add_4_1/S0 undriven or does not drive anything
+     - clipped.
+Signal protocol/lease_timer_2809_add_4_1/CI undriven or does not drive anything
+     - clipped.
+Signal protocol/add_212_23/S1 undriven or does not drive anything - clipped.
+Signal protocol/add_212_23/CO undriven or does not drive anything - clipped.
+Signal protocol/add_385_1/S0 undriven or does not drive anything - clipped.
+Signal protocol/add_385_1/CI undriven or does not drive anything - clipped.
+Signal protocol/add_2762_1/S0 undriven or does not drive anything - clipped.
+Signal protocol/add_2762_1/CI undriven or does not drive anything - clipped.
+Signal protocol/lease_timer_2809_add_4_21/S1 undriven or does not drive anything
+     - clipped.
+Signal protocol/lease_timer_2809_add_4_21/CO undriven or does not drive anything
+     - clipped.
+Signal protocol/add_2763_2/S0 undriven or does not drive anything - clipped.
+Signal protocol/add_2763_2/CI undriven or does not drive anything - clipped.
+Signal protocol/add_385_13/S1 undriven or does not drive anything - clipped.
+Signal protocol/add_385_13/CO undriven or does not drive anything - clipped.
+Signal protocol/sub_88_add_2_1/S0 undriven or does not drive anything - clipped.
+     
+Signal protocol/sub_88_add_2_1/CI undriven or does not drive anything - clipped.
+     
+Signal mode/add_5_17/CO undriven or does not drive anything - clipped.
+Signal mode/add_5_1/S0 undriven or does not drive anything - clipped.
+Signal mode/add_5_1/CI undriven or does not drive anything - clipped.
+Block protocol/i29846_3_lut_4_lut_4_lut was optimized away.
+
+                                   Page 12
+
+
+
+
+Design:  top                                           Date:  09/10/26  19:09:04
+
+Removed logic (cont)
+--------------------
+Block i1 was optimized away.
+
+OSC Summary
+-----------
+
+OSC 1:                                     Pin/Node Value
+  OSC Instance Name:                                osc
+  OSC Type:                                         OSCH
+  STDBY Input:                                      NONE
+  OSC Output:                              NODE     clk
+  OSC Nominal Frequency (MHz):                      53.20
+
+ASIC Components
+---------------
+
+Instance Name: osc
+         Type: OSCH
+
+Run Time and Memory Usage
+-------------------------
+
+   Total CPU Time: 3 secs  
+   Total REAL Time: 3 secs  
+   Peak Memory Usage: 98 MB
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                   Page 13
+
+
+Copyright (c) 1991-1994 by NeoCAD Inc. All rights reserved.
+     Copyright (c) 1995 AT&T Corp.   All rights reserved.
+     Copyright (c) 1995-2001 Lucent Technologies Inc.  All rights reserved.
+     Copyright (c) 2001 Agere Systems   All rights reserved.
+     Copyright (c) 2002-2024 Lattice Semiconductor Corporation,  All rights
+     reserved.

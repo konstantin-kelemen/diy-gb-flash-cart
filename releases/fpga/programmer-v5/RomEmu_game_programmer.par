@@ -1,0 +1,313 @@
+PAR: Place And Route Diamond (64-bit) 3.14.0.75.2.
+Copyright (c) 1991-1994 by NeoCAD Inc. All rights reserved.
+Copyright (c) 1995 AT&T Corp.   All rights reserved.
+Copyright (c) 1995-2001 Lucent Technologies Inc.  All rights reserved.
+Copyright (c) 2001 Agere Systems   All rights reserved.
+Copyright (c) 2002-2024 Lattice Semiconductor Corporation,  All rights reserved.
+Thu Sep 10 19:06:56 2026
+
+C:/lscc/diamond/3.14/ispfpga\bin\nt64\par -f RomEmu_game_programmer.p2t
+RomEmu_game_programmer_map.ncd RomEmu_game_programmer.dir
+RomEmu_game_programmer.prf -gui -msgset
+C:/Users/Admin/Documents/diy-gb-flash-cart/fpga/diamond/promote.xml
+
+
+Preference file: RomEmu_game_programmer.prf.
+
+Level/       Number       Worst        Timing       Worst        Timing       Run          NCD
+Cost [ncd]   Unrouted     Slack        Score        Slack(hold)  Score(hold)  Time         Status
+----------   --------     -----        ------       -----------  -----------  ----         ------
+5_1          -            -            -            -            -            01:13        Failed
+
+* : Design saved.
+
+INFO - par: Iteration 5_1 failed due to design error(s).
+
+ERROR - par: All 1 iterations failed with design error(s). It is recommended to correct all design errors before running multiple iterations. Please check the Place and Route reports (.par) for the individual iterations under the directory "C:\Users\Admin\Documents\diy-gb-flash-cart\fpga\diamond\game_programmer\RomEmu_game_programmer.dir".
+
+Total (real) run time for 1-seed: 1 mins 13 secs 
+
+par failed!
+
+Lattice Place and Route Report for Design "RomEmu_game_programmer_map.ncd"
+Thu Sep 10 19:06:56 2026
+
+PAR: Place And Route Diamond (64-bit) 3.14.0.75.2.
+Command Line: par -w -l 5 -i 6 -t 1 -c 0 -e 0 -gui -msgset C:/Users/Admin/Documents/diy-gb-flash-cart/fpga/diamond/promote.xml -exp parUseNBR=1:parCDP=0:parCDR=0:parPathBased=OFF:parASE=1 RomEmu_game_programmer_map.ncd RomEmu_game_programmer.dir/5_1.ncd RomEmu_game_programmer.prf
+Preference file: RomEmu_game_programmer.prf.
+Placement level-cost: 5-1.
+Routing Iterations: 6
+
+Loading design for application par from file RomEmu_game_programmer_map.ncd.
+Design name: programmer_block
+NCD version: 3.3
+Vendor:      LATTICE
+Device:      LCMXO2-1200HC
+Package:     TQFP100
+Performance: 4
+Loading device for application par from file 'xo2c1200.nph' in environment: C:/lscc/diamond/3.14/ispfpga.
+Package Status:                     Final          Version 1.44.
+Performance Hardware Data Status:   Final          Version 36.4.
+License checked out.
+
+
+Ignore Preference Error(s):  True
+Device utilization summary:
+
+   PIO (prelim)   73+4(JTAG)/108     71% used
+                  73+4(JTAG)/80      96% bonded
+   IOLOGIC           10/108           9% used
+
+   SLICE            271/640          42% used
+
+   EBR                2/7            28% used
+
+
+Number of Signals: 935
+Number of Connections: 2608
+
+Pin Constraint Summary:
+   4 out of 73 pins locked (5% locked).
+
+The following 1 signal is selected to use the primary clock routing resources:
+    clk_c (driver: clk, clk load #: 192)
+
+
+The following 8 signals are selected to use the secondary clock routing resources:
+    reset_c (driver: reset, clk load #: 0, sr load #: 75, ce load #: 0)
+    n4631 (driver: SLICE_276, clk load #: 0, sr load #: 48, ce load #: 0)
+    clk_c_enable_153 (driver: SLICE_286, clk load #: 0, sr load #: 0, ce load #: 28)
+    clk_c_enable_182 (driver: SLICE_336, clk load #: 0, sr load #: 15, ce load #: 8)
+    clk_c_enable_242 (driver: SLICE_284, clk load #: 0, sr load #: 0, ce load #: 22)
+    clk_c_enable_85 (driver: SLICE_294, clk load #: 0, sr load #: 9, ce load #: 6)
+    clk_c_enable_249 (driver: SLICE_311, clk load #: 0, sr load #: 0, ce load #: 12)
+    clk_c_enable_197 (driver: SLICE_172, clk load #: 0, sr load #: 0, ce load #: 12)
+
+No signal is selected as Global Set/Reset.
+....................
+........................................................................
+........................................................................
+........................................................
+WARNING - par: Due to difficulties in finding a legal I/O placement, it may be impossible to assign optimal locations for the PIO drivers of clock and/or PLL/DLL inputs in this design.  Check the PAR and PAD reports to see if the placement fulfil the requirements; and use LOCATE preference to lock clock and/or PLL/DLL input pins if necessary.
+....................
+........................................................................
+........................................................................
+........................................................
+....................
+........................................................................
+........................................................................
+........................................................
+....................
+........................................................................
+........................................................................
+........................................................
+....................
+........................................................................
+........................................................................
+........................................................
+
+ERROR - par: I/O initial placement is unsuccessful.  Check the I/O placement constraints / user preferences (such as pin locking) carefully.
+
+***** I/O Placement and Bank Assignment *****
+
+*** Overview of I/O Grouping ***
++---+-------+------+---------+-------+---------+------------+
+| # | Vccio | Vref | Dir/IOL | # IOs | # Sites | Attributes |
++---+-------+------+---------+-------+---------+------------+
+| 0 | 2.5V  | OFF  | OUT     | 41    | 41      |            |
+| 1 | 2.5V  | OFF  | IN      | 20    | 20      |            |
+| 2 | 2.5V  | OFF  | IN/IOL  | 8     | 8       |            |
++---+-------+------+---------+-------+---------+------------+
+IOs *LOCKED* - # of IOs: 4, required # of sites: 4
++----------+----------+----------+------+---------+------+------------+----------+
+| PIO      | IO Type  | Vccio(s) | Vref | Dir/IOL | LCT# | Attributes | Site     |
++----------+----------+----------+------+---------+------+------------+----------+
+| spi_cs_n | LVCMOS33 | 3.3V     | OFF  | IN      | 42@I |            | 97/PT10A |
+| spi_sck  | LVCMOS33 | 3.3V     | OFF  | IN/IOL  | 42@I |            | 98/PT9B  |
+| spi_mosi | LVCMOS33 | 3.3V     | OFF  | IN/IOL  | 42@I |            | 96/PT10B |
+| spi_miso | LVCMOS33 | 3.3V     | OFF  | OUT     | 22@O |            | 99/PT9A  |
++----------+----------+----------+------+---------+------+------------+----------+
+
+
+*** Primary/Secondary Clock Overview (PIO drivers only) ***
+Primary clock signal clk_c (driver clk, Vccio: 2.5V, Vref: OFF@OFF) uses PIO pad 25 (PL10D) in bank 3.
+Secondary clock signal reset_c (driver reset, Vccio: 2.5V, Vref: OFF@OFF) uses PIO pad 24 (PL10C) in bank 3.
+
+
+*** I/O Bank Assignment Overview ***
++------+-------+-------+-------+----------+----+------+------+
+| Bank | Vccio | Vref1 | Vref2 | Capacity | PG | INRD | LVDS |
++------+-------+-------+-------+----------+----+------+------+
+| 0    | 3.3V  | OFF   | OFF   | 19       |    |      |      |
+| 1    | 2.5V  | OFF   | OFF   | 21       |    |      |      |
+| 2    | 2.5V  | OFF   | OFF   | 20       |    |      |      |
+| 3    | 2.5V  | OFF   | OFF   | 20       |    |      |      |
++------+-------+-------+-------+----------+----+------+------+
+*** Detailed Bank Assignment ***
+
+--- I/Os placed in Bank 0 ---
+Bank Vccio=3.3V, Vref1/2=(OFF@OFF, OFF@OFF)
+
++-----+-------+-------+-----+------+------+-------+----------+----------+-------+------+---------+------+------+----+------+------+------------+
+| Pin | Site  | IOL   | T/C | Proh | Vref | Other | I/O      | IO_TYPE  | Vccio | Vref | Dir/IOL | Lock | LCT# | PG | INRD | LVDS | Attributes |
++-----+-------+-------+-----+------+------+-------+----------+----------+-------+------+---------+------+------+----+------+------+------------+
+| 99  | PT9A  | TIOL  | L+  |      |      |       | spi_miso | LVCMOS33 | 3.3V  | OFF  | OUT     | Y    | 21@O |    |      |      |            |
+| 98  | PT9B  | IOL   | L-  |      |      |       | spi_sck  | LVCMOS33 | 3.3V  | OFF  | IN/IOL  | Y    | 41@I |    |      |      |            |
+| 97  | PT10A | TIOL  | L+  |      |      |       | spi_cs_n | LVCMOS33 | 3.3V  | OFF  | IN      | Y    | 41@I |    |      |      |            |
+| 96  | PT10B | IOL   | L-  |      |      |       | spi_mosi | LVCMOS33 | 3.3V  | OFF  | IN/IOL  | Y    | 41@I |    |      |      |            |
+| 95  | PT10C | TSIOL | T   |      |      | CONF  |          |          |       |      |         |      |      |    |      |      |            |
+| 94  | PT10D | IOL   | C   |      |      | CONF  |          |          |       |      |         |      |      |    |      |      |            |
+| 91  | PT11C | TSIOL | T   |      |      | CONF  |          |          |       |      |         |      |      |    |      |      |            |
+| 90  | PT11D | IOL   | C   |      |      | CONF  |          |          |       |      |         |      |      |    |      |      |            |
+| 88  | PT12A | TIOL  | L+  |      | 1    | PCLK  |          |          |       |      |         |      |      |    |      |      |            |
+| 87  | PT12B | IOL   | L-  |      |      |       |          |          |       |      |         |      |      |    |      |      |            |
+| 86  | PT12C | TSIOL | T   |      |      | PCLK  |          |          |       |      |         |      |      |    |      |      |            |
+| 85  | PT12D | IOL   | C   |      |      |       |          |          |       |      |         |      |      |    |      |      |            |
+| 84  | PT15A | TIOL  | L+  |      |      |       |          |          |       |      |         |      |      |    |      |      |            |
+| 83  | PT15B | IOL   | L-  |      |      |       |          |          |       |      |         |      |      |    |      |      |            |
+| 82  | PT15C | TSIOL | T   |      |      |       |          |          |       |      |         |      |      |    |      |      |            |
+| 81  | PT15D | IOL   | C   |      |      |       |          |          |       |      |         |      |      |    |      |      |            |
+| 78  | PT16C | TSIOL | T   |      |      |       |          |          |       |      |         |      |      |    |      |      |            |
+| 77  | PT17C | TSIOL | T   |      |      |       |          |          |       |      |         |      |      |    |      |      |            |
+| 76  | PT17D | IOL   | C   |      |      |       |          |          |       |      |         |      |      |    |      |      |            |
++-----+-------+-------+-----+------+------+-------+----------+----------+-------+------+---------+------+------+----+------+------+------------+
+
+*** Bank 0 - # of PIO sites: 19, occupied: 4; # of Vref inputs used: 0
+
+
+--- I/Os placed in Bank 1 ---
+Bank Vccio=2.5V, Vref1/2=(OFF@OFF, OFF@OFF)
+
++-----+-------+------+-----+------+------+-------+-------------+----------+-------+------+---------+------+------+----+------+------+------------+
+| Pin | Site  | IOL  | T/C | Proh | Vref | Other | I/O         | IO_TYPE  | Vccio | Vref | Dir/IOL | Lock | LCT# | PG | INRD | LVDS | Attributes |
++-----+-------+------+-----+------+------+-------+-------------+----------+-------+------+---------+------+------+----+------+------+------------+
+| 51  | PR10D | RIOL | C   |      | 1    |       | data[6]     | LVCMOS25 | 2.5V  | OFF  | OUT     |      | 27@O |    |      |      |            |
+| 52  | PR10C | RIOL | T   |      |      |       | data[5]     | LVCMOS25 | 2.5V  | OFF  | OUT     |      | 27@O |    |      |      |            |
+| 53  | PR9D  | RIOL | C   |      |      |       | data[4]     | LVCMOS25 | 2.5V  | OFF  | OUT     |      | 27@O |    |      |      |            |
+| 54  | PR9C  | RIOL | T   |      |      |       | data[3]     | LVCMOS25 | 2.5V  | OFF  | OUT     |      | 27@O |    |      |      |            |
+| 57  | PR9B  | RIOL | C   |      |      |       | data[2]     | LVCMOS25 | 2.5V  | OFF  | OUT     |      | 27@O |    |      |      |            |
+| 58  | PR9A  | RIOL | T   |      |      |       | data[1]     | LVCMOS25 | 2.5V  | OFF  | OUT     |      | 27@O |    |      |      |            |
+| 59  | PR8D  | RIOL | C   |      |      |       | data[0]     | LVCMOS25 | 2.5V  | OFF  | OUT     |      | 27@O |    |      |      |            |
+| 60  | PR8C  | RIOL | T   |      |      |       | address[21] | LVCMOS25 | 2.5V  | OFF  | OUT     |      | 27@O |    |      |      |            |
+| 61  | PR8A  | RIOL | T   |      |      |       | address[20] | LVCMOS25 | 2.5V  | OFF  | OUT     |      | 27@O |    |      |      |            |
+| 62  | PR5D  | RIOL | C   |      |      |       | address[19] | LVCMOS25 | 2.5V  | OFF  | OUT     |      | 27@O |    |      |      |            |
+| 63  | PR5C  | RIOL | T   |      |      | PCLK  | address[18] | LVCMOS25 | 2.5V  | OFF  | OUT     |      | 27@O |    |      |      |            |
+| 64  | PR5B  | RIOL | C   |      |      |       | address[17] | LVCMOS25 | 2.5V  | OFF  | OUT     |      | 27@O |    |      |      |            |
+| 65  | PR5A  | RIOL | T   |      |      |       | address[16] | LVCMOS25 | 2.5V  | OFF  | OUT     |      | 27@O |    |      |      |            |
+| 66  | PR4D  | RIOL | C   |      |      |       | address[15] | LVCMOS25 | 2.5V  | OFF  | OUT     |      | 27@O |    |      |      |            |
+| 67  | PR4C  | RIOL | T   |      |      |       | address[14] | LVCMOS25 | 2.5V  | OFF  | OUT     |      | 27@O |    |      |      |            |
+| 68  | PR4B  | RIOL | C   |      |      |       | address[13] | LVCMOS25 | 2.5V  | OFF  | OUT     |      | 27@O |    |      |      |            |
+| 69  | PR4A  | RIOL | T   |      |      |       | address[12] | LVCMOS25 | 2.5V  | OFF  | OUT     |      | 27@O |    |      |      |            |
+| 70  | PR3B  | RIOL | C   |      |      |       | address[11] | LVCMOS25 | 2.5V  | OFF  | OUT     |      | 27@O |    |      |      |            |
+| 71  | PR3A  | RIOL | T   |      |      |       | address[10] | LVCMOS25 | 2.5V  | OFF  | OUT     |      | 27@O |    |      |      |            |
+| 74  | PR2B  | RIOL | C   |      |      |       | address[9]  | LVCMOS25 | 2.5V  | OFF  | OUT     |      | 27@O |    |      |      |            |
+| 75  | PR2A  | RIOL | T   |      |      |       | address[8]  | LVCMOS25 | 2.5V  | OFF  | OUT     |      | 27@O |    |      |      |            |
++-----+-------+------+-----+------+------+-------+-------------+----------+-------+------+---------+------+------+----+------+------+------------+
+
+*** Bank 1 - # of PIO sites: 21, occupied: 21; # of Vref inputs used: 0
+
+
+--- I/Os placed in Bank 2 ---
+Bank Vccio=2.5V, Vref1/2=(OFF@OFF, OFF@OFF)
+
++-----+-------+-------+-----+------+------+-------+------------+----------+-------+------+---------+------+------+----+------+------+------------+
+| Pin | Site  | IOL   | T/C | Proh | Vref | Other | I/O        | IO_TYPE  | Vccio | Vref | Dir/IOL | Lock | LCT# | PG | INRD | LVDS | Attributes |
++-----+-------+-------+-----+------+------+-------+------------+----------+-------+------+---------+------+------+----+------+------+------------+
+| 27  | PB4C  | BSIOL | T   |      | 1    |       | active     | LVCMOS25 | 2.5V  | OFF  | OUT     |      | 27@O |    |      |      |            |
+| 28  | PB4D  | IOL   | C   |      |      |       | seen       | LVCMOS25 | 2.5V  | OFF  | OUT     |      | 27@O |    |      |      |            |
+| 29  | PB6A  | BIOL  | T   |      |      |       | address[0] | LVCMOS25 | 2.5V  | OFF  | OUT     |      | 27@O |    |      |      |            |
+| 30  | PB6B  | IOL   | C   |      |      |       | address[1] | LVCMOS25 | 2.5V  | OFF  | OUT     |      | 27@O |    |      |      |            |
+| 31  | PB6C  | BSIOL | T   |      |      |       | address[2] | LVCMOS25 | 2.5V  | OFF  | OUT     |      | 27@O |    |      |      |            |
+| 32  | PB6D  | IOL   | C   |      |      |       | address[3] | LVCMOS25 | 2.5V  | OFF  | OUT     |      | 27@O |    |      |      |            |
+| 34  | PB9A  | BIOL  | T   |      |      | PCLK  | address[4] | LVCMOS25 | 2.5V  | OFF  | OUT     |      | 27@O |    |      |      |            |
+| 35  | PB9B  | IOL   | C   |      |      |       | address[5] | LVCMOS25 | 2.5V  | OFF  | OUT     |      | 27@O |    |      |      |            |
+| 38  | PB11A | BIOL  | T   |      |      | PCLK  | address[6] | LVCMOS25 | 2.5V  | OFF  | OUT     |      | 27@O |    |      |      |            |
+| 39  | PB11B | IOL   | C   |      |      |       | address[7] | LVCMOS25 | 2.5V  | OFF  | OUT     |      | 27@O |    |      |      |            |
+| 36  | PB11C | BSIOL | T   |      |      |       | start      | LVCMOS25 | 2.5V  | OFF  | OUT     |      | 27@O |    |      |      |            |
+| 37  | PB11D | IOL   | C   |      |      |       | command[7] | LVCMOS25 | 2.5V  | OFF  | OUT     |      | 27@O |    |      |      |            |
+| 40  | PB15A | BIOL  | T   |      |      |       | command[6] | LVCMOS25 | 2.5V  | OFF  | OUT     |      | 27@O |    |      |      |            |
+| 41  | PB15B | IOL   | C   |      |      |       | command[5] | LVCMOS25 | 2.5V  | OFF  | OUT     |      | 27@O |    |      |      |            |
+| 42  | PB18A | BIOL  | T   |      |      |       | command[4] | LVCMOS25 | 2.5V  | OFF  | OUT     |      | 27@O |    |      |      |            |
+| 43  | PB18B | IOL   | C   |      |      |       | command[3] | LVCMOS25 | 2.5V  | OFF  | OUT     |      | 27@O |    |      |      |            |
+| 45  | PB18C | BSIOL | T   |      |      |       | command[2] | LVCMOS25 | 2.5V  | OFF  | OUT     |      | 27@O |    |      |      |            |
+| 47  | PB18D | IOL   | C   |      |      |       | command[1] | LVCMOS25 | 2.5V  | OFF  | OUT     |      | 27@O |    |      |      |            |
+| 48  | PB20C | BSIOL | T   |      |      |       | command[0] | LVCMOS25 | 2.5V  | OFF  | OUT     |      | 27@O |    |      |      |            |
+| 49  | PB20D | IOL   | C   |      |      |       | data[7]    | LVCMOS25 | 2.5V  | OFF  | OUT     |      | 27@O |    |      |      |            |
++-----+-------+-------+-----+------+------+-------+------------+----------+-------+------+---------+------+------+----+------+------+------------+
+
+*** Bank 2 - # of PIO sites: 20, occupied: 20; # of Vref inputs used: 0
+
+
+--- I/Os placed in Bank 3 ---
+Bank Vccio=2.5V, Vref1/2=(OFF@OFF, OFF@OFF)
+
++-----+-------+-----+-----+------+------+-------+---------------------+----------+-------+------+---------+------+------+----+------+------+------------+
+| Pin | Site  | IOL | T/C | Proh | Vref | Other | I/O                 | IO_TYPE  | Vccio | Vref | Dir/IOL | Lock | LCT# | PG | INRD | LVDS | Attributes |
++-----+-------+-----+-----+------+------+-------+---------------------+----------+-------+------+---------+------+------+----+------+------+------------+
+| 25  | PL10D | IOL | C   |      | 1    |       | clk                 | LVCMOS25 | 2.5V  | OFF  | IN      |      | 44@I |    |      |      |            |
+| 24  | PL10C | IOL | T   |      |      |       | reset               | LVCMOS25 | 2.5V  | OFF  | IN      |      | 44@I |    |      |      |            |
+| 21  | PL9B  | IOL | C   |      |      |       | busy                | LVCMOS25 | 2.5V  | OFF  | IN      |      | 44@I |    |      |      |            |
+| 20  | PL9A  | IOL | T   |      |      | PCLK  | done                | LVCMOS25 | 2.5V  | OFF  | IN      |      | 44@I |    |      |      |            |
+| 19  | PL8D  | IOL | C   |      |      |       | operation_status[7] | LVCMOS25 | 2.5V  | OFF  | IN      |      | 44@I |    |      |      |            |
+| 18  | PL8C  | IOL | T   |      |      |       | operation_status[6] | LVCMOS25 | 2.5V  | OFF  | IN      |      | 44@I |    |      |      |            |
+| 17  | PL8B  | IOL | C   |      |      |       | operation_status[5] | LVCMOS25 | 2.5V  | OFF  | IN      |      | 44@I |    |      |      |            |
+| 16  | PL8A  | IOL | T   |      |      |       | operation_status[4] | LVCMOS25 | 2.5V  | OFF  | IN      |      | 44@I |    |      |      |            |
+| 15  | PL5D  | IOL | C   |      |      |       | operation_status[3] | LVCMOS25 | 2.5V  | OFF  | IN      |      | 44@I |    |      |      |            |
+| 14  | PL5C  | IOL | T   |      |      |       | operation_status[2] | LVCMOS25 | 2.5V  | OFF  | IN      |      | 44@I |    |      |      |            |
+| 13  | PL5B  | IOL | C   |      |      |       | operation_status[1] | LVCMOS25 | 2.5V  | OFF  | IN      |      | 44@I |    |      |      |            |
+| 12  | PL5A  | IOL | T   |      |      | PCLK  | operation_status[0] | LVCMOS25 | 2.5V  | OFF  | IN      |      | 44@I |    |      |      |            |
+| 10  | PL4B  | IOL | C   |      |      |       | result[15]          | LVCMOS25 | 2.5V  | OFF  | IN/IOL  |      | 44@I |    |      |      |            |
+| 9   | PL4A  | IOL | T   |      |      |       | result[14]          | LVCMOS25 | 2.5V  | OFF  | IN/IOL  |      | 44@I |    |      |      |            |
+| 8   | PL3D  | IOL | C   |      |      |       | result[13]          | LVCMOS25 | 2.5V  | OFF  | IN/IOL  |      | 44@I |    |      |      |            |
+| 7   | PL3C  | IOL | T   |      |      |       | result[12]          | LVCMOS25 | 2.5V  | OFF  | IN/IOL  |      | 44@I |    |      |      |            |
+| 4   | PL3B  | IOL | C   |      |      |       | result[11]          | LVCMOS25 | 2.5V  | OFF  | IN/IOL  |      | 44@I |    |      |      |            |
+| 3   | PL3A  | IOL | T   |      |      | PCLK  | result[10]          | LVCMOS25 | 2.5V  | OFF  | IN/IOL  |      | 44@I |    |      |      |            |
+| 2   | PL2D  | IOL | C   |      |      |       | result[9]           | LVCMOS25 | 2.5V  | OFF  | IN/IOL  |      | 44@I |    |      |      |            |
+| 1   | PL2C  | IOL | T   |      |      |       | result[8]           | LVCMOS25 | 2.5V  | OFF  | IN/IOL  |      | 44@I |    |      |      |            |
++-----+-------+-----+-----+------+------+-------+---------------------+----------+-------+------+---------+------+------+----+------+------+------------+
+
+*** Bank 3 - # of PIO sites: 20, occupied: 20; # of Vref inputs used: 0
+
+
+ERROR - par: I/O initial placement for result[7] is unsuccessful. Check the I/O placement constraints / user preferences (such as pin locking) carefully.
+ERROR - par: I/O initial placement for result[6] is unsuccessful. Check the I/O placement constraints / user preferences (such as pin locking) carefully.
+ERROR - par: I/O initial placement for result[5] is unsuccessful. Check the I/O placement constraints / user preferences (such as pin locking) carefully.
+ERROR - par: I/O initial placement for result[4] is unsuccessful. Check the I/O placement constraints / user preferences (such as pin locking) carefully.
+ERROR - par: I/O initial placement for result[3] is unsuccessful. Check the I/O placement constraints / user preferences (such as pin locking) carefully.
+ERROR - par: I/O initial placement for result[2] is unsuccessful. Check the I/O placement constraints / user preferences (such as pin locking) carefully.
+ERROR - par: I/O initial placement for result[1] is unsuccessful. Check the I/O placement constraints / user preferences (such as pin locking) carefully.
+ERROR - par: I/O initial placement for result[0] is unsuccessful. Check the I/O placement constraints / user preferences (such as pin locking) carefully.
+
+*** I/Os not placed ***
+PIO "result[7]": (IO_TYPE=LVCMOS25_IN, Vccio/Vref=2.5V/OFF@OFF, IN/NO_IOL) was not placed.
+PIO "result[6]": (IO_TYPE=LVCMOS25_IN, Vccio/Vref=2.5V/OFF@OFF, IN/NO_IOL) was not placed.
+PIO "result[5]": (IO_TYPE=LVCMOS25_IN, Vccio/Vref=2.5V/OFF@OFF, IN/NO_IOL) was not placed.
+PIO "result[4]": (IO_TYPE=LVCMOS25_IN, Vccio/Vref=2.5V/OFF@OFF, IN/NO_IOL) was not placed.
+PIO "result[3]": (IO_TYPE=LVCMOS25_IN, Vccio/Vref=2.5V/OFF@OFF, IN/NO_IOL) was not placed.
+PIO "result[2]": (IO_TYPE=LVCMOS25_IN, Vccio/Vref=2.5V/OFF@OFF, IN/NO_IOL) was not placed.
+PIO "result[1]": (IO_TYPE=LVCMOS25_IN, Vccio/Vref=2.5V/OFF@OFF, IN/NO_IOL) was not placed.
+PIO "result[0]": (IO_TYPE=LVCMOS25_IN, Vccio/Vref=2.5V/OFF@OFF, IN/NO_IOL) was not placed.
+
+
+
+
+PAR_SUMMARY::Run status = Failed
+PAR_SUMMARY::Number of unrouted conns = <n/a>
+PAR_SUMMARY::Worst  slack<setup/<ns>> = <n/a>
+PAR_SUMMARY::Timing score<setup/<ns>> = <n/a>
+PAR_SUMMARY::Worst  slack<hold /<ns>> = <n/a>
+PAR_SUMMARY::Timing score<hold /<ns>> = <n/a>
+PAR_SUMMARY::Number of errors = 9
+
+Total CPU  time to completion: 1 mins 11 secs 
+Total REAL time to completion: 1 mins 13 secs 
+
+par done!
+
+Note: user must run 'Trace' for timing closure signoff.
+
+Copyright (c) 1991-1994 by NeoCAD Inc. All rights reserved.
+Copyright (c) 1995 AT&T Corp.   All rights reserved.
+Copyright (c) 1995-2001 Lucent Technologies Inc.  All rights reserved.
+Copyright (c) 2001 Agere Systems   All rights reserved.
+Copyright (c) 2002-2024 Lattice Semiconductor Corporation,  All rights reserved.
