@@ -1,6 +1,6 @@
 `timescale 1ns/1ps
-module game_programmer_tb #(parameter HOST_BLOCKS=0);
-    localparam real CLOCK_HALF=9.4;
+module game_programmer_tb #(parameter real CLOCK_HALF=9.4);
+    defparam dut.osc.CLOCK_HALF=CLOCK_HALF;
     reg clk=0, reset=1;
     always #(CLOCK_HALF) clk=~clk;
     reg cs=1, sck=0, mosi=0;
@@ -17,7 +17,7 @@ module game_programmer_tb #(parameter HOST_BLOCKS=0);
     reg cpu_drive=0;
     reg [7:0] cpu_data=0;
     wire data_oe_n, data_dir, fram_ce_n, fram_oe_n, fram_we_n;
-    top #(.HOST_BLOCKS(HOST_BLOCKS),.DETECT_TICKS(16),.POWER_CYCLES(20),.PROGRAM_CYCLES(2000),.ERASE_CYCLES(6000)) dut(
+    top #(.DETECT_TICKS(16),.POWER_CYCLES(20),.PROGRAM_CYCLES(2000),.ERASE_CYCLES(6000)) dut(
         .gb_power_present(gb_power_present),.gb_a(gb_a),.gb_rd_n(gb_rd_n),.gb_wr_n(gb_wr_n),
         .gb_cs_n(gb_cs_n),.gb_res_n(gb_res_n),.gb_d(gb_d),.data_oe_n(data_oe_n),.data_dir(data_dir),
         .spi_cs_n(cs),.spi_sck(sck),.spi_mosi(mosi),.spi_miso(miso),
@@ -66,6 +66,8 @@ module game_programmer_tb #(parameter HOST_BLOCKS=0);
     reg id_mode=0;
     reg [1:0] fault=0;
     reg fault_active=0;
+    reg [21:0] fail_address=0;
+    reg selective_fault=0;
     reg expected_bit=0;
     wire [7:0] read_data = id_mode ? (fa==0 ? 8'hc2 : fa==2 ? 8'ha8 : 8'hff) :
         fault_active ? {~expected_bit, 1'b0, (fault==1 || fault==3), 5'b0} : memory[fa];
@@ -78,7 +80,7 @@ module game_programmer_tb #(parameter HOST_BLOCKS=0);
     always @(posedge we) if (!reset && !ce) begin
         writes=writes+1;
         if (model_state==3) begin
-            if (fault != 0) begin
+            if (fault != 0 && (!selective_fault || fa==fail_address)) begin
                 fault_active=1; expected_bit=fd[7];
                 if (fault==3) memory[fa]=memory[fa] & fd;
             end
@@ -199,145 +201,125 @@ module game_programmer_tb #(parameter HOST_BLOCKS=0);
                 $fatal(1,"status seq=%h/%h status=%h/%h op=%h/%h",rx[1],seq,rx[2],expected,rx[3],op);
         end
     endtask
-    initial if(!HOST_BLOCKS) begin
-        for(n=0;n<4194304;n=n+1) memory[n]=(n^(n>>8)^(n>>16))&255;
-        #5000; reset=0; #50000;
-        query(1,8);
-        if({rx[0],rx[1],rx[2],rx[3],rx[4],rx[5],rx[6],rx[7]}!==64'h4742464303000004)
-            $fatal(1,"version");
-        before_writes=writes;
-        // Unaligned full block, crosses byte and address boundaries.
-        request_frame(8'h30,24'h00ff80,1024,0,0,0); finish_op(8'h30,0);
-        if({rx[7],rx[6]}!==16'd1024) $fatal(1,"read count");
-        query(3,1026); crc=16'hffff;
-        for(n=0;n<1024;n=n+1) begin
-            if(rx[n]!==memory[24'h00ff80+n]) $fatal(1,"read byte %d: %h",n,rx[n]);
-            crc=crc_byte(crc,rx[n]);
+
+    task acquire;
+        begin request_frame(8'h22,0,0,8'ha5,0,0); finish_op(8'h22,0); end
+    endtask
+    task release_bus;
+        begin request_frame(8'h23,0,0,0,0,0); finish_op(8'h23,0); end
+    endtask
+    task read_check(input [23:0] addr, input integer count);
+        integer k; reg [15:0] check_crc;
+        begin
+            acquire();
+            request_frame(8'h30,addr,count,0,0,0); finish_op(8'h30,0);
+            if({rx[7],rx[6]}!==count) $fatal(1,"read completed");
+            query(3,count+2); check_crc=16'hffff;
+            for(k=0;k<count;k=k+1) begin
+                if(rx[k]!==memory[addr+k]) $fatal(1,"read %h got %h expected %h",addr+k,rx[k],memory[addr+k]);
+                check_crc=crc_byte(check_crc,rx[k]);
+            end
+            if({rx[count],rx[count+1]}!==check_crc) $fatal(1,"block CRC");
+            release_bus();
         end
-        if({rx[1024],rx[1025]}!==crc || writes!=before_writes) $fatal(1,"read CRC/writes");
-        request_frame(8'h30,24'h3fffff,1,0,0,0); finish_op(8'h30,0);
-        query(3,3); if(rx[0]!==memory[22'h3fffff]) $fatal(1,"last address");
-        request_frame(8'h30,24'h3fffff,2,0,0,0); finish_op(8'h30,8);
-        request_frame(8'h30,0,0,0,0,0); finish_op(8'h30,8);
-        request_frame(8'h30,0,1025,0,0,0); finish_op(8'h30,8);
-        request_frame(8'h31,0,1,0,0,0); finish_op(8'h31,9);
-        request_frame(8'h20,0,0,8'ha5,0,0); finish_op(8'h20,0);
-        request_frame(8'h13,0,0,0,0,0); finish_op(8'h13,0);
-        if({rx[5],rx[4]}!==16'ha8c2 || id_mode) $fatal(1,"ID");
-        request_frame(8'h12,0,0,0,0,0); finish_op(8'h12,0);
-        for(n=0;n<1024;n=n+1) tx[8+n]=n&255;
-        request_frame(8'h31,24'h000100,1024,0,0,0); finish_op(8'h31,0);
-        for(n=0;n<1024;n=n+1)
-            if(memory[256+n]!== (n&255)) $fatal(1,"program byte %d",n);
-        if(memory[255]!==8'hff || memory[1280]!==8'hff) $fatal(1,"write boundary");
-        before_writes=writes;
-        request_frame(8'h31,24'h002000,3,0,0,1); finish_op(8'h31,7);
-        request_frame(8'h31,24'h002000,3,0,0,0); finish_op(8'h31,9);
-        request_frame(8'h20,0,0,8'ha5,0,0); finish_op(8'h20,0);
-        request_frame(8'h31,24'h002000,3,0,-1,0);
-        malformed_bits(13*8-1);
-        malformed_bits(13*8+1);
-        request_frame(8'h31,24'h002000,3,0,1,0);
-        if(writes!=before_writes) $fatal(1,"bad framing wrote Flash");
-        fault=1; tx[8]=8'ha5;
-        request_frame(8'h31,24'h002000,1,0,0,0); finish_op(8'h31,4);
-        request_frame(8'h31,24'h002000,1,0,0,0); finish_op(8'h31,9);
-        fault=0;
-        request_frame(8'h20,0,0,8'ha5,0,0); finish_op(8'h20,0);
-        seq=seq-1;
-        request_frame(8'h12,0,0,0,0,0); finish_op(8'h12,10);
-        request_frame(8'h20,0,0,8'ha5,0,0); finish_op(8'h20,0);
-        fault=2; tx[8]=8'ha5;
-        request_frame(8'h31,24'h002000,1,0,0,0);
-        // Frame beginning while busy must not commit even if busy clears mid-frame.
-        request_frame(8'h12,0,0,0,0,0);
-        seq=seq-1; finish_op(8'h31,3);
-        fault=0;
-        request_frame(8'h21,0,0,0,0,0); finish_op(8'h21,0);
-        // Короткий импульс детектора не переключает режим.
-        gb_power_present=1; #60; gb_power_present=0; #1000;
-        if(!dut.programmer_enable) $fatal(1,"detector glitch switched mode");
-        request_frame(8'h20,0,0,8'ha5,0,0); finish_op(8'h20,0);
+    endtask
+    initial begin
+        for(n=0;n<4194304;n=n+1) memory[n]=(n^(n>>8)^(n>>16))&255;
         memory['h147]='h1b; memory['h148]=5; memory['h149]=4;
         memory['h4000]='h72;
-        for(n=0;n<64;n=n+1) begin memory['h3000+n]='hff; tx[8+n]=n+32; end
-        request_frame(8'h31,24'h003000,64,0,0,0);
-        if(!dut.active) $fatal(1,"expected active block");
-        gb_power_present=1; gb_res_n=1;
-        // Питание Game Boy появилось во время записи: закончить весь блок.
-        wait(dut.game_enable); wait(dut.game.configured); #1000;
-        for(n=0;n<64;n=n+1) if(memory['h3000+n]!==n+32) $fatal(1,"block interrupted %d",n);
-        if(id_mode || model_state!=0) $fatal(1,"Flash not in read-array");
-        game_read('h4000,'h72); game_write(0,'ha); game_write('h4000,15);
-        game_write('hbfff,'h9a); game_read('hbfff,'h9a);
-        before_writes=writes;
-        request_frame(8'h20,0,0,8'ha5,0,0);
-        request_frame(8'h12,0,0,0,0,0);
-        if(writes!=before_writes) $fatal(1,"SPI mutated Flash in GAME");
-        // Уход из GAME ждёт окончания текущего чтения.
-        gb_a='h4000; gb_cs_n=1; gb_rd_n=0; #200; gb_power_present=0; #1000;
-        if(!dut.game_enable) $fatal(1,"GAME read interrupted");
-        gb_rd_n=1; gb_res_n=0; wait(dut.programmer_enable); #1000; seq=0;
-        if(ram_writes!=1) $fatal(1,"unexpected RAM writes");
-        query(1,8); if(rx[4]!==3) $fatal(1,"programmer not restored");
-        request_frame(8'h20,0,0,8'ha5,0,0); finish_op(8'h20,0);
-        before_writes=writes;
-        // Появление питания посреди SPI-кадра запрещает его commit.
-        fork
-            request_frame(8'h12,0,0,0,0,0);
-            begin #5000; gb_power_present=1; gb_res_n=1; end
-        join
-        wait(dut.game_enable); wait(dut.game.configured); #1000;
-        if(writes!=before_writes+1) $fatal(1,"in-flight SPI accepted (only cleanup F0 expected)");
-        if(memory['h147]!==8'h1b) $fatal(1,"ROM erased on switch");
-        game_write(0,'ha); game_write('h4000,15); game_read('hbfff,'h9a);
-        $display("PASS game_programmer: v3 regression, GAME/FRAM, power detection, drain block, read-array, SPI rejection, bus isolation");
-        $finish;
-    end
-    initial if(HOST_BLOCKS) begin
-        for(n=0;n<4194304;n=n+1) memory[n]=(n^(n>>8)^(n>>16))&255;
-        memory['h147]=0; memory['h148]=0; memory['h149]=0;
         #5000; reset=0; #50000;
         query(1,8);
-        if({rx[0],rx[1],rx[2],rx[3],rx[4],rx[5],rx[6],rx[7]}!==64'h4742464304000100)
-            $fatal(1,"SPI v4 version");
+        if({rx[0],rx[1],rx[2],rx[3],rx[4],rx[5],rx[6],rx[7]}!==64'h4742464305000001)
+            $fatal(1,"SPI v5 version");
         request_frame(8'h23,0,0,0,0,0); finish_op(8'h23,9);
-        if(dut.protocol.lease_release) $fatal(1,"release without lease stalled commands");
-        request_frame(8'h30,0,1024,0,0,0); finish_op(8'h30,8);
-        request_frame(8'h30,24'h3fffff,1,0,0,0); finish_op(8'h30,0);
-        if(rx[4]!==memory[22'h3fffff] || rx[6]!==1) $fatal(1,"single read result");
+        if(dut.protocol.lease_release) $fatal(1,"release without lease");
+        request_frame(8'h30,0,1,0,0,0); finish_op(8'h30,9);
+        read_check('hff80,256); read_check('hff81,255); read_check('h3fffff,1);
+        acquire();
+        request_frame(8'h30,'h3fffff,2,0,0,0); finish_op(8'h30,8);
+        request_frame(8'h30,0,0,0,0,0); finish_op(8'h30,8);
+        request_frame(8'h30,0,257,0,0,0); finish_op(8'h30,8);
+        request_frame(8'h30,'h400000,1,0,0,0); finish_op(8'h30,8);
+        tx[8]=0; request_frame(8'h31,0,1,0,0,0); finish_op(8'h31,9);
+        release_bus();
         request_frame(8'h20,0,0,8'ha5,0,0); finish_op(8'h20,0);
-        before_writes=writes; tx[8]=8'h55;
-        request_frame(8'h31,24'h3000,1,0,0,1); finish_op(8'h31,7);
-        request_frame(8'h31,24'h3000,1,0,-1,0);
-        malformed_bits(11*8-1); malformed_bits(11*8+1);
-        if(writes!=before_writes) $fatal(1,"malformed v4 request wrote Flash");
+        acquire(); request_frame(8'h13,0,0,0,0,0); finish_op(8'h13,0);
+        if({rx[5],rx[4]}!==16'ha8c2 || id_mode) $fatal(1,"ID");
+        release_bus(); acquire();
+        request_frame(8'h12,0,0,0,0,0); finish_op(8'h12,0); release_bus();
+        acquire();
+        for(n=0;n<256;n=n+1) tx[8+n]=n;
+        request_frame(8'h31,'h100,256,0,0,0); finish_op(8'h31,0);
+        if({rx[7],rx[6]}!==256) $fatal(1,"write completed");
+        release_bus(); read_check('h100,256);
+        for(n=0;n<256;n=n+1) if(memory[256+n]!==n) $fatal(1,"write %d",n);
+        if(memory[255]!==8'hff || memory[512]!==8'hff) $fatal(1,"write boundary");
+        acquire(); before_writes=writes;
+        request_frame(8'h31,'h2000,3,0,0,1); finish_op(8'h31,7);
+        request_frame(8'h31,'h2000,3,0,0,0); finish_op(8'h31,9);
         request_frame(8'h20,0,0,8'ha5,0,0); finish_op(8'h20,0);
-        request_frame(8'h22,0,0,8'ha5,0,0); finish_op(8'h22,0);
-        if(!rx[2][7] || !dut.active) $fatal(1,"lease not acquired");
-        for(n=0;n<8;n=n+1) begin
-            memory['h3000+n]=8'hff; tx[8]=n+32;
-            request_frame(8'h31,24'h3000+n,1,0,0,0); finish_op(8'h31,0);
-            if(n==0) begin gb_power_present=1; gb_res_n=1; end
-            if(dut.game_enable || !dut.programmer_enable || !rx[2][7]) $fatal(1,"lease interrupted");
-        end
-        for(n=0;n<8;n=n+1) if(memory['h3000+n]!==n+32) $fatal(1,"leased program data");
+        request_frame(8'h31,'h2000,3,0,-1,0);
+        malformed_bits(13*8-1); malformed_bits(13*8+1);
+        request_frame(8'h31,'h2000,3,0,1,0);
+        if(writes!=before_writes) $fatal(1,"bad frame wrote Flash");
+        // Only the first 13 bytes commit before the injected Q5 failure.
+        for(n=0;n<32;n=n+1) begin memory['h2100+n]='hff; tx[8+n]=n; end
+        fault=1; selective_fault=1; fail_address='h210d;
+        request_frame(8'h31,'h2100,32,0,0,0); finish_op(8'h31,4);
+        if({rx[7],rx[6]}!==13) $fatal(1,"partial count");
+        for(n=0;n<32;n=n+1)
+            if(memory['h2100+n]!== (n<13 ? n : 8'hff)) $fatal(1,"partial write boundary");
+        fault=0; selective_fault=0; release_bus();
+        request_frame(8'h20,0,0,8'ha5,0,0); finish_op(8'h20,0);
+        acquire(); seq=seq-1;
+        request_frame(8'h12,0,0,0,0,0); finish_op(8'h12,10); release_bus();
+        request_frame(8'h20,0,0,8'ha5,0,0); finish_op(8'h20,0); acquire();
+        fault=2; tx[8]='ha5;
+        request_frame(8'h31,'h2200,1,0,0,0);
+        request_frame(8'h12,0,0,0,0,0); // begins busy, must not commit
+        seq=seq-1; finish_op(8'h31,3); fault=0; release_bus();
+        request_frame(8'h20,0,0,8'ha5,0,0); finish_op(8'h20,0);
+        // Counter wrap independent of USB; every block holds and releases the bus.
+        for(j=0;j<90;j=j+1) read_check('h100,1);
+        memory['h147]='h1b; memory['h148]=5; memory['h149]=4;
+        memory['h4000]='h72;
+        acquire();
+        for(n=0;n<256;n=n+1) begin memory['h3000+n]='hff; tx[8+n]=n; end
+        request_frame(8'h31,'h3000,256,0,0,0);
+        gb_power_present=1; gb_res_n=1; finish_op(8'h31,0);
+        if(dut.game_enable || !dut.active) $fatal(1,"lease interrupted");
+        for(n=0;n<256;n=n+1) if(memory['h3000+n]!==n) $fatal(1,"block interrupted");
         request_frame(8'h23,0,0,0,0,0);
-        if(!dut.active || dut.game_enable) $fatal(1,"mode changed before release ACK");
         query(2,5);
         if(!dut.active || dut.game_enable) $fatal(1,"partial ACK released lease");
         finish_op(8'h23,0);
-        if(rx[2][7]) $fatal(1,"release ACK still shows lease");
         wait(dut.game_enable); wait(dut.game.configured); #1000;
-        game_read('h4000,memory['h4000]);
-        gb_power_present=0; gb_res_n=0;
-        wait(dut.accept_requests); #1000;
-        request_frame(8'h22,0,0,8'ha5,0,0); finish_op(8'h22,0);
+        game_read('h4000,'h72); game_write(0,'ha); game_write('h4000,15);
+        game_write('hbfff,'h9a); game_read('hbfff,'h9a);
+        before_writes=writes;
+        request_frame(8'h20,0,0,8'ha5,0,0); request_frame(8'h12,0,0,0,0,0);
+        if(writes!=before_writes) $fatal(1,"SPI wrote in GAME");
+        gb_a='h4000; gb_cs_n=1; gb_rd_n=0; #200; gb_power_present=0; #1000;
+        if(!dut.game_enable) $fatal(1,"GAME read interrupted");
+        gb_rd_n=1; gb_res_n=0; wait(dut.accept_requests); #1000;
+        seq=0;
+        acquire(); request_frame(8'h30,'hff80,256,0,0,0); finish_op(8'h30,0);
         gb_power_present=1; gb_res_n=1;
-        #21000000; // Lost RP2040: idle lease expires after 2^20 clock ticks.
+        query(3,5);
+        if(!dut.active || dut.game_enable) $fatal(1,"partial data released lease");
+        query(3,258); crc=16'hffff;
+        for(n=0;n<256;n=n+1) begin
+            if(rx[n]!==memory['hff80+n]) $fatal(1,"read lost during mode switch");
+            crc=crc_byte(crc,rx[n]);
+        end
+        if({rx[256],rx[257]}!==crc) $fatal(1,"mode-switch read CRC");
+        release_bus(); wait(dut.game_enable); wait(dut.game.configured);
+        gb_power_present=0; gb_res_n=0; wait(dut.accept_requests); #1000;
+        seq=0; acquire(); gb_power_present=1; gb_res_n=1;
+        #26000000;
         wait(dut.game_enable); wait(dut.game.configured); #1000;
         if(dut.active || dut.protocol.lease) $fatal(1,"lease watchdog stuck");
-        $display("PASS SPI v4 offload: short CRC frames, byte Flash operations, leased mode switch, ACK, watchdog");
+        $display("PASS SPI v5: EBR blocks, CRC, bounds, partial faults, sequence, lease ACK/watchdog, GAME/FRAM");
         $finish;
     end
     initial begin #200000000; $fatal(1,"timeout"); end
@@ -345,7 +327,8 @@ endmodule
 
 module OSCH(input STDBY, output reg OSC=0, output SEDSTDBY);
     parameter NOM_FREQ="53.20";
-    always #9.4 OSC=~OSC;
+    parameter real CLOCK_HALF=9.4;
+    always #(CLOCK_HALF) OSC=~OSC;
     assign SEDSTDBY=STDBY;
 endmodule
 module FD1S3AX(input D, CK, output reg Q=0);

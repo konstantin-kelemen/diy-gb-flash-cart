@@ -28,7 +28,7 @@ try {
 -use_io_insertion 1
 -top top
 -ver "$repo/fpga/targets/game_programmer/top.v"
--ver "$repo/fpga/rtl/programmer_block.v"
+-ver "$repo/fpga/rtl/programmer_v5.v"
 -ver "$repo/fpga/rtl/mx29_programmer.v"
 -ver "$repo/fpga/rtl/mx29_bus.v"
 -ver "$repo/fpga/rtl/game_multi_core.v"
@@ -40,6 +40,10 @@ try {
 "@ | Set-Content -Encoding ASCII build.synproj
     Invoke-Checked 'synthesis.exe' @('-f','build.synproj')
     Invoke-Checked 'map.exe' @('-noinferGSR','-a','MachXO2','-p','LCMXO2-1200HC','-t','TQFP100','-s','4','-oc','Commercial','RomEmu_game_programmer.ngd','-o','RomEmu_game_programmer_map.ncd','-pr','RomEmu_game_programmer.prf','-mp','RomEmu_game_programmer.mrp','-lpf',"$repo/fpga/constraints/game_programmer.lpf",'-c','0')
+    $mapping = Get-Content 'RomEmu_game_programmer.mrp' -Raw
+    if ($mapping -notmatch 'Number of block RAMs:\s+1 out of') {
+        throw 'Expected one shared EBR; inspect the MAP report before exporting firmware.'
+    }
     if ($MapOnly) { return }
     Invoke-Checked 'par.exe' @('-w','RomEmu_game_programmer_map.ncd','RomEmu_game_programmer.ncd','RomEmu_game_programmer.prf')
     Invoke-Checked 'trce.exe' @('-v','10','-gt','-sethld','-sp','4','-sphld','m','-o','RomEmu_game_programmer.twr','RomEmu_game_programmer.ncd','RomEmu_game_programmer.prf')

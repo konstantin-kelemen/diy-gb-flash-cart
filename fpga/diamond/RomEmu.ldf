@@ -9,7 +9,7 @@
         <Source name="../rtl/cart_mapper.v" type="Verilog" type_short="Verilog"><Options/></Source>
         <Source name="../rtl/mbc_rtc.v" type="Verilog" type_short="Verilog"><Options/></Source>
         <Source name="../rtl/cart_mode.v" type="Verilog" type_short="Verilog"><Options/></Source>
-        <Source name="../rtl/programmer_block.v" type="Verilog" type_short="Verilog"><Options/></Source>
+        <Source name="../rtl/programmer_v5.v" type="Verilog" type_short="Verilog"><Options/></Source>
         <Source name="../rtl/mx29_programmer.v" type="Verilog" type_short="Verilog"><Options/></Source>
         <Source name="../rtl/mx29_bus.v" type="Verilog" type_short="Verilog"><Options/></Source>
         <Source name="../constraints/game_programmer.lpf" type="Logic Preference" type_short="LPF"><Options/></Source>

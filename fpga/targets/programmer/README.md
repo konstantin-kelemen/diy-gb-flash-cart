@@ -1,8 +1,8 @@
 # Отдельный FPGA programmer
 
-Исходник этой конфигурации оставлен для регрессионных тестов.
-Актуальная конфигурация для прошивки — [game_programmer](../game_programmer/README.md)
-с [RP2040 programmer-v4](../../../releases/rp2040/programmer-v4/).
+Конфигурация сохраняет SPI v3 и проверяется регрессионными тестами.
+[Исторический протокол](../../../docs/PROGRAMMER_PROTOCOL_V3.md).
+Текущие RP2040 и `host/gbflash.py` v5 с ней несовместимы.
 
-[Запись Flash](../../../docs/PROGRAMMER.md),
-[актуальный SPI-протокол](../../../docs/PROGRAMMER_SPI_V4.md).
+Для новой пары прошивок используется [game_programmer v5](../game_programmer/README.md).
+[Практическая инструкция](../../../docs/PROGRAMMER.md).

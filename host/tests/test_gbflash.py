@@ -31,17 +31,16 @@ class Bridge:
         return result
 
     def write(self, frame):
-        assert frame[:4] == b'GB3Q'
-        assert gbflash.packet(frame[4:-2]) == frame[4:]
+        assert frame[:4] == b'GB5Q'
+        assert gbflash.packet(frame[4:-4]) == frame[4:]
         size = int.from_bytes(frame[4:6], 'big')
-        request = frame[6:-2]
+        request = frame[6:-4]
         assert len(request) == size
         if request == b'\x01':
-            response = bytes.fromhex('4742464303000004')
+            response = bytes.fromhex('4742464305000040')
         elif request == b'\x02':
-            response = gbflash.packet(bytes([0x50, self.sequence, 0, 0, 0, 0, 0, 0]))
+            response = bytes([0, self.sequence, 0, 0, 0, 0, 0, 0])
         else:
-            assert gbflash.packet(request[:-2]) == request
             op, seq = request[:2]
             assert seq == (self.sequence + 1) % 256
             self.sequence = seq
@@ -62,12 +61,12 @@ class Bridge:
                 pass
             elif op == 0x30:
                 count = length
-                payload = gbflash.packet(bytes(self.memory[address:address + length]))
-                if self.corrupt == 'block_crc':
-                    payload = payload[:-1] + bytes([payload[-1] ^ 1])
+                payload = bytes(self.memory[address:address + length])
+                if self.corrupt == 'block_length':
+                    payload = payload[:-1]
             elif op == 0x31:
-                assert len(request) == 10 + length
-                for offset, value in enumerate(request[8:-2]):
+                assert len(request) == 8 + length
+                for offset, value in enumerate(request[8:]):
                     self.memory[address + offset] &= value
                 count = length
             elif op == 0x12:
@@ -82,9 +81,9 @@ class Bridge:
                 count -= 1
             if self.corrupt == 'timeout':
                 code, count = 3, 13
-            response = gbflash.packet(bytes([0x50, seq, code, op, result & 255,
-                                             result >> 8, count & 255, count >> 8])) + payload
-        self.output = b'GB3R' + gbflash.packet(len(response).to_bytes(2, 'big') + response)
+            response = bytes([op, seq, code, result & 255, result >> 8,
+                              count & 255, count >> 8, 0]) + payload
+        self.output = b'GB5R' + gbflash.packet(len(response).to_bytes(2, 'big') + response)
         if self.corrupt == 'usb_crc':
             self.output = self.output[:-1] + bytes([self.output[-1] ^ 1])
         if self.corrupt == 'truncated':
@@ -133,15 +132,12 @@ class Tests(unittest.TestCase):
                             write.assert_not_called()
                             verify.assert_not_called()
 
-    def test_crc_standard_vector_and_corruption(self):
-        self.assertEqual(gbflash.packet(b'123456789')[-2:], b'\x29\xb1')
-        raw = gbflash.packet(bytes.fromhex('50070030a5000004'))
-        self.assertEqual(gbflash.status(raw), raw)
-        for i in range(80):
-            bad = bytearray(raw)
-            bad[i // 8] ^= 1 << (i % 8)
+    def test_crc_standard_vector_and_status(self):
+        self.assertEqual(gbflash.packet(b'123456789')[-4:], bytes.fromhex('2639f4cb'))
+        self.assertEqual(gbflash.status(bytes(8)), bytes(8))
+        for raw in (bytes(7), bytes(9), bytes(7)+b'\x01'):
             with self.assertRaises(RuntimeError):
-                gbflash.status(bytes(bad))
+                gbflash.status(raw)
 
     def test_sector_geometry_both_variants(self):
         for device in (0xa7, 0xa8):
@@ -167,13 +163,13 @@ class Tests(unittest.TestCase):
     def test_last_byte_and_invalid_ranges(self):
         programmer, bridge = self.make_programmer()
         self.assertEqual(programmer.read_block(gbflash.SIZE - 1, 1), b'\xff')
-        for address, length in [(0, 0), (0, 1025), (-1, 1), (gbflash.SIZE - 1, 2)]:
+        for address, length in [(0, 0), (0, gbflash.BLOCK + 1), (-1, 1), (gbflash.SIZE - 1, 2)]:
             with self.assertRaises(ValueError):
                 programmer.read_block(address, length)
         self.assertEqual(len(bridge.operations), 1)
 
     def test_transport_faults_stop_without_retry(self):
-        for fault in ('usb_crc', 'block_crc', 'truncated', 'sequence', 'count'):
+        for fault in ('usb_crc', 'block_length', 'truncated', 'sequence', 'count'):
             with self.subTest(fault=fault):
                 programmer, bridge = self.make_programmer()
                 bridge.corrupt = fault
@@ -201,7 +197,7 @@ class Tests(unittest.TestCase):
         self.assertEqual(bridge.memory[len(image):16384], b'\xff' * (16384 - len(image)))
         self.assertEqual(bridge.memory[16384], 0)
         writes = [(a, n) for op, a, n in bridge.operations if op == 0x31]
-        self.assertEqual(writes, [(i * 1024, 1024) for i in range(8)] + [(8192, 2)])
+        self.assertEqual(writes, [(0, 8194)])
         bridge.memory[8192] ^= 1
         with contextlib.redirect_stdout(io.StringIO()):
             with self.assertRaisesRegex(RuntimeError, '0x002000: expected A5, read A4'):
@@ -223,20 +219,20 @@ class Tests(unittest.TestCase):
                 programmer, bridge = self.make_programmer()
                 bridge.device = device
                 bridge.memory[:] = b'\x55' * gbflash.SIZE
-                before = b''.join(programmer.read_block(a, 1024)
-                                  for a in range(0, gbflash.SIZE, 1024))
+                before = b''.join(programmer.read_block(a, gbflash.BLOCK)
+                                  for a in range(0, gbflash.SIZE, gbflash.BLOCK))
                 with contextlib.redirect_stdout(io.StringIO()):
                     self.assertEqual(programmer.identify(), device)
                     gbflash.write_image(programmer, image, device)
-                after = b''.join(programmer.read_block(a, 1024)
-                                 for a in range(0, gbflash.SIZE, 1024))
+                after = b''.join(programmer.read_block(a, gbflash.BLOCK)
+                                 for a in range(0, gbflash.SIZE, gbflash.BLOCK))
                 self.assertEqual(len(before), gbflash.SIZE)
                 self.assertEqual(len(after), gbflash.SIZE)
                 self.assertEqual(after[:len(image)], image)
                 self.assertEqual(after[len(image):], before[len(image):])
                 self.assertEqual(bridge.erased, [a for a, n in gbflash.sectors(device)
                                                 if a < len(image)])
-                self.assertTrue(all(n == 1024 for op, a, n in bridge.operations
+                self.assertTrue(all(n in (8192, gbflash.BLOCK) for op, a, n in bridge.operations
                                     if op in (0x30, 0x31)))
 
     def test_ff_blocks_are_skipped_only_after_erase_check(self):
@@ -253,11 +249,11 @@ class Tests(unittest.TestCase):
             programmer.write_block(0, b'\x00')
         self.assertEqual(bridge.memory[0], 255)
 
-    def test_full_dump_uses_4096_requests(self):
+    def test_full_dump_uses_256_requests(self):
         programmer, bridge = self.make_programmer()
         for address in range(0, gbflash.SIZE, gbflash.BLOCK):
-            self.assertEqual(len(programmer.read_block(address, gbflash.BLOCK)), 1024)
-        self.assertEqual(len(bridge.operations), 4096)
+            self.assertEqual(len(programmer.read_block(address, gbflash.BLOCK)), gbflash.BLOCK)
+        self.assertEqual(len(bridge.operations), 256)
 
 
 if __name__ == '__main__':

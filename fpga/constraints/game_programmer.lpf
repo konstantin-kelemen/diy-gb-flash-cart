@@ -1,4 +1,4 @@
-# GAME multi / PROGRAMMER v3, автоопределение питания Game Boy.
+# GAME multi / PROGRAMMER v5, автоопределение питания Game Boy.
 # flash_a[16:0] и flash_d[7:0] — общие шины Flash / F-RAM.
 # Асинхронные пути и WR# требуют отдельного post-route анализа setup/hold.
 SYSCONFIG JTAG_PORT=ENABLE ;

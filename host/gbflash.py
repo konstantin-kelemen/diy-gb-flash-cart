@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""MX29LV320E programmer v3. Serial transport: pip install pyserial."""
+"""MX29LV320E programmer v5. Serial transport: pip install pyserial."""
 import argparse
 import binascii
 import pathlib
@@ -7,19 +7,23 @@ import sys
 import time
 
 SIZE = 0x400000
-BLOCK = 1024
+BLOCK = 16384
+TIMEOUT = 120
 ERRORS = {2: 'unknown command', 3: 'Flash timeout', 4: 'Flash Q5 failure',
           5: 'Flash readback mismatch', 6: 'controller fault', 7: 'SPI request CRC',
-          8: 'address out of range', 9: 'programmer locked', 10: 'duplicate sequence'}
+          8: 'address out of range', 9: 'programmer locked', 10: 'duplicate sequence',
+          0xe1: 'SPI version or CRC failure', 0xe2: 'invalid USB request',
+          0xe3: 'SPI busy, mode unavailable or duplicate sequence',
+          0xe4: 'bridge deadline exceeded', 0xe5: 'invalid SPI completed count'}
 
 
 def packet(payload):
-    return payload + binascii.crc_hqx(payload, 0xffff).to_bytes(2, 'big')
+    return payload + binascii.crc32(payload).to_bytes(4, 'little')
 
 
 def status(raw):
-    if len(raw) != 10 or raw[0] != 0x50 or packet(raw[:8]) != raw:
-        raise RuntimeError('Invalid FPGA status or CRC')
+    if len(raw) != 8 or raw[7] != 0:
+        raise RuntimeError('Invalid bridge status')
     return raw
 
 
@@ -40,17 +44,20 @@ class Programmer:
         # Let a prior damaged/partial USB frame expire before handshaking.
         time.sleep(2.2)
         serial.reset_input_buffer()
-        if self.exchange(b'\x01') != bytes.fromhex('4742464303000004'):
-            raise RuntimeError('FPGA programmer v3 not found; update both firmware builds')
+        if self.exchange(b'\x01') != bytes.fromhex('4742464305000040'):
+            raise RuntimeError('Programmer v5 not found; update FPGA, RP2040 and host together')
         raw = status(self.exchange(b'\x02'))
         if raw[2] == 1:
             raise RuntimeError('FPGA is busy; wait for the previous operation to finish')
         self.sequence = raw[1]
 
-    def read_exact(self, length):
+    def read_exact(self, length, deadline):
         result = bytearray()
-        deadline = time.monotonic() + 10
         while len(result) < length:
+            remaining = deadline - time.monotonic()
+            if remaining <= 0:
+                raise RuntimeError('USB response deadline exceeded; operation was not retried')
+            self.serial.timeout = remaining
             part = self.serial.read(length - len(result))
             if not part or time.monotonic() > deadline:
                 raise RuntimeError('USB timeout/incomplete response; operation was not retried')
@@ -58,21 +65,22 @@ class Programmer:
         return bytes(result)
 
     def exchange(self, payload):
-        frame = b'GB3Q' + packet(len(payload).to_bytes(2, 'big') + payload)
+        deadline = time.monotonic() + TIMEOUT
+        frame = b'GB5Q' + packet(len(payload).to_bytes(2, 'big') + payload)
         if self.serial.write(frame) != len(frame):
             raise RuntimeError('Incomplete USB write; operation was not retried')
-        header = self.read_exact(6)
-        if header[:4] != b'GB3R':
-            raise RuntimeError('Invalid USB framing; update RP2040 firmware to v3')
+        header = self.read_exact(6, deadline)
+        if header[:4] != b'GB5R':
+            raise RuntimeError('Invalid USB framing; update RP2040 firmware to v5')
         length = int.from_bytes(header[4:6], 'big')
-        if not 1 <= length <= BLOCK + 12:
+        if not 1 <= length <= BLOCK + 8:
             raise RuntimeError('Invalid USB response length')
-        body = self.read_exact(length + 2)
-        if packet(header[4:6] + body[:-2])[-2:] != body[-2:]:
+        body = self.read_exact(length + 4, deadline)
+        if packet(header[4:6] + body[:-4])[-4:] != body[-4:]:
             raise RuntimeError('USB response CRC mismatch')
         if length == 1:
             raise RuntimeError(f'RP2040 bridge error: 0x{body[0]:02X}; operation was not retried')
-        return body[:-2]
+        return body[:-4]
 
     def request(self, op, address=0, length=0, data=0, payload=b''):
         if not 0 <= address < SIZE or not 0 <= data <= 255:
@@ -85,26 +93,29 @@ class Programmer:
         if len(payload) != (length if op == 0x31 else 0):
             raise ValueError('Invalid write payload length')
         self.sequence = (self.sequence + 1) & 255
-        request = packet(bytes([op, self.sequence]) + address.to_bytes(3, 'big') +
-                         length.to_bytes(2, 'big') + bytes([data]) + payload)
+        request = (bytes([op, self.sequence]) + address.to_bytes(3, 'big') +
+                   length.to_bytes(2, 'big') + bytes([data]) + payload)
         reply = self.exchange(request)
-        raw = status(reply[:10])
-        if raw[1] != self.sequence or raw[3] != op:
+        raw = status(reply[:8])
+        if raw[1] != self.sequence or raw[0] != op:
             raise RuntimeError('Stale or mismatched FPGA response')
-        count = int.from_bytes(raw[6:8], 'little')
+        count = int.from_bytes(raw[5:7], 'little')
+        if raw[2] >= 0xe0:
+            raise RuntimeError(f'Bridge: {ERRORS.get(raw[2], hex(raw[2]))}; '
+                               f'confirmed {count} bytes at 0x{address:06X}; operation was not retried')
         if raw[2] != 0:
             raise RuntimeError(f'At 0x{address + count:06X}: '
                                f'{ERRORS.get(raw[2], "unexpected status")} ({raw[2]})')
         if op in (0x30, 0x31) and count != length:
             raise RuntimeError('Incomplete FPGA block')
         if op == 0x30:
-            block = reply[10:]
-            if len(block) != length + 2 or packet(block[:-2]) != block:
-                raise RuntimeError('Invalid SPI block length or CRC')
-            return block[:-2]
-        if len(reply) != 10:
+            block = reply[8:]
+            if len(block) != length:
+                raise RuntimeError('Invalid read payload length')
+            return block
+        if len(reply) != 8:
             raise RuntimeError('Unexpected response payload')
-        return raw[4] | raw[5] << 8
+        return raw[3] | raw[4] << 8
 
     def operation(self, op, address=0, data=0):
         return self.request(op, address, data=data)
@@ -137,7 +148,8 @@ def verify(programmer, expected, start=0, label='Verified'):
         if actual != block:
             i = next(i for i, (a, b) in enumerate(zip(block, actual)) if a != b)
             raise RuntimeError(f'0x{start + offset + i:06X}: expected {block[i]:02X}, read {actual[i]:02X}')
-        print(f'{label}: {offset + len(block)}/{len(expected)}', flush=True)
+        if (offset + len(block)) % 65536 == 0 or offset + len(block) == len(expected):
+            print(f'{label}: {offset + len(block)}/{len(expected)}', flush=True)
 
 
 def write_image(programmer, image, device):
@@ -145,16 +157,28 @@ def write_image(programmer, image, device):
         raise ValueError('Image must contain 1..4194304 bytes')
     affected = [(a, n) for a, n in sectors(device) if a < len(image)]
     print('Erasing sectors: ' + ', '.join(f'{a:06X}+{n:X}' for a, n in affected), flush=True)
+    erase_seconds = erase_verify_seconds = 0.0
     for address, size in affected:
+        started = time.monotonic()
         programmer.operation(0x12, address)
+        erase_seconds += time.monotonic() - started
+        started = time.monotonic()
         # Check the entire erased sector, including any tail beyond the image.
         verify(programmer, b'\xff' * size, address, 'Erase verified')
+        erase_verify_seconds += time.monotonic() - started
+    started = time.monotonic()
     for address in range(0, len(image), BLOCK):
         block = image[address:address + BLOCK]
         if block != b'\xff' * len(block):
             programmer.write_block(address, block)
-        print(f'Written: {address + len(block)}/{len(image)}', flush=True)
+        if (address + len(block)) % 65536 == 0 or address + len(block) == len(image):
+            print(f'Written: {address + len(block)}/{len(image)}', flush=True)
+    program_seconds = time.monotonic() - started
+    started = time.monotonic()
     verify(programmer, image)
+    verify_seconds = time.monotonic() - started
+    print(f'Time: erase={erase_seconds:.3f}s; erase verify={erase_verify_seconds:.3f}s; '
+          f'program={program_seconds:.3f}s; ROM verify={verify_seconds:.3f}s')
     print(f'Written: {len(image)} bytes\nVerified: {len(image)} bytes\nResult: SUCCESS')
 
 
@@ -183,7 +207,7 @@ def main():
         if args.command == 'read' and not (0 <= args.address < SIZE and 0 < args.length <= SIZE - args.address):
             raise ValueError('Read range exceeds Flash capacity')
         import serial
-        with serial.Serial(args.port, 115200, timeout=10, write_timeout=2) as port:
+        with serial.Serial(args.port, 115200, timeout=TIMEOUT, write_timeout=2) as port:
             programmer = Programmer(port)
             try:
                 if args.command in ('info', 'write'):

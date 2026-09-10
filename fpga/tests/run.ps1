@@ -4,13 +4,14 @@ $build = Join-Path $PSScriptRoot 'build'
 New-Item -ItemType Directory -Force $build | Out-Null
 $game = @('../../rtl/game_multi_core.v', '../../rtl/cart_header.v', '../../rtl/cart_mapper.v', '../../rtl/mbc_rtc.v')
 $programmer = @('../../rtl/mx29_bus.v', '../../rtl/mx29_programmer.v', '../../rtl/programmer_block.v')
-$combined = @('../../targets/game_programmer/top.v') + $game + $programmer + @('../../rtl/cart_mode.v', '../game_programmer_tb.sv')
+$combined = @('../../targets/game_programmer/top.v') + $game + @('../../rtl/mx29_bus.v', '../../rtl/mx29_programmer.v', '../../rtl/programmer_v5.v', '../../rtl/cart_mode.v', '../game_programmer_tb.sv')
 $cases = @(
     @{Name='cart_header'; Top='cart_header_tb'; Files=@('../../rtl/cart_header.v', '../cart_header_tb.sv'); Options=''},
     @{Name='game_multi'; Top='game_multi_tb'; Files=@('../../targets/game_multi/top.v') + $game + @('../game_multi_tb.sv'); Options=''},
     @{Name='programmer_block'; Top='programmer_block_tb'; Files=$programmer + @('../programmer_block_tb.sv'); Options=''},
-    @{Name='game_programmer'; Top='game_programmer_tb'; Files=$combined; Options='-gHOST_BLOCKS=0'},
-    @{Name='offload'; Top='game_programmer_tb'; Files=$combined; Options='-gHOST_BLOCKS=1'}
+    @{Name='game_programmer'; Top='game_programmer_tb'; Files=$combined; Options=''},
+    @{Name='v5_slow'; Top='game_programmer_tb'; Files=$combined; Options='-gCLOCK_HALF=11.75'},
+    @{Name='v5_fast'; Top='game_programmer_tb'; Files=$combined; Options='-gCLOCK_HALF=7.8125'}
 )
 Push-Location $build
 try {

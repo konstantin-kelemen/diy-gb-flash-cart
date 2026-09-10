@@ -1,122 +1,118 @@
-// Appended to the actual firmware source by test_bridge.py (SDK calls stubbed).
+// Appended to the actual main.c. Exported functions are used by Python/ctypes.
+static uint8_t memory[0x400000], spi_buffer[SPI_BLOCK];
 static unsigned commits, reads, writes, leases, releases;
 static uint8_t query_op, fpga_seq, fpga_op, fpga_status;
-static uint16_t fpga_result;
-static bool fpga_armed, leased, accepting=true, force_busy, stall, stall_after_read;
-static bool corrupt_next, corrupt_write_reply, switch_during_write, old_version;
-static unsigned fail_read;
-static uint8_t usb[1200];
-static size_t usb_size;
-
+static uint16_t fpga_result, fpga_completed;
+static bool fpga_armed, leased, accepting, old_version, corrupt_status, corrupt_data;
+static bool corrupt_after_write, stall, switch_during_write, bad_count;
+static uint32_t fail_address;
+static unsigned op_delay, input_delay;
+static uint8_t usb_output[MAX_REPLY+10];
+static size_t usb_size, input_size, input_offset;
+static const uint8_t *usb_input;
+static jmp_buf usb_end;
 static int spi_write_blocking(int ignored,const uint8_t *p,size_t n) {
-    (void)ignored;
+    (void)ignored; model_time+=2*n;
     if(n==1) { query_op=p[0]; return (int)n; }
-    assert((n==10 || n==11) && valid(p,n));
+    assert(n>=10 && n<=SPI_BLOCK+10 && valid(p,n));
     assert(accepting || leased);
-    ++commits; fpga_seq=p[1]; fpga_op=p[0]; fpga_status=0; fpga_result=0;
+    assert(p[1]!=fpga_seq);
+    ++commits; fpga_seq=p[1]; fpga_op=p[0]; fpga_status=0; fpga_result=0; fpga_completed=0;
     uint32_t addr=(uint32_t)p[2]<<16|(uint32_t)p[3]<<8|p[4];
+    size_t len=(size_t)p[5]<<8|p[6];
     switch(p[0]) {
         case 0x20: assert(p[7]==0xa5); fpga_armed=true; break;
         case 0x21: fpga_armed=false; break;
         case 0x22: assert(!leased && accepting && p[7]==0xa5); leased=true; ++leases; break;
         case 0x23: assert(leased); leased=false; ++releases; break;
-        case 0x30:
-            assert(leased && n==10 && p[5]==0 && p[6]==1);
-            ++reads; fpga_result=(uint8_t)(addr^(addr>>8)^(addr>>16));
-            if(fail_read && reads==fail_read) fpga_status=5;
-            if(stall_after_read) stall=true;
+        case 0x30: case 0x31:
+            assert(leased && len>=1 && len<=SPI_BLOCK && addr+len<=0x400000);
+            assert(n==10+(p[0]==0x31?len:0));
+            if(p[0]==0x31) { assert(fpga_armed); ++writes; } else ++reads;
+            model_time+=op_delay;
+            for(size_t i=0;i<len;++i) {
+                if(addr+i==fail_address) { fpga_status=5; fpga_armed=false; break; }
+                if(p[0]==0x31) memory[addr+i]&=p[8+i];
+                else spi_buffer[i]=memory[addr+i];
+                ++fpga_completed;
+            }
+            if(p[0]==0x31 && switch_during_write) accepting=false;
+            if(p[0]==0x31 && corrupt_after_write) {corrupt_status=true; corrupt_after_write=false;}
             break;
-        case 0x31:
-            assert(leased && fpga_armed && n==11 && p[5]==0 && p[6]==1 && p[8]!=0xff);
-            ++writes; fpga_result=p[8];
-            if(switch_during_write) accepting=false;
-            if(corrupt_write_reply) { corrupt_next=true; corrupt_write_reply=false; }
-            break;
-        case 0x12: case 0x14: assert(leased && fpga_armed); break;
-        case 0x13: assert(leased && fpga_armed); fpga_result=0xa8c2; break;
+        case 0x12: {
+            assert(leased && fpga_armed);
+            uint32_t size=addr<0x10000 ? 8192 : 65536;
+            memset(memory+(addr/size)*size,0xff,size); fpga_completed=1; break;
+        }
+        case 0x14: assert(leased && fpga_armed); fpga_completed=1; break;
+        case 0x13: assert(leased && fpga_armed); fpga_result=0xa8c2; fpga_completed=1; break;
         default: assert(0);
     }
     return (int)n;
 }
 static int spi_read_blocking(int ignored,uint8_t filler,uint8_t *p,size_t n) {
-    (void)ignored; (void)filler;
-    memset(p,0,n);
+    (void)ignored; (void)filler; model_time+=2*n; memset(p,0,n);
     if(query_op==1) {
-        assert(n==8); memcpy(p,old_version?"GBFC\3\0\0\4":"GBFC\4\0\1\0",8);
+        assert(n==8); memcpy(p,old_version?"GBFC\4\0\1\0":"GBFC\5\0\0\1",8); return (int)n;
+    }
+    if(query_op==3) {
+        assert(leased && fpga_op==0x30 && fpga_status==0 && n==fpga_completed+2u);
+        memcpy(p,spi_buffer,n-2); append_crc(p,n-2);
+        if(corrupt_data) p[n-1]^=1;
         return (int)n;
     }
     assert(query_op==2 && n==10);
     p[0]=0x50; p[1]=fpga_seq; p[3]=fpga_op;
-    p[2]=(leased?0x80:0)|(accepting?0x40:0)|((force_busy||stall)?1:fpga_status);
+    p[2]=(leased?0x80:0)|(accepting?0x40:0)|(stall && fpga_op==0x31?1:fpga_status);
     p[4]=(uint8_t)fpga_result; p[5]=(uint8_t)(fpga_result>>8);
-    p[6]=(fpga_op==0x30 || fpga_op==0x31) && fpga_status==0;
-    append_crc(p,8);
-    if(corrupt_next) { p[9]^=1; corrupt_next=false; }
+    unsigned count=fpga_completed+(bad_count && fpga_op==0x30 ? 1:0);
+    p[6]=(uint8_t)count; p[7]=(uint8_t)(count>>8); append_crc(p,8);
+    if(corrupt_status) { p[9]^=1; corrupt_status=false; }
     return (int)n;
 }
 static int stdio_put_string(const char *p,int n,bool newline,bool translate) {
-    assert(!newline && !translate); memcpy(usb,p,n); usb_size=(size_t)n; return n;
+    assert(!newline && !translate && n<=(int)sizeof(usb_output));
+    memcpy(usb_output,p,n); usb_size=(size_t)n; return n;
 }
-static size_t prepare(uint8_t op,uint32_t addr,size_t length) {
-    size_t n=10+(op==0x31?length:0);
-    memset(request,0,sizeof(request));
-    request[0]=op; request[1]=(uint8_t)(host_seq+1);
-    request[2]=(uint8_t)(addr>>16); request[3]=(uint8_t)(addr>>8); request[4]=(uint8_t)addr;
-    request[5]=(uint8_t)(length>>8); request[6]=(uint8_t)length;
-    if(op==0x20) request[7]=0xa5;
-    for(size_t i=0;i<(op==0x31?length:0);++i) request[8+i]=(uint8_t)i;
-    append_crc(request,n-2); return n;
+static int getchar_timeout_us(unsigned timeout) {
+    if(input_offset<input_size) { model_time+=input_delay; return usb_input[input_offset++]; }
+    // Permit receive() and discard logic to time out, then stop the firmware loop.
+    model_time+=timeout;
+    if(timeout==100000) longjmp(usb_end,1);
+    return PICO_ERROR_TIMEOUT;
 }
-static void arm_host(void) {
-    size_t n=prepare(0x20,0,0);
-    assert(execute(n)==10 && response[2]==0 && host_armed && fpga_armed);
+void model_reset(void) {
+    memset(memory,0xff,sizeof(memory)); model_time=0;
+    commits=reads=writes=leases=releases=0;
+    fpga_seq=fpga_op=fpga_status=0; fpga_result=fpga_completed=0;
+    host_seq=host_op=host_status=0; host_result=host_completed=0;
+    fpga_armed=leased=host_armed=old_version=corrupt_status=corrupt_data=false;
+    corrupt_after_write=stall=switch_during_write=bad_count=false;
+    accepting=true; fail_address=0xffffffff; op_delay=input_delay=0;
 }
-int main(void) {
-    request[0]=1; assert(execute(1)==8 && !memcmp(response,"GBFC\3\0\0\4",8));
-    old_version=true; assert(execute(1)==1 && response[0]==0xe1); old_version=false;
-    size_t n=prepare(0x30,0x00ff80,1024);
-    assert(execute(n)==1036 && reads==1024 && leases==1 && releases==1 && !leased);
-    assert(host_completed==1024 && valid(response,10) && valid(response+10,1026));
-    for(size_t i=0;i<1024;++i) {
-        uint32_t addr=0x00ff80+(uint32_t)i;
-        assert(response[10+i]==(uint8_t)(addr^(addr>>8)^(addr>>16)));
+size_t model_exchange(const uint8_t *p,size_t n,uint8_t *out) {
+    usb_input=p; input_size=n; input_offset=0; usb_size=0;
+    if(!setjmp(usb_end)) firmware_main();
+    memcpy(out,usb_output,usb_size); return usb_size;
+}
+void model_fault(unsigned kind,unsigned value) {
+    switch(kind) {
+        case 1: old_version=value; break;
+        case 2: corrupt_data=value; break;
+        case 3: corrupt_after_write=value; break;
+        case 4: stall=value; break;
+        case 5: switch_during_write=value; break;
+        case 6: fail_address=value; break;
+        case 7: bad_count=value; break;
+        case 8: op_delay=value; break;
+        case 9: input_delay=value; break;
+        case 10: accepting=value; break;
+        default: assert(0);
     }
-    send_reply(1036); assert(usb_size==1044 && !memcmp(usb,"GB3R",4) && valid(usb+4,1040));
-    unsigned before=commits;
-    assert(execute(n)==1 && response[0]==0xe3 && commits==before); // duplicate host sequence
-    n=prepare(0x31,0,3); request[n-1]^=1;
-    assert(execute(n)==1 && response[0]==0xe2 && commits==before);
-    n=prepare(0x31,0,3); assert(execute(n-1)==1 && commits==before);
-    n=prepare(0x30,0,0); assert(execute(n)==1 && commits==before);
-    n=prepare(0x30,0x3fffff,2); assert(execute(n)==10 && response[2]==8 && commits==before);
-    n=prepare(0x30,0x3fffff,1); assert(execute(n)==13 && host_completed==1);
-    n=prepare(0x31,0,1); assert(execute(n)==10 && response[2]==9 && writes==0);
-    arm_host();
-    switch_during_write=true;
-    n=prepare(0x31,0x100,1024);
-    assert(execute(n)==10 && host_completed==1024 && writes==1020 && !leased && !accepting);
-    assert(response[2]==0 && valid(response,10));
-    // The mode may change only after the whole leased block, including skipped FF bytes.
-    before=commits; n=prepare(0x30,0,1);
-    assert(execute(n)==1 && response[0]==0xe3 && commits==before);
-    accepting=true; switch_during_write=false;
-    arm_host(); n=prepare(0x13,0,0);
-    assert(execute(n)==10 && host_result==0xa8c2 && host_completed==1 && !leased);
-    n=prepare(0x30,0,30); fail_read=reads+17;
-    assert(execute(n)==10 && response[2]==5 && host_completed==16 && !host_armed && !leased);
-    fail_read=0;
-    arm_host(); corrupt_write_reply=true; before=writes; n=prepare(0x31,0,1);
-    assert(execute(n)==1 && response[0]==0xe1 && writes==before+1 && !leased);
-    arm_host(); force_busy=true; before=commits; n=prepare(0x31,0,1);
-    assert(execute(n)==1 && response[0]==0xe3 && commits==before); force_busy=false;
-    // Invalid CRCs in status are never accepted as successful operations.
-    corrupt_next=true; n=prepare(0x30,0,1);
-    assert(execute(n)==1 && response[0]==0xe1);
-    stall_after_read=true; before=reads; n=prepare(0x30,0,1);
-    assert(execute(n)==1 && response[0]==0xe4 && reads==before+1 && leased);
-    stall_after_read=false; stall=false; leased=false; // model the idle-lease watchdog
-    request[0]=2; assert(execute(1)==10 && valid(response,10));
-    uint8_t b; assert(!receive(&b,1,0));
-    puts("PASS RP2040 offload: 1024-byte blocks, CRC, bounds, lease, mode change, partial failure, no retry");
-    return 0;
 }
+unsigned model_count(unsigned kind) {
+    switch(kind) {case 0:return commits; case 1:return reads; case 2:return writes;
+        case 3:return leases; case 4:return releases; case 5:return host_completed;
+        case 6:return (unsigned)(model_time/1000); default:assert(0); return 0;}
+}
+uint8_t *model_memory(void) {return memory;}

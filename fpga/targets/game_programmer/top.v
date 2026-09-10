@@ -1,11 +1,10 @@
 `timescale 1ns/1ps
 // Автовыбор по отдельному сигналу питания Game Boy.
-// Питание Game Boy отсутствует: PROGRAMMER v3. Присутствует: GAME multi.
+// Питание Game Boy отсутствует: PROGRAMMER v5. Присутствует: GAME multi.
 // Новый режим не прерывает принятую операцию Flash; CPU на время PROGRAMMER
 // отключён от шины. Включать Game Boy следует после завершения записи ROM.
 module top #(
     parameter integer DETECT_TICKS=106400,
-    parameter HOST_BLOCKS=1,
     parameter integer POWER_CYCLES=16000000,
     parameter integer PROGRAM_CYCLES=128000,
     parameter integer ERASE_CYCLES=192000000,
@@ -60,7 +59,7 @@ module top #(
         .flash_a(game_address),.flash_ce_n(game_ce_n),.flash_oe_n(game_oe_n),.flash_we_n(game_we_n),
         .fram_ce_n(game_ram_ce_n),.fram_oe_n(game_ram_oe_n),.fram_we_n(game_ram_we_n),
         .bus_idle(game_bus_idle));
-    programmer_block #(.CONTROLLED(1),.HOST_BLOCKS(HOST_BLOCKS)) protocol(
+    programmer_v5 protocol(
         .clk(clk),.reset(reset || !programmer_enable || cleanup),.accept_requests(accept_requests),
         .spi_cs_n(spi_cs_n),.spi_sck(spi_sck),.spi_mosi(spi_mosi),.spi_miso(spi_miso),
         .busy(busy),.done(done),.operation_status(status),.result(result),

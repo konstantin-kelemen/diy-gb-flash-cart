@@ -8,7 +8,7 @@ set(CMAKE_C_STANDARD 11)
 set(CMAKE_CXX_STANDARD 17)
 pico_sdk_init()
 add_executable(gb_cart_programmer src/main.c)
-pico_set_program_version(gb_cart_programmer "4.0")
+pico_set_program_version(gb_cart_programmer "5.0")
 target_link_libraries(gb_cart_programmer pico_stdlib hardware_spi)
 target_compile_options(gb_cart_programmer PRIVATE -Wall -Wextra -Werror)
 pico_enable_stdio_usb(gb_cart_programmer 1)
@@ -20,6 +20,7 @@ if(PICO_NO_PICOTOOL)
     if(NOT PICO_PLATFORM STREQUAL "rp2040")
         message(FATAL_ERROR "The UF2 fallback supports RP2040 only")
     endif()
+    find_package(Python3 REQUIRED COMPONENTS Interpreter)
     add_custom_command(TARGET gb_cart_programmer POST_BUILD
         COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_LIST_DIR}/tools/bin_to_uf2.py
             ${CMAKE_CURRENT_BINARY_DIR}/gb_cart_programmer.bin
