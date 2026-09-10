@@ -2,6 +2,9 @@
 
 ## Конфигурации
 
+Новая совмещённая конфигурация: [game_programmer](targets/game_programmer/README.md).
+Блоки программирования обрабатывает RP2040; FPGA использует короткий SPI v4.
+
 | Каталог target | Реализация Diamond | Ограничения / инструкция |
 |---|---|---|
 | `targets/internal_rom/` | `v1_0` | `constraints/internal_rom.lpf`; сборка ниже |

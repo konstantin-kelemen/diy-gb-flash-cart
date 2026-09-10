@@ -5,6 +5,7 @@
 // отключён от шины. Включать Game Boy следует после завершения записи ROM.
 module top #(
     parameter integer DETECT_TICKS=106400,
+    parameter HOST_BLOCKS=1,
     parameter integer POWER_CYCLES=16000000,
     parameter integer PROGRAM_CYCLES=128000,
     parameter integer ERASE_CYCLES=192000000,
@@ -22,7 +23,9 @@ module top #(
     output wire flash_ce_n, flash_oe_n, flash_we_n,
     output wire fram_ce_n, fram_oe_n, fram_we_n
 );
-    wire clk;
+    wire clk, game_bus_idle;
+    // Game Boy reset is local to its mapper, never a reset of the whole FPGA.
+    GSR global_reset(.GSR(1'b1));
     OSCH osc(.STDBY(1'b0),.OSC(clk),.SEDSTDBY());
     defparam osc.NOM_FREQ="53.20";
     wire [3:0] ready;
@@ -44,7 +47,7 @@ module top #(
     wire programmer_ce_n, programmer_oe_n, programmer_we_n;
     cart_mode #(.DETECT_TICKS(DETECT_TICKS)) mode(
         .clk(clk),.reset(reset),.game_present(gb_power_present),
-        .game_idle(game_ce_n && game_ram_ce_n && !game_memory_drive),
+        .game_idle(game_bus_idle),
         .programmer_active(active),.flash_busy(busy),.flash_done(done),.flash_status(status),
         .game_enable(game_enable),.programmer_enable(programmer_enable),.accept_requests(accept_requests),
         .cleanup_start(cleanup_start),.cleanup(cleanup),.fault(mode_fault));
@@ -55,8 +58,9 @@ module top #(
         .gb_data_drive(game_gb_drive),.memory_data_drive(game_memory_drive),
         .data_oe_n(game_data_oe_n),.data_dir(game_data_dir),
         .flash_a(game_address),.flash_ce_n(game_ce_n),.flash_oe_n(game_oe_n),.flash_we_n(game_we_n),
-        .fram_ce_n(game_ram_ce_n),.fram_oe_n(game_ram_oe_n),.fram_we_n(game_ram_we_n));
-    programmer_block #(.CONTROLLED(1)) protocol(
+        .fram_ce_n(game_ram_ce_n),.fram_oe_n(game_ram_oe_n),.fram_we_n(game_ram_we_n),
+        .bus_idle(game_bus_idle));
+    programmer_block #(.CONTROLLED(1),.HOST_BLOCKS(HOST_BLOCKS)) protocol(
         .clk(clk),.reset(reset || !programmer_enable || cleanup),.accept_requests(accept_requests),
         .spi_cs_n(spi_cs_n),.spi_sck(spi_sck),.spi_mosi(spi_mosi),.spi_miso(spi_miso),
         .busy(busy),.done(done),.operation_status(status),.result(result),

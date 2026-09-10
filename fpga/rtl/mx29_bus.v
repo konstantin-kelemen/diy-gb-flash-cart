@@ -50,7 +50,9 @@ module mx29_bus #(parameter READ_TICKS=1, WRITE_TICKS=1, SPLIT_DATA=0) (
 
 
     reg [3:0] state;
-    reg [7:0] tick;
+    localparam MAX_TICKS=WRITE_TICKS>READ_TICKS ? WRITE_TICKS : READ_TICKS;
+    localparam TICK_WIDTH=MAX_TICKS<2 ? 1 : $clog2(MAX_TICKS);
+    reg [TICK_WIDTH-1:0] tick;
     wire write_state = state >= 1 && state <= 4;
     wire advance = state == 0 || tick == (write_state ? WRITE_TICKS-1 : READ_TICKS-1);
 

@@ -11,7 +11,8 @@ module game_multi_core #(parameter integer RTC_CLOCK_HZ=53200000) (
     output wire data_oe_n, data_dir,
     output wire [21:0] flash_a,
     output wire flash_ce_n, flash_oe_n, flash_we_n,
-    output wire fram_ce_n, fram_oe_n, fram_we_n
+    output wire fram_ce_n, fram_oe_n, fram_we_n,
+    output wire bus_idle
 );
     wire scan_reset=power_reset || !enable || !gb_res_n;
     wire configured, multicart, supported;
@@ -42,6 +43,8 @@ module game_multi_core #(parameter integer RTC_CLOCK_HZ=53200000) (
     wire rom_read=reading && !gb_a[15];
     wire ram_read=reading && ram_window;
     wire ram_write=running && gb_rd_n && !gb_wr_n && ram_window && ram_access;
+    // Conservative idle detection avoids routing mapper decode into mode logic.
+    assign bus_idle=!scanning && (!running || (gb_rd_n && gb_wr_n));
     wire drive_gb=rom_read || ram_read;
     assign flash_a=!configured ? scan_address : ram_window ? {5'b0,ram_address} : rom_address;
     assign flash_ce_n=!(scanning || (rom_read && supported));

@@ -8,13 +8,24 @@ _autosave-*
 
 # Diamond temporary/build output
 *.run
+fpga/diamond/.recovery
+fpga/diamond/*.ini
+fpga/diamond/*.ccl
+fpga/diamond/*.xml
+fpga/diamond/*.dmp
+fpga/diamond/*.html
+fpga/diamond/*.ldf
+fpga/diamond/*.sty
 /fpga/diamond/v1_0/
 /fpga/tests/build/
+/fpga/diamond/spi_bringup/
 /fpga/diamond/programmer/
 /fpga/diamond/game_rom/
 /fpga/diamond/game_mbc5/
 /fpga/diamond/game_multi/
 /fpga/diamond/game_programmer/
+/fpga/diamond/flash_bringup/
+/fpga/diamond/RomEmu_tcr.dir
 __pycache__/
 
 # RP2040 build atrifacts

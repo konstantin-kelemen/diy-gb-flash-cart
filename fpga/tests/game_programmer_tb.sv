@@ -1,5 +1,5 @@
 `timescale 1ns/1ps
-module game_programmer_tb;
+module game_programmer_tb #(parameter HOST_BLOCKS=0);
     localparam real CLOCK_HALF=9.4;
     reg clk=0, reset=1;
     always #(CLOCK_HALF) clk=~clk;
@@ -17,7 +17,7 @@ module game_programmer_tb;
     reg cpu_drive=0;
     reg [7:0] cpu_data=0;
     wire data_oe_n, data_dir, fram_ce_n, fram_oe_n, fram_we_n;
-    top #(.DETECT_TICKS(16),.POWER_CYCLES(20),.PROGRAM_CYCLES(2000),.ERASE_CYCLES(6000)) dut(
+    top #(.HOST_BLOCKS(HOST_BLOCKS),.DETECT_TICKS(16),.POWER_CYCLES(20),.PROGRAM_CYCLES(2000),.ERASE_CYCLES(6000)) dut(
         .gb_power_present(gb_power_present),.gb_a(gb_a),.gb_rd_n(gb_rd_n),.gb_wr_n(gb_wr_n),
         .gb_cs_n(gb_cs_n),.gb_res_n(gb_res_n),.gb_d(gb_d),.data_oe_n(data_oe_n),.data_dir(data_dir),
         .spi_cs_n(cs),.spi_sck(sck),.spi_mosi(mosi),.spi_miso(miso),
@@ -33,7 +33,10 @@ module game_programmer_tb;
     reg [7:0] ram_data;
     integer ram_writes=0;
     always @(negedge fram_we_n) ram_writing=1;
-    always @(fa or fd or ram_writing) if(ram_writing) begin ram_address=fa[16:0]; ram_data=fd; end
+    // Let the zero-delay FPGA output assignments settle before sampling the bus.
+    always @(fa or fd or ram_writing) begin
+        #0; if(ram_writing && !fram_we_n) begin ram_address=fa[16:0]; ram_data=fd; end
+    end
     always @(posedge fram_we_n) if(ram_writing) begin
         if(^ram_data===1'bx) $fatal(1,"invalid RAM write");
         ram[ram_address]=ram_data; ram_writes=ram_writes+1; ram_writing=0;
@@ -188,15 +191,15 @@ module game_programmer_tb;
         integer polls;
         begin
             query(2,10); polls=0;
-            while(rx[2]==1 && polls<2000) begin #2000; query(2,10); polls=polls+1; end
+            while((rx[2]&8'h0f)==1 && polls<2000) begin #2000; query(2,10); polls=polls+1; end
             crc=16'hffff;
             for(integer k=0;k<8;k=k+1) crc=crc_byte(crc,rx[k]);
             if({rx[8],rx[9]}!==crc) $fatal(1,"status CRC %h%h != %h",rx[8],rx[9],crc);
-            if(rx[0]!==8'h50 || rx[1]!==seq || rx[2]!==expected || rx[3]!==op)
+            if(rx[0]!==8'h50 || rx[1]!==seq || (rx[2]&8'h0f)!==expected || rx[3]!==op)
                 $fatal(1,"status seq=%h/%h status=%h/%h op=%h/%h",rx[1],seq,rx[2],expected,rx[3],op);
         end
     endtask
-    initial begin
+    initial if(!HOST_BLOCKS) begin
         for(n=0;n<4194304;n=n+1) memory[n]=(n^(n>>8)^(n>>16))&255;
         #5000; reset=0; #50000;
         query(1,8);
@@ -291,6 +294,52 @@ module game_programmer_tb;
         $display("PASS game_programmer: v3 regression, GAME/FRAM, power detection, drain block, read-array, SPI rejection, bus isolation");
         $finish;
     end
+    initial if(HOST_BLOCKS) begin
+        for(n=0;n<4194304;n=n+1) memory[n]=(n^(n>>8)^(n>>16))&255;
+        memory['h147]=0; memory['h148]=0; memory['h149]=0;
+        #5000; reset=0; #50000;
+        query(1,8);
+        if({rx[0],rx[1],rx[2],rx[3],rx[4],rx[5],rx[6],rx[7]}!==64'h4742464304000100)
+            $fatal(1,"SPI v4 version");
+        request_frame(8'h23,0,0,0,0,0); finish_op(8'h23,9);
+        if(dut.protocol.lease_release) $fatal(1,"release without lease stalled commands");
+        request_frame(8'h30,0,1024,0,0,0); finish_op(8'h30,8);
+        request_frame(8'h30,24'h3fffff,1,0,0,0); finish_op(8'h30,0);
+        if(rx[4]!==memory[22'h3fffff] || rx[6]!==1) $fatal(1,"single read result");
+        request_frame(8'h20,0,0,8'ha5,0,0); finish_op(8'h20,0);
+        before_writes=writes; tx[8]=8'h55;
+        request_frame(8'h31,24'h3000,1,0,0,1); finish_op(8'h31,7);
+        request_frame(8'h31,24'h3000,1,0,-1,0);
+        malformed_bits(11*8-1); malformed_bits(11*8+1);
+        if(writes!=before_writes) $fatal(1,"malformed v4 request wrote Flash");
+        request_frame(8'h20,0,0,8'ha5,0,0); finish_op(8'h20,0);
+        request_frame(8'h22,0,0,8'ha5,0,0); finish_op(8'h22,0);
+        if(!rx[2][7] || !dut.active) $fatal(1,"lease not acquired");
+        for(n=0;n<8;n=n+1) begin
+            memory['h3000+n]=8'hff; tx[8]=n+32;
+            request_frame(8'h31,24'h3000+n,1,0,0,0); finish_op(8'h31,0);
+            if(n==0) begin gb_power_present=1; gb_res_n=1; end
+            if(dut.game_enable || !dut.programmer_enable || !rx[2][7]) $fatal(1,"lease interrupted");
+        end
+        for(n=0;n<8;n=n+1) if(memory['h3000+n]!==n+32) $fatal(1,"leased program data");
+        request_frame(8'h23,0,0,0,0,0);
+        if(!dut.active || dut.game_enable) $fatal(1,"mode changed before release ACK");
+        query(2,5);
+        if(!dut.active || dut.game_enable) $fatal(1,"partial ACK released lease");
+        finish_op(8'h23,0);
+        if(rx[2][7]) $fatal(1,"release ACK still shows lease");
+        wait(dut.game_enable); wait(dut.game.configured); #1000;
+        game_read('h4000,memory['h4000]);
+        gb_power_present=0; gb_res_n=0;
+        wait(dut.accept_requests); #1000;
+        request_frame(8'h22,0,0,8'ha5,0,0); finish_op(8'h22,0);
+        gb_power_present=1; gb_res_n=1;
+        #21000000; // Lost RP2040: idle lease expires after 2^20 clock ticks.
+        wait(dut.game_enable); wait(dut.game.configured); #1000;
+        if(dut.active || dut.protocol.lease) $fatal(1,"lease watchdog stuck");
+        $display("PASS SPI v4 offload: short CRC frames, byte Flash operations, leased mode switch, ACK, watchdog");
+        $finish;
+    end
     initial begin #200000000; $fatal(1,"timeout"); end
 endmodule
 
@@ -301,4 +350,6 @@ module OSCH(input STDBY, output reg OSC=0, output SEDSTDBY);
 endmodule
 module FD1S3AX(input D, CK, output reg Q=0);
     always @(posedge CK) Q<=D;
+endmodule
+module GSR(input GSR);
 endmodule

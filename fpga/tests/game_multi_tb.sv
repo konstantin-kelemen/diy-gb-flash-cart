@@ -20,13 +20,17 @@ module game_multi_tb;
     top #(.RTC_CLOCK_HZ(100000)) dut(.*);
     reg [7:0] cart_type=0, rom_size=0, ram_size=0;
     reg secondary_logo=0;
+    reg [1:0] logo_fill=0;
     integer corrupt_logo=-1;
     localparam [383:0] LOGO=384'hceed6666cc0d000b03730083000c000d0008111f8889000edccc6ee6ddddd999bbbb67636e0eecccdddc999fbbb9333e;
     reg [7:0] ram[0:131071];
     wire [7:0] rom_data=flash_a=='h147 ? cart_type : flash_a=='h148 ? rom_size :
         flash_a=='h149 ? ram_size :
+        flash_a>='h104 && flash_a<='h133 ?
+            (logo_fill==1 ? 8'h00 : logo_fill==2 ? 8'hff : (LOGO >> (('h133-flash_a)*8))) :
         secondary_logo && flash_a>='h40104 && flash_a<='h40133 ?
-            (LOGO >> (('h40133-flash_a)*8)) ^ (flash_a=='h40104+corrupt_logo ? 8'h01 : 8'h00) :
+            (logo_fill==1 ? 8'h00 : logo_fill==2 ? 8'hff : (LOGO >> (('h40133-flash_a)*8))) ^
+            (flash_a=='h40104+corrupt_logo ? 8'h01 : 8'h00) :
         (flash_a>>14) ^ flash_a;
     assign cpu_bus=cpu_drive ? cpu_data : 8'hzz;
     assign #(5,5,5) gb_d=!data_oe_n && !data_dir ? cpu_bus : 8'hzz;
@@ -38,7 +42,7 @@ module game_multi_tb;
     reg [7:0] write_value;
     time ce_start=0, ce_end=0, we_start=0, data_changed=0;
     integer writes=0, i, b, old_writes;
-    always @(flash_d) data_changed=$time;
+    always @(flash_d) begin #0; if(writing && !fram_we_n) data_changed=$time; end
     always @(negedge fram_ce_n) begin
         if($time-ce_end<30) $fatal(1,"precharge"); ce_start=$time;
     end
@@ -46,7 +50,9 @@ module game_multi_tb;
         if($time>0 && $time-ce_start<60) $fatal(1,"CE pulse"); ce_end=$time;
     end
     always @(negedge fram_we_n) begin writing=1; we_start=$time; end
-    always @(flash_d or flash_a or writing) if(writing) begin write_address=flash_a[16:0]; write_value=flash_d; end
+    always @(flash_d or flash_a or writing) begin
+        #0; if(writing && !fram_we_n) begin write_address=flash_a[16:0]; write_value=flash_d; end
+    end
     always @(posedge fram_we_n) if(writing) begin
         if($time-we_start<18 || $time-data_changed<15 || ^write_value===1'bx) $fatal(1,"RAM write timing/data");
         ram[write_address]=write_value; writes=writes+1; writing=0;
@@ -97,6 +103,9 @@ module game_multi_tb;
             corrupt_logo=i; boot(1,5,0,1); if(dut.game.multicart) $fatal(1,"partial MBC1M logo");
         end
         corrupt_logo=-1; boot(1,5,0,0); if(dut.game.multicart) $fatal(1,"false MBC1M");
+        logo_fill=1; boot(1,5,0,1); if(dut.game.multicart) $fatal(1,"zero logos accepted");
+        logo_fill=2; boot(1,5,0,1); if(dut.game.multicart) $fatal(1,"erased logos accepted");
+        logo_fill=0;
         boot(6,3,0,0); wr('h0000,'ha); wr('ha123,'hab); rd('hb323,'hfb);
         wr('h2100,9); rd('h4000,9); wr('h2000,0); rd('ha123,'hff);
         boot('h1b,7,4,0); wr('h2000,255); rd('h7fff,0); wr('h3000,1); rd('h4000,255);

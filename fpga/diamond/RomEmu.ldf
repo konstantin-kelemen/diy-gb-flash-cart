@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <BaliProject version="3.2" title="RomEmu" device="LCMXO2-1200HC-4TG100C" default_implementation="flash_bringup">
     <Options/>
-    <Implementation title="game_programmer" dir="game_programmer" description="Automatic GAME multi / PROGRAMMER by Game Boy power" synthesis="lse" default_strategy="Strategy1">
+    <Implementation title="game_programmer" dir="game_programmer" description="GAME multi / RP2040 block programmer" synthesis="lse" default_strategy="GameProgrammerArea">
         <Options def_top="top"/>
         <Source name="../targets/game_programmer/top.v" type="Verilog" type_short="Verilog"><Options top_module="top"/></Source>
         <Source name="../rtl/game_multi_core.v" type="Verilog" type_short="Verilog"><Options/></Source>
@@ -75,4 +75,5 @@
         </Source>
     </Implementation>
     <Strategy name="Strategy1" file="RomEmu1.sty"/>
+    <Strategy name="GameProgrammerArea" file="RomEmu_game_programmer.sty"/>
 </BaliProject>

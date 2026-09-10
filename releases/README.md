@@ -14,6 +14,10 @@
 
 ## FPGA
 
+- [game_programmer](fpga/game_programmer/MANIFEST.md) — GAME multi и PROGRAMMER
+  с обработкой блоков на RP2040; MAP/PAR/TRACE и симуляции пройдены, аппаратной
+  проверки ещё нет. Совместимый [UF2 v4](rp2040/programmer-v4/MANIFEST.md).
+
 - [spi_bringup](fpga/spi_bringup/MANIFEST.md) — оригинальный рабочий SPI-тест,
   протокол 1.0, аппаратный PASS 1000/1000.
 - [programmer-v3](fpga/programmer-v3/MANIFEST.md) — рабочий блочный программатор,
