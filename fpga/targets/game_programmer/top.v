@@ -23,6 +23,7 @@ module top #(
     output wire flash_ce_n, flash_oe_n, flash_we_n,
     output wire fram_ce_n, fram_oe_n, fram_we_n
 );
+    wire programmer_ram_ce_n, programmer_ram_oe_n, programmer_ram_we_n;
     wire clk, game_bus_idle;
     // Game Boy reset is local to its mapper, never a reset of the whole FPGA.
     GSR global_reset(.GSR(1'b1));
@@ -74,6 +75,7 @@ module top #(
         .busy(busy),.done(done),.status(status),.result(result),
         .flash_a(programmer_address),.flash_d(),.flash_ce_n(programmer_ce_n),
         .flash_oe_n(programmer_oe_n),.flash_we_n(programmer_we_n),
+        .fram_ce_n(programmer_ram_ce_n),.fram_oe_n(programmer_ram_oe_n),.fram_we_n(programmer_ram_we_n),
         .memory_data_in(flash_d),.memory_data_out(programmer_memory_data),.memory_data_drive(programmer_memory_drive));
     // Единственное место управления внешними двунаправленными портами.
     assign gb_d=game_enable && game_gb_drive ? game_gb_data : 8'hzz;
@@ -83,9 +85,9 @@ module top #(
     assign flash_ce_n=programmer_enable ? programmer_ce_n : game_enable ? game_ce_n : 1'b1;
     assign flash_oe_n=programmer_enable ? programmer_oe_n : game_enable ? game_oe_n : 1'b1;
     assign flash_we_n=programmer_enable ? programmer_we_n : 1'b1;
-    assign fram_ce_n=game_enable ? game_ram_ce_n : 1'b1;
-    assign fram_oe_n=game_enable ? game_ram_oe_n : 1'b1;
-    assign fram_we_n=game_enable ? game_ram_we_n : 1'b1;
+    assign fram_ce_n=programmer_enable ? programmer_ram_ce_n : game_enable ? game_ram_ce_n : 1'b1;
+    assign fram_oe_n=programmer_enable ? programmer_ram_oe_n : game_enable ? game_ram_oe_n : 1'b1;
+    assign fram_we_n=programmer_enable ? programmer_ram_we_n : game_enable ? game_ram_we_n : 1'b1;
     assign data_oe_n=game_enable ? game_data_oe_n : 1'b1;
     assign data_dir=game_enable ? game_data_dir : 1'b0;
 endmodule

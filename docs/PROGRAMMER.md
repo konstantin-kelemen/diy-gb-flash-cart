@@ -131,3 +131,31 @@ shasum -a 256 "$FLASH_RUN/rom.gb" "$FLASH_RUN/after.bin" > "$FLASH_RUN/after.sha
 
 Зафиксировать результат и контрольные суммы загруженных UF2/JEDEC в
 [журнале испытаний](TEST_PLAN.md#журнал-результатов).
+
+## Чтение и запись FRAM
+
+Команды FRAM требуют сборки **обеих прошивок из обновлённых исходников**:
+FPGA `game_programmer` и RP2040 `programmer`. Старые файлы в `releases/`
+не содержат эту возможность. Game Boy должен быть выключен, картридж — в режиме PROGRAMMER.
+
+```sh
+python host/gbflash.py --port "$FLASH_PORT" fram-read "$FLASH_RUN/save.sav"
+python host/gbflash.py --port "$FLASH_PORT" fram-write "$FLASH_RUN/save.sav"
+python host/gbflash.py --port "$FLASH_PORT" fram-clear
+```
+
+`fram-read` по умолчанию читает все 128 КиБ; существующий файл не перезаписывается.
+`fram-write` записывает файл без предварительного стирания, затем читает и проверяет
+записанный диапазон. Остальная FRAM сохраняется. `fram-clear` заполняет память
+байтом `0xFF` и проверяет результат; для заполнения нулями добавьте `--value 0`.
+
+Все три команды принимают `--address` (по умолчанию 0). Для чтения и очистки
+доступен `--length` (по умолчанию до конца FRAM); длина записи определяется файлом.
+Адреса — физические байтовые смещения `0..0x1FFFF`, независимо от маппера ROM.
+Например, очистка одного банка 8 КиБ:
+
+```sh
+python host/gbflash.py --port "$FLASH_PORT" fram-clear --address 0x2000 --length 0x2000 --value 0
+```
+
+FRAM-команды не стирают и не программируют Flash ROM. Дамп FRAM не включает RTC.

@@ -5,6 +5,8 @@ static uint16_t fpga_result;
 static bool fpga_armed, leased, accepting=true, force_busy, stall, stall_after_read;
 static bool corrupt_next, corrupt_write_reply, switch_during_write, old_version;
 static unsigned fail_read;
+static uint8_t fram[0x20000];
+static unsigned fram_writes;
 static uint8_t usb[1200];
 static size_t usb_size;
 
@@ -32,6 +34,12 @@ static int spi_write_blocking(int ignored,const uint8_t *p,size_t n) {
             if(switch_during_write) accepting=false;
             if(corrupt_write_reply) { corrupt_next=true; corrupt_write_reply=false; }
             break;
+        case 0x32:
+            assert(leased && n==10 && p[6]==1 && addr<sizeof(fram));
+            fpga_result=fram[addr]; break;
+        case 0x33:
+            assert(leased && fpga_armed && n==11 && p[6]==1 && addr<sizeof(fram));
+            fram[addr]=p[8]; ++fram_writes; fpga_result=p[8]; break;
         case 0x12: case 0x14: assert(leased && fpga_armed); break;
         case 0x13: assert(leased && fpga_armed); fpga_result=0xa8c2; break;
         default: assert(0);
@@ -58,13 +66,13 @@ static int stdio_put_string(const char *p,int n,bool newline,bool translate) {
     assert(!newline && !translate); memcpy(usb,p,n); usb_size=(size_t)n; return n;
 }
 static size_t prepare(uint8_t op,uint32_t addr,size_t length) {
-    size_t n=10+(op==0x31?length:0);
+    size_t n=10+((op==0x31 || op==0x33)?length:0);
     memset(request,0,sizeof(request));
     request[0]=op; request[1]=(uint8_t)(host_seq+1);
     request[2]=(uint8_t)(addr>>16); request[3]=(uint8_t)(addr>>8); request[4]=(uint8_t)addr;
     request[5]=(uint8_t)(length>>8); request[6]=(uint8_t)length;
     if(op==0x20) request[7]=0xa5;
-    for(size_t i=0;i<(op==0x31?length:0);++i) request[8+i]=(uint8_t)i;
+    for(size_t i=0;i<((op==0x31 || op==0x33)?length:0);++i) request[8+i]=(uint8_t)i;
     append_crc(request,n-2); return n;
 }
 static void arm_host(void) {
@@ -116,6 +124,18 @@ int main(void) {
     assert(execute(n)==1 && response[0]==0xe4 && reads==before+1 && leased);
     stall_after_read=false; stall=false; leased=false; // model the idle-lease watchdog
     request[0]=2; assert(execute(1)==10 && valid(response,10));
+    n=prepare(0x33,0,1); assert(execute(n)==10 && response[2]==9);
+    arm_host();
+    before=writes;
+    n=prepare(0x33,0x1fc00,1024);
+    assert(execute(n)==10 && host_completed==1024 && fram_writes==1024 && writes==before);
+    assert(fram[0x1ffff]==0xff && fram[0x1fbff]==0);
+    n=prepare(0x32,0x1fc00,1024);
+    assert(execute(n)==1036 && valid(response+10,1026));
+    for(size_t i=0;i<1024;++i) assert(response[10+i]==(uint8_t)i);
+    before=commits;
+    n=prepare(0x33,0x1ffff,2); assert(execute(n)==10 && response[2]==8 && commits==before);
+    n=prepare(0x32,0x20000,1); assert(execute(n)==10 && response[2]==8 && commits==before);
     uint8_t b; assert(!receive(&b,1,0));
     puts("PASS RP2040 offload: 1024-byte blocks, CRC, bounds, lease, mode change, partial failure, no retry");
     return 0;

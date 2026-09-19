@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""MX29LV320E programmer v3. Serial transport: pip install pyserial."""
+"""MX29LV320E / 128 KiB FRAM programmer. Serial transport: pip install pyserial."""
 import argparse
 import binascii
 import pathlib
@@ -7,6 +7,7 @@ import sys
 import time
 
 SIZE = 0x400000
+FRAM_SIZE = 0x20000
 BLOCK = 1024
 ERRORS = {2: 'unknown command', 3: 'Flash timeout', 4: 'Flash Q5 failure',
           5: 'Flash readback mismatch', 6: 'controller fault', 7: 'SPI request CRC',
@@ -35,7 +36,10 @@ def sectors(device):
 
 
 class Programmer:
-    def __init__(self, serial):
+    def __init__(self, serial, memory='flash'):
+        if memory not in ('flash', 'fram'):
+            raise ValueError('Unknown memory target')
+        self.memory = memory
         self.serial = serial
         # Let a prior damaged/partial USB frame expire before handshaking.
         time.sleep(2.2)
@@ -75,14 +79,15 @@ class Programmer:
         return body[:-2]
 
     def request(self, op, address=0, length=0, data=0, payload=b''):
-        if not 0 <= address < SIZE or not 0 <= data <= 255:
+        capacity = FRAM_SIZE if op in (0x32, 0x33) else SIZE
+        if not 0 <= address < capacity or not 0 <= data <= 255:
             raise ValueError('Address/data out of range')
-        if op in (0x30, 0x31):
-            if not 1 <= length <= BLOCK or address + length > SIZE:
-                raise ValueError('Block range exceeds Flash capacity')
+        if op in (0x30, 0x31, 0x32, 0x33):
+            if not 1 <= length <= BLOCK or address + length > capacity:
+                raise ValueError('Block range exceeds memory capacity')
         elif length:
             raise ValueError('Control command cannot have a block length')
-        if len(payload) != (length if op == 0x31 else 0):
+        if len(payload) != (length if op in (0x31, 0x33) else 0):
             raise ValueError('Invalid write payload length')
         self.sequence = (self.sequence + 1) & 255
         request = packet(bytes([op, self.sequence]) + address.to_bytes(3, 'big') +
@@ -92,12 +97,17 @@ class Programmer:
         if raw[1] != self.sequence or raw[3] != op:
             raise RuntimeError('Stale or mismatched FPGA response')
         count = int.from_bytes(raw[6:8], 'little')
+        if op in (0x32, 0x33) and raw[2] == 2:
+            raise RuntimeError('FRAM is not supported by this FPGA; update FPGA and RP2040 firmware')
         if raw[2] != 0:
+            error = ERRORS.get(raw[2], 'unexpected status')
+            if op in (0x32, 0x33) and raw[2] == 5:
+                error = 'FRAM readback mismatch'
             raise RuntimeError(f'At 0x{address + count:06X}: '
-                               f'{ERRORS.get(raw[2], "unexpected status")} ({raw[2]})')
-        if op in (0x30, 0x31) and count != length:
+                               f'{error} ({raw[2]})')
+        if op in (0x30, 0x31, 0x32, 0x33) and count != length:
             raise RuntimeError('Incomplete FPGA block')
-        if op == 0x30:
+        if op in (0x30, 0x32):
             block = reply[10:]
             if len(block) != length + 2 or packet(block[:-2]) != block:
                 raise RuntimeError('Invalid SPI block length or CRC')
@@ -119,10 +129,10 @@ class Programmer:
         return ident >> 8
 
     def read_block(self, address, length):
-        return self.request(0x30, address, length)
+        return self.request(0x32 if self.memory == 'fram' else 0x30, address, length)
 
     def write_block(self, address, payload):
-        self.request(0x31, address, len(payload), payload=payload)
+        self.request(0x33 if self.memory == 'fram' else 0x31, address, len(payload), payload=payload)
 
     def read(self, address):
         return self.read_block(address, 1)[0]
@@ -158,6 +168,18 @@ def write_image(programmer, image, device):
     print(f'Written: {len(image)} bytes\nVerified: {len(image)} bytes\nResult: SUCCESS')
 
 
+def write_fram(programmer, image, start=0):
+    if not (0 <= start < FRAM_SIZE and 0 < len(image) <= FRAM_SIZE - start):
+        raise ValueError('Write range exceeds FRAM capacity')
+    programmer.operation(0x20, data=0xa5)
+    for offset in range(0, len(image), BLOCK):
+        block = image[offset:offset + BLOCK]
+        programmer.write_block(start + offset, block)
+        print(f'Written: {offset + len(block)}/{len(image)}', flush=True)
+    verify(programmer, image, start)
+    print(f'Written and verified: {len(image)} bytes; SUCCESS')
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--port', required=True, help='e.g. /dev/cu.usbmodem123')
@@ -173,9 +195,36 @@ def main():
     p.add_argument('file', type=pathlib.Path)
     p.add_argument('--length', type=lambda s: int(s, 0), required=True)
     p.add_argument('--address', type=lambda s: int(s, 0), default=0)
+    for name in ('fram-read', 'fram-write', 'fram-clear'):
+        p = sub.add_parser(name)
+        p.add_argument('--address', type=lambda s: int(s, 0), default=0)
+        if name != 'fram-clear':
+            p.add_argument('file', type=pathlib.Path)
+        if name != 'fram-write':
+            p.add_argument('--length', type=lambda s: int(s, 0),
+                           help='default: from address to end of 128 KiB FRAM')
+        if name == 'fram-clear':
+            p.add_argument('--value', type=lambda s: int(s, 0), default=0xff,
+                           help='fill byte, default: 0xff')
     args = parser.parse_args()
     try:
         image = None
+        fram = args.command.startswith('fram-')
+        if fram:
+            if not 0 <= args.address < FRAM_SIZE:
+                raise ValueError('Address exceeds FRAM capacity')
+            if args.command == 'fram-write':
+                image = args.file.read_bytes()
+                length = len(image)
+            else:
+                length = FRAM_SIZE - args.address if args.length is None else args.length
+                args.length = length
+            if not 0 < length <= FRAM_SIZE - args.address:
+                raise ValueError('Range exceeds FRAM capacity')
+            if args.command == 'fram-clear':
+                if not 0 <= args.value <= 255:
+                    raise ValueError('Fill value must be between 0 and 255')
+                image = bytes([args.value]) * length
         if args.command in ('write', 'verify'):
             image = args.file.read_bytes()
             if not 0 < len(image) <= SIZE:
@@ -184,17 +233,19 @@ def main():
             raise ValueError('Read range exceeds Flash capacity')
         import serial
         with serial.Serial(args.port, 115200, timeout=10, write_timeout=2) as port:
-            programmer = Programmer(port)
+            programmer = Programmer(port, memory='fram' if fram else 'flash')
             try:
                 if args.command in ('info', 'write'):
                     device = programmer.identify()
                     print(f'MX29LV320E: C2 {device:02X}, {"Bottom" if device == 0xa8 else "Top"} Boot, PROGRAMMER')
-                if args.command == 'write':
+                if args.command in ('fram-write', 'fram-clear'):
+                    write_fram(programmer, image, args.address)
+                elif args.command == 'write':
                     write_image(programmer, image, device)
                 elif args.command == 'verify':
                     verify(programmer, image)
                     print(f'Verified: {len(image)} bytes; SUCCESS')
-                elif args.command == 'read':
+                elif args.command in ('read', 'fram-read'):
                     # Exclusive creation prevents accidentally replacing an existing dump.
                     with args.file.open('xb') as output:
                         started = time.monotonic()

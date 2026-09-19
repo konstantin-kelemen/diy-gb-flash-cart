@@ -134,10 +134,8 @@ LOCATE COMP "fram_oe_n" SITE "83" ;
 IOBUF PORT "fram_oe_n" IO_TYPE=LVCMOS33 PULLMODE=UP ;
 LOCATE COMP "fram_we_n" SITE "84" ;
 IOBUF PORT "fram_we_n" IO_TYPE=LVCMOS33 PULLMODE=UP ;
-
 # Только внутренний домен сканера/RTC; внешние пути проверяются отдельно.
-FREQUENCY NET "clk" 53.20 MHz ;
-
+FREQUENCY NET "clk" 53.200000 MHz ;
 LOCATE COMP "spi_mosi" SITE "96" ;
 LOCATE COMP "spi_cs_n" SITE "97" ;
 LOCATE COMP "spi_sck" SITE "98" ;

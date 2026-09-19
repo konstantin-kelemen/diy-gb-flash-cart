@@ -7,10 +7,6 @@ module top (
     output wire flash_ce_n, flash_oe_n, flash_we_n,
     output wire fram_ce_n, fram_oe_n, fram_we_n
 );
-    // F-RAM разделяет шины с Flash и всегда отключена в PROGRAMMER.
-    assign fram_ce_n = 1'b1;
-    assign fram_oe_n = 1'b1;
-    assign fram_we_n = 1'b1;
     wire clk;
     OSCH osc (.STDBY(1'b0), .OSC(clk), .SEDSTDBY());
     defparam osc.NOM_FREQ = "53.20";
@@ -33,5 +29,6 @@ module top (
         .ERASE_CYCLES(192000000), .READ_TICKS(4), .WRITE_TICKS(32)) flash(.clk(clk), .reset(reset), .start(start),
         .command(command), .address(address), .data(data), .busy(busy),
         .done(done), .status(status), .result(result), .flash_a(flash_a),
+        .fram_ce_n(fram_ce_n), .fram_oe_n(fram_oe_n), .fram_we_n(fram_we_n),
         .flash_d(flash_d), .flash_ce_n(flash_ce_n), .flash_oe_n(flash_oe_n), .flash_we_n(flash_we_n));
 endmodule

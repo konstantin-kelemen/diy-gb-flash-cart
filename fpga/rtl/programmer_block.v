@@ -58,7 +58,7 @@ module programmer_block #(parameter CONTROLLED=0, HOST_BLOCKS=0, LEASE_BITS=20) 
     reg [15:0] block_crc;
     reg [COUNT_WIDTH-1:0] length;
     wire [7:0] op=last_op;
-    assign command=op==8'h30 ? 8'h10 : op==8'h31 ? 8'h11 : op;
+    assign command=op==8'h30 ? 8'h10 : op==8'h31 ? 8'h11 : op==8'h32 ? 8'h16 : op==8'h33 ? 8'h17 : op;
     localparam IDLE=0, FETCH=1, ISSUE=2, WAIT_OP=3;
     reg [1:0] state;
     wire operation_active=busy || start || state!=IDLE;
@@ -70,7 +70,7 @@ module programmer_block #(parameter CONTROLLED=0, HOST_BLOCKS=0, LEASE_BITS=20) 
             arm_key_ok<=0; block_op<=0; read_op<=0; known_op<=0;
             range_ok<=0;
         end else begin
-            payload_end <= (frame_op==8'h31 && frame_length<=MAX_BLOCK) ?
+            payload_end <= ((frame_op==8'h31 || frame_op==8'h33) && frame_length<=MAX_BLOCK) ?
                            EIGHT + frame_length[COUNT_WIDTH-1:0] : EIGHT;
             frame_end <= payload_end + TWO;
             payload_byte <= byte_count>=EIGHT && byte_count<payload_end;
@@ -79,15 +79,15 @@ module programmer_block #(parameter CONTROLLED=0, HOST_BLOCKS=0, LEASE_BITS=20) 
             // Appending the big-endian CRC gives a zero CCITT residue.
             crc_ok <= rx_crc==16'h0000;
             sequence_ok <= header[55:48]!=sequence_id;
-            address_ok <= header[47:46]==0;
+            address_ok <= (frame_op==8'h32 || frame_op==8'h33) ? header[47:41]==0 : header[47:46]==0;
             length_ok <= frame_length!=0 && frame_length<=MAX_BLOCK;
             // With length_ok, only the final 1 KiB page can cross 4 MiB.
-            range_ok <= HOST_BLOCKS || header[45:34]!=12'hfff ||
+            range_ok <= HOST_BLOCKS || ((frame_op==8'h32 || frame_op==8'h33) ? header[40:34]!=7'h7f : header[45:34]!=12'hfff) ||
                         ({1'b0,header[33:24]} + frame_length[10:0])<=11'd1024;
             arm_key_ok <= header[47:0]==48'h0000000000a5;
-            block_op <= frame_op==8'h30 || frame_op==8'h31;
-            read_op <= frame_op==8'h30;
-            known_op <= frame_op==8'h30 || frame_op==8'h31 || frame_op==8'h12 ||
+            block_op <= (frame_op==8'h30 || frame_op==8'h32) || (frame_op==8'h31 || frame_op==8'h33);
+            read_op <= (frame_op==8'h30 || frame_op==8'h32);
+            known_op <= (frame_op==8'h30 || frame_op==8'h32) || (frame_op==8'h31 || frame_op==8'h33) || frame_op==8'h12 ||
                         frame_op==8'h13 || frame_op==8'h14;
         end
     end
@@ -108,9 +108,9 @@ module programmer_block #(parameter CONTROLLED=0, HOST_BLOCKS=0, LEASE_BITS=20) 
         input_data <= incoming[HOST_BLOCKS ? 10'd0 : memory_index];
         if(!HOST_BLOCKS) output_data <= outgoing[output_address];
         if (!reset && !cs_sync[1] && sck_sync[1] && !old_sck && bits[2:0]==7 &&
-            frame_op==8'h31 && payload_byte && !operation_active && !frame_blocked)
+            (frame_op==8'h31 || frame_op==8'h33) && payload_byte && !operation_active && !frame_blocked)
             incoming[HOST_BLOCKS ? 10'd0 : byte_address-10'd8] <= rx_byte;
-        if (!HOST_BLOCKS && !reset && state==WAIT_OP && done && operation_status==0 && op==8'h30)
+        if (!HOST_BLOCKS && !reset && state==WAIT_OP && done && operation_status==0 && (op==8'h30 || op==8'h32))
             outgoing[memory_index] <= result[7:0];
     end
 
@@ -162,7 +162,7 @@ module programmer_block #(parameter CONTROLLED=0, HOST_BLOCKS=0, LEASE_BITS=20) 
                 else if(byte_count==9) next_tx=status_crc[15:8];
                 else if(byte_count==10) next_tx=status_crc[7:0];
             end
-            8'h03: if(!HOST_BLOCKS && !operation_active && status==0 && last_op==8'h30) begin
+            8'h03: if(!HOST_BLOCKS && !operation_active && status==0 && (last_op==8'h30 || last_op==8'h32)) begin
                 if(byte_count>=1 && byte_count<=completed) next_tx=output_data;
                 else if(byte_count==completed+ONE) next_tx=block_crc[15:8];
                 else if(byte_count==completed+TWO) next_tx=block_crc[7:0];
@@ -206,7 +206,7 @@ module programmer_block #(parameter CONTROLLED=0, HOST_BLOCKS=0, LEASE_BITS=20) 
                     if(operation_status!=0) begin
                         status<=operation_status; armed<=0; state<=IDLE;
                     end else begin
-                        if(!HOST_BLOCKS && op==8'h30) block_crc<=crc_byte(block_crc,result[7:0]);
+                        if(!HOST_BLOCKS && (op==8'h30 || op==8'h32)) block_crc<=crc_byte(block_crc,result[7:0]);
                         completed<=completed+1'b1;
                         if(HOST_BLOCKS || completed+11'd1==length) begin status<=0; state<=IDLE; end
                         else begin address<=address+1'b1; state<=FETCH; end

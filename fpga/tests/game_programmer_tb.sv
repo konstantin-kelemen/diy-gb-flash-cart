@@ -55,8 +55,12 @@ module game_programmer_tb #(parameter HOST_BLOCKS=0);
     always @(posedge clk) if(!reset) begin
         if(dut.game_enable && dut.programmer_enable) $fatal(1,"two bus owners");
         if(dut.game_enable && !we) $fatal(1,"Flash write in GAME");
-        if(dut.programmer_enable && (!data_oe_n || !fram_ce_n || !fram_oe_n || !fram_we_n)) $fatal(1,"programmer isolation");
+        if(dut.programmer_enable && !data_oe_n) $fatal(1,"programmer isolation");
         if(!dut.game_enable && !dut.programmer_enable && (!ce || !oe || !we || !fram_ce_n || !fram_we_n)) $fatal(1,"handover isolation");
+        if(dut.programmer_enable && !dut.programmer.fram &&
+           (!fram_ce_n || !fram_oe_n || !fram_we_n)) $fatal(1,"FRAM selected during Flash operation");
+        if(dut.programmer_enable && dut.programmer.fram &&
+           (!ce || !oe || !we)) $fatal(1,"Flash selected during FRAM operation");
         if(!ce && !fram_ce_n) $fatal(1,"both memories selected");
     end
 
@@ -155,7 +159,7 @@ module game_programmer_tb #(parameter HOST_BLOCKS=0);
             seq=seq+1;
             tx[0]=op; tx[1]=seq; tx[2]=addr[23:16]; tx[3]=addr[15:8]; tx[4]=addr[7:0];
             tx[5]=count>>8; tx[6]=count; tx[7]=key;
-            size=8+(op==8'h31 ? count:0); crc=16'hffff;
+            size=8+((op==8'h31 || op==8'h33) ? count:0); crc=16'hffff;
             for(k=0;k<size;k=k+1) crc=crc_byte(crc,tx[k]);
             tx[size]=crc[15:8]; tx[size+1]=crc[7:0]^{7'b0,corrupt};
             cs=0; #2000;
@@ -301,6 +305,23 @@ module game_programmer_tb #(parameter HOST_BLOCKS=0);
         query(1,8);
         if({rx[0],rx[1],rx[2],rx[3],rx[4],rx[5],rx[6],rx[7]}!==64'h4742464304000100)
             $fatal(1,"SPI v4 version");
+        // FRAM writes overwrite bits in both directions, including FF.
+        before_writes=writes;
+        ram[17'h1ffff]=0;
+        request_frame(8'h32,24'h01ffff,1,0,0,0); finish_op(8'h32,0);
+        if(rx[4]!==0) $fatal(1,"FRAM read");
+        tx[8]=8'hff;
+        request_frame(8'h33,24'h01ffff,1,0,0,0); finish_op(8'h33,9);
+        request_frame(8'h20,0,0,8'ha5,0,0); finish_op(8'h20,0);
+        tx[8]=8'hff;
+        request_frame(8'h33,24'h01ffff,1,0,0,0); finish_op(8'h33,0);
+        if(ram[17'h1ffff]!==8'hff) $fatal(1,"FRAM FF was skipped");
+        tx[8]=8'h5a;
+        request_frame(8'h33,24'h01ffff,1,0,0,0); finish_op(8'h33,0);
+        request_frame(8'h32,24'h01ffff,1,0,0,0); finish_op(8'h32,0);
+        if(rx[4]!==8'h5a || writes!=before_writes) $fatal(1,"FRAM/Flash isolation");
+        request_frame(8'h32,24'h020000,1,0,0,0); finish_op(8'h32,8);
+        request_frame(8'h33,24'h020000,1,0,0,0); finish_op(8'h33,8);
         request_frame(8'h23,0,0,0,0,0); finish_op(8'h23,9);
         if(dut.protocol.lease_release) $fatal(1,"release without lease stalled commands");
         request_frame(8'h30,0,1024,0,0,0); finish_op(8'h30,8);

@@ -9,7 +9,7 @@ module cart_mapper (
     input wire [15:0] gb_a,
     input wire [7:0] gb_data,
     input wire gb_rd_n, gb_wr_n, gb_cs_n, gb_res_n,
-    output wire supported,
+    output reg supported,
     output wire [21:0] rom_address,
     output wire [16:0] ram_address,
     output wire ram_access, nibble_ram, rtc_access,
@@ -19,55 +19,45 @@ module cart_mapper (
     output reg [7:0] rtc_write_data=0
 );
     localparam NONE=0, MBC1=1, MBC2=2, MBC3=3, MBC5=5, INVALID=7;
-    // Header fields settle during scanning. Register their decode separately
-    // from mapper writes so cart_type -> supported -> bank is not one path.
-    reg [2:0] kind=INVALID, kind_next;
-    reg has_ram=0, has_rtc=0, rumble=0;
-    reg has_ram_next, has_rtc_next, rumble_next;
-    reg [7:0] rom_mask=0, rom_mask_next;
-    reg [16:0] ram_mask=0, ram_mask_next;
-    reg supported_config=0;
+    reg [2:0] kind;
+    reg has_ram, has_rtc, rumble;
     wire mbc30 = kind==MBC3 && (rom_size==7 || ram_size==5);
-    assign supported=configured && supported_config;
+    reg [7:0] rom_mask;
+    reg [16:0] ram_mask;
     always @* begin
-        kind_next=INVALID; has_ram_next=0; has_rtc_next=0; rumble_next=0;
+        kind=INVALID; has_ram=0; has_rtc=0; rumble=0;
         case(cart_type)
-            'h00: kind_next=NONE;
-            'h08,'h09: begin kind_next=NONE; has_ram_next=1; end
-            'h01: kind_next=MBC1;
-            'h02,'h03: begin kind_next=MBC1; has_ram_next=1; end
-            'h05,'h06: begin kind_next=MBC2; has_ram_next=1; end
-            'h0f: begin kind_next=MBC3; has_rtc_next=1; end
-            'h10: begin kind_next=MBC3; has_ram_next=1; has_rtc_next=1; end
-            'h11: kind_next=MBC3;
-            'h12,'h13: begin kind_next=MBC3; has_ram_next=1; end
-            'h19: kind_next=MBC5;
-            'h1a,'h1b: begin kind_next=MBC5; has_ram_next=1; end
-            'h1c: begin kind_next=MBC5; rumble_next=1; end
-            'h1d,'h1e: begin kind_next=MBC5; has_ram_next=1; rumble_next=1; end
+            'h00: kind=NONE;
+            'h08,'h09: begin kind=NONE; has_ram=1; end
+            'h01: kind=MBC1;
+            'h02,'h03: begin kind=MBC1; has_ram=1; end
+            'h05,'h06: begin kind=MBC2; has_ram=1; end
+            'h0f: begin kind=MBC3; has_rtc=1; end
+            'h10: begin kind=MBC3; has_ram=1; has_rtc=1; end
+            'h11: kind=MBC3;
+            'h12,'h13: begin kind=MBC3; has_ram=1; end
+            'h19: kind=MBC5;
+            'h1a,'h1b: begin kind=MBC5; has_ram=1; end
+            'h1c: begin kind=MBC5; rumble=1; end
+            'h1d,'h1e: begin kind=MBC5; has_ram=1; rumble=1; end
             default: ;
         endcase
         case(rom_size)
-            0: rom_mask_next=8'h01; 1: rom_mask_next=8'h03; 2: rom_mask_next=8'h07;
-            3: rom_mask_next=8'h0f; 4: rom_mask_next=8'h1f; 5: rom_mask_next=8'h3f;
-            6: rom_mask_next=8'h7f; 7: rom_mask_next=8'hff; default: rom_mask_next=0;
+            0: rom_mask=8'h01; 1: rom_mask=8'h03; 2: rom_mask=8'h07;
+            3: rom_mask=8'h0f; 4: rom_mask=8'h1f; 5: rom_mask=8'h3f;
+            6: rom_mask=8'h7f; 7: rom_mask=8'hff; default: rom_mask=0;
         endcase
         case(ram_size)
-            1: ram_mask_next=17'h007ff; 2: ram_mask_next=17'h01fff;
-            3: ram_mask_next=17'h07fff; 4: ram_mask_next=17'h1ffff;
-            5: ram_mask_next=17'h0ffff; default: ram_mask_next=0;
+            1: ram_mask=17'h007ff; 2: ram_mask=17'h01fff;
+            3: ram_mask=17'h07fff; 4: ram_mask=17'h1ffff;
+            5: ram_mask=17'h0ffff; default: ram_mask=0;
         endcase
-    end
-    always @(posedge clk) begin
-        kind<=kind_next; has_ram<=has_ram_next;
-        has_rtc<=has_rtc_next; rumble<=rumble_next;
-        rom_mask<=rom_mask_next; ram_mask<=ram_mask_next;
-        supported_config<=configured && kind!=INVALID && rom_size<=7 && ram_size<=5;
-        if(kind==NONE && (rom_size!=0 || (has_ram && ram_size>2))) supported_config<=0;
-        if(kind==MBC1 && (rom_size>6 || ram_size>3 || (rom_size>=5 && ram_size>2))) supported_config<=0;
-        if(kind==MBC2 && rom_size>3) supported_config<=0;
-        if(kind==MBC3 && ram_size==4) supported_config<=0;
-        if(rumble && ram_size==4) supported_config<=0;
+        supported=configured && kind!=INVALID && rom_size<=7 && ram_size<=5;
+        if(kind==NONE && (rom_size!=0 || (has_ram && ram_size>2))) supported=0;
+        if(kind==MBC1 && (rom_size>6 || ram_size>3 || (rom_size>=5 && ram_size>2))) supported=0;
+        if(kind==MBC2 && rom_size>3) supported=0;
+        if(kind==MBC3 && ram_size==4) supported=0;
+        if(rumble && ram_size==4) supported=0;
     end
     reg enabled=0, mode=0;
     reg [4:0] mbc1_low=0;

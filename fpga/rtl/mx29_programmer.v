@@ -19,6 +19,7 @@ module mx29_programmer #(
     output wire [21:0] flash_a,
     inout wire [7:0] flash_d,
     output wire flash_ce_n, flash_oe_n, flash_we_n,
+    output wire fram_ce_n, fram_oe_n, fram_we_n,
     input wire [7:0] memory_data_in,
     output wire [7:0] memory_data_out,
     output wire memory_data_drive
@@ -33,6 +34,14 @@ module mx29_programmer #(
     reg [21:0] target;
     reg [27:0] timer;
     reg recheck;
+    reg fram;
+    wire bus_ce_n, bus_oe_n, bus_we_n;
+    assign flash_ce_n=fram ? 1'b1 : bus_ce_n;
+    assign flash_oe_n=fram ? 1'b1 : bus_oe_n;
+    assign flash_we_n=fram ? 1'b1 : bus_we_n;
+    assign fram_ce_n=fram ? bus_ce_n : 1'b1;
+    assign fram_oe_n=fram ? bus_oe_n : 1'b1;
+    assign fram_we_n=fram ? bus_we_n : 1'b1;
     reg bus_start, bus_write;
     reg [21:0] bus_addr;
     reg [7:0] bus_data;
@@ -42,15 +51,15 @@ module mx29_programmer #(
     mx29_bus #(.READ_TICKS(READ_TICKS), .WRITE_TICKS(WRITE_TICKS), .SPLIT_DATA(SPLIT_DATA)) bus(.clk(clk), .reset(reset), .start(bus_start),
         .write_cycle(bus_write), .addr(bus_addr), .wdata(bus_data),
         .busy(), .done(bus_done), .rdata(bus_result),
-        .flash_a(flash_a), .flash_d(flash_d), .flash_ce_n(flash_ce_n),
-        .flash_oe_n(flash_oe_n), .flash_we_n(flash_we_n),
+        .flash_a(flash_a), .flash_d(flash_d), .flash_ce_n(bus_ce_n),
+        .flash_oe_n(bus_oe_n), .flash_we_n(bus_we_n),
         .memory_data_in(memory_data_in), .memory_data_out(memory_data_out), .memory_data_drive(memory_data_drive));
 
     always @(posedge clk) begin
         if (reset) begin
             state <= POWER; timer <= POWER_CYCLES; done <= 0; status <= 0;
             result <= 0; step <= 0; op <= 0; value <= 0; target <= 0;
-            recheck <= 0; bus_start <= 0; bus_write <= 0;
+            fram <= 0; recheck <= 0; bus_start <= 0; bus_write <= 0;
             bus_addr <= 0; bus_data <= 0;
         end else begin
             bus_start <= 0;
@@ -62,9 +71,11 @@ module mx29_programmer #(
                 POWER: if (timer == 0) state <= IDLE;
                        else timer <= timer - 1'b1;
                 IDLE: if (start) begin
-                    op <= command[1:0]; target <= address; value <= data;
+                    fram <= command==8'h16 || command==8'h17;
+                    op <= (command==8'h16 || command==8'h17) ? {1'b0,command[0]} : command[1:0]; target <= address; value <= data;
                     result <= 0; status <= 0; step <= 0; recheck <= 0;
                     if (command == 8'h14) state <= RESET_FLASH;
+                    else if (command==8'h16 || command==8'h17) state <= ISSUE;
                     else if (command >= 8'h10 && command <= 8'h13) state <= ISSUE;
                     else begin status <= 8'h02; done <= 1; end
                 end
@@ -73,7 +84,9 @@ module mx29_programmer #(
                     bus_write <= 1;
                     bus_addr <= 22'h000aaa;
                     bus_data <= 8'haa;
-                    if (op == 2'd0) begin
+                    if (fram) begin
+                        bus_write <= op[0]; bus_addr <= target; bus_data <= value;
+                    end else if (op == 2'd0) begin
                         bus_write <= 0; bus_addr <= target;
                     end else case (step)
                         0: begin end
@@ -89,7 +102,10 @@ module mx29_programmer #(
                     state <= WAIT_BUS;
                 end
                 WAIT_BUS: if (bus_done) begin
-                    if (op == 2'd0) begin
+                    if (fram) begin
+                        if(op[0]) state <= VERIFY;
+                        else begin result <= {8'b0,bus_result}; done <= 1; state <= IDLE; end
+                    end else if (op == 2'd0) begin
                         result <= {8'b0, bus_result}; done <= 1; state <= IDLE;
                     end else if (op == 2'd3 && step == 4) begin
                         result[15:8] <= bus_result; state <= RESET_FLASH;
@@ -120,7 +136,8 @@ module mx29_programmer #(
                 WAIT_VERIFY: if (bus_done) begin
                     result <= {8'b0, bus_result};
                     if (bus_result != (op == 2'd2 ? 8'hff : value)) status <= 8'h05;
-                    state <= RESET_FLASH;
+                    if(fram) begin done <= 1; state <= IDLE; end
+                    else state <= RESET_FLASH;
                 end
                 RESET_FLASH: begin
                     bus_start <= 1; bus_write <= 1; bus_addr <= 0; bus_data <= 8'hf0;

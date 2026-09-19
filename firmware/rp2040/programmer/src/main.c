@@ -64,8 +64,8 @@ static uint8_t link_command(uint8_t op, uint32_t address, uint8_t value,
     uint8_t packet[11]={op,seq,(uint8_t)(address>>16),(uint8_t)(address>>8),
                         (uint8_t)address,0,0,0,0,0,0};
     size_t n=10;
-    if(op==0x30 || op==0x31) packet[6]=1;
-    if(op==0x31) { packet[8]=value; n=11; }
+    if(op==0x30 || op==0x31 || op==0x32 || op==0x33) packet[6]=1;
+    if(op==0x31 || op==0x33) { packet[8]=value; n=11; }
     else if(op==0x20 || op==0x22) packet[7]=value;
     append_crc(packet,n-2);
     select_spi(); spi_write_blocking(spi0,packet,n); release_spi();
@@ -86,20 +86,21 @@ static size_t execute(size_t n) {
     const uint8_t op=request[0], seq=request[1];
     const size_t length=(size_t)request[5]<<8|request[6];
     const uint32_t address=(uint32_t)request[2]<<16|(uint32_t)request[3]<<8|request[4];
-    const bool block=op==0x30 || op==0x31;
+    const bool block=op==0x30 || op==0x31 || op==0x32 || op==0x33;
     if((block ? (length==0 || length>BLOCK) : length!=0) ||
-       n!=10+(op==0x31?length:0) ||
+       n!=10+((op==0x31 || op==0x33)?length:0) ||
        !(block || op==0x12 || op==0x13 || op==0x14 || op==0x20 || op==0x21))
         return bridge_error(0xe2);
     if(seq==host_seq) return bridge_error(0xe3);
     host_seq=seq; host_op=op; host_status=0; host_result=0; host_completed=0;
-    if(address>=0x400000 || (block && length>0x400000-address)) {
+    const uint32_t capacity=(op==0x32 || op==0x33) ? 0x20000 : 0x400000;
+    if(address>=capacity || (block && length>capacity-address)) {
         host_status=8; host_armed=false; return host_reply();
     }
     if(op==0x20 && (address!=0 || request[7]!=0xa5)) {
         host_status=9; host_armed=false; return host_reply();
     }
-    if(op!=0x30 && op!=0x20 && op!=0x21 && !host_armed) {
+    if(op!=0x30 && op!=0x32 && op!=0x20 && op!=0x21 && !host_armed) {
         host_status=9; return host_reply();
     }
     if(!probe_link()) return bridge_error(0xe1);
@@ -120,13 +121,13 @@ static size_t execute(size_t n) {
     for(size_t i=0;i<count;++i) {
         // Erased bytes need no program pulse. The full block is already CRC checked.
         if(op==0x31 && request[8+i]==0xff) { ++host_completed; continue; }
-        error=link_command(op,address+(uint32_t)i,op==0x31?request[8+i]:0,true,status,deadline);
+        error=link_command(op,address+(uint32_t)i,(op==0x31 || op==0x33)?request[8+i]:0,true,status,deadline);
         if(error) break;
         host_status=status[2]&15;
         host_result=(uint16_t)status[4]|(uint16_t)status[5]<<8;
         if(host_status!=0) { host_armed=false; break; }
         if(!(status[2]&0x80)) { error=0xe3; break; }
-        if(op==0x30) response[10+i]=status[4];
+        if(op==0x30 || op==0x32) response[10+i]=status[4];
         ++host_completed;
     }
     // Release only through a checked command; if communication failed, the FPGA
@@ -136,7 +137,7 @@ static size_t execute(size_t n) {
     if(release_error) return bridge_error(release_error);
     if((status[2]&15)!=0 || (status[2]&0x80)) return bridge_error(0xe3);
     host_reply();
-    if(op==0x30 && host_status==0) {
+    if((op==0x30 || op==0x32) && host_status==0) {
         append_crc(response+10,length); return 12+length;
     }
     return 10;

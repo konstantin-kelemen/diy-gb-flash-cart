@@ -1,6 +1,7 @@
 import contextlib
 import io
 import sys
+import tempfile
 import unittest
 from pathlib import Path
 from unittest.mock import MagicMock, patch
@@ -13,6 +14,7 @@ class Bridge:
     """Binary USB/FPGA protocol model, deliberately returns fragmented reads."""
     def __init__(self):
         self.memory = bytearray(b'\xff' * gbflash.SIZE)
+        self.fram = bytearray(gbflash.FRAM_SIZE)
         self.device = 0xa8
         self.sequence = 254
         self.armed = False
@@ -54,8 +56,14 @@ class Bridge:
                 self.armed = True
             elif op == 0x21:
                 self.armed = False
-            elif op != 0x30 and not self.armed:
+            elif op not in (0x30, 0x32) and not self.armed:
                 code = 9
+            elif op == 0x32:
+                count = length
+                payload = gbflash.packet(bytes(self.fram[address:address + length]))
+            elif op == 0x33:
+                self.fram[address:address + length] = request[8:-2]
+                count = length
             elif op == 0x13:
                 result = (self.device << 8) | 0xc2
             elif op == 0x14:
@@ -98,6 +106,66 @@ class Tests(unittest.TestCase):
         with patch('gbflash.time.sleep'):
             programmer = gbflash.Programmer(bridge)
         return programmer, bridge
+
+    def test_fram_write_ff_bounds_and_flash_isolation(self):
+        programmer, bridge = self.make_programmer()
+        programmer.memory = 'fram'
+        image = bytes(range(256)) * 4 + b'\xff'
+        with contextlib.redirect_stdout(io.StringIO()):
+            gbflash.write_fram(programmer, image, gbflash.FRAM_SIZE - len(image))
+        self.assertEqual(bridge.fram[-len(image):], image)
+        self.assertEqual(bridge.fram[:-len(image)], bytes(gbflash.FRAM_SIZE - len(image)))
+        self.assertEqual(bridge.memory, b'\xff' * gbflash.SIZE)
+        self.assertEqual(programmer.read_block(gbflash.FRAM_SIZE - 1, 1), b'\xff')
+        for address, length in ((-1, 1), (gbflash.FRAM_SIZE, 1), (gbflash.FRAM_SIZE-1, 2), (0, 0)):
+            with self.assertRaises(ValueError):
+                programmer.read_block(address, length)
+        self.assertTrue(all(op in (0x20, 0x32, 0x33) for op, _, _ in bridge.operations))
+
+    def test_fram_cli_clear_and_invalid_ranges(self):
+        for command, extra, valid in (
+            ('fram-clear', ['--address', '0x1fffe', '--value', '0'], True),
+            ('fram-clear', ['--value', '256'], False),
+            ('fram-read', ['save.sav', '--address', '0x20000'], False),
+            ('fram-clear', ['--address', '0x1ffff', '--length', '2'], False),
+        ):
+            serial = MagicMock()
+            with patch.object(sys, 'argv', ['gbflash', '--port', 'test', command] + extra), \
+                 patch.dict(sys.modules, {'serial': serial}), \
+                 patch('gbflash.Programmer') as programmer, \
+                 patch('gbflash.write_fram') as write, \
+                 contextlib.redirect_stdout(io.StringIO()), \
+                 contextlib.redirect_stderr(io.StringIO()):
+                self.assertEqual(gbflash.main(), 0 if valid else 1)
+                if valid:
+                    write.assert_called_once_with(programmer.return_value, b'\0\0', 0x1fffe)
+                    programmer.return_value.identify.assert_not_called()
+                    programmer.return_value.operation.assert_called_once_with(0x21)
+                else:
+                    serial.Serial.assert_not_called()
+
+    def test_fram_cli_roundtrip_and_clear_preserves_neighbours(self):
+        bridge = Bridge()
+        image = bytes(range(256)) * 4 + b'\xff'
+        serial = MagicMock()
+        serial.Serial.return_value.__enter__.return_value = bridge
+        with tempfile.TemporaryDirectory() as tmp:
+            source, dump = Path(tmp) / 'in.sav', Path(tmp) / 'out.sav'
+            source.write_bytes(image)
+            for command in (
+                ['fram-write', str(source), '--address', '13'],
+                ['fram-clear', '--address', '20', '--length', '3', '--value', '0xff'],
+                ['fram-read', str(dump), '--address', '13', '--length', str(len(image))],
+            ):
+                with patch.object(sys, 'argv', ['gbflash', '--port', 'test'] + command), \
+                     patch.dict(sys.modules, {'serial': serial}), patch('gbflash.time.sleep'), \
+                     contextlib.redirect_stdout(io.StringIO()):
+                    self.assertEqual(gbflash.main(), 0)
+                self.assertFalse(bridge.armed)
+            self.assertEqual(dump.read_bytes(), image[:7] + b'\xff' * 3 + image[10:])
+            self.assertEqual(bridge.fram[:13], bytes(13))
+            self.assertEqual(bridge.fram[13 + len(image):], bytes(gbflash.FRAM_SIZE - 13 - len(image)))
+            self.assertEqual(bridge.memory, b'\xff' * gbflash.SIZE)
 
     def test_cli_image_capacity(self):
         for command in ('write', 'verify'):
