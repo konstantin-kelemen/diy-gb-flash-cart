@@ -2,6 +2,7 @@
 """MX29LV320E / 128 KiB FRAM programmer. Serial transport: pip install pyserial."""
 import argparse
 import binascii
+from contextlib import nullcontext
 import pathlib
 import sys
 import time
@@ -138,46 +139,92 @@ class Programmer:
         return self.read_block(address, 1)[0]
 
 
-def verify(programmer, expected, start=0, label='Verified'):
-    for offset in range(0, len(expected), BLOCK):
-        block = expected[offset:offset + BLOCK]
-        actual = programmer.read_block(start + offset, len(block))
-        if len(actual) != len(block):
-            raise RuntimeError('Incomplete read block')
-        if actual != block:
-            i = next(i for i, (a, b) in enumerate(zip(block, actual)) if a != b)
-            raise RuntimeError(f'0x{start + offset + i:06X}: expected {block[i]:02X}, read {actual[i]:02X}')
-        print(f'{label}: {offset + len(block)}/{len(expected)}', flush=True)
+class Progress:
+    """One terminal line per phase; only start/end lines in redirected logs."""
+    def __init__(self, label, total):
+        self.label, self.total = label, total
+        self.completed = 0
+        self.stream = sys.stdout
+        self.interactive = self.stream.isatty()
+        self.last_update = 0
+        self.width = 0
+
+    def __enter__(self):
+        self.render(force=True)
+        return self
+
+    def advance(self, count):
+        self.completed += count
+        self.render()
+
+    def render(self, force=False, failed=False):
+        now = time.monotonic()
+        if not force and (not self.interactive or now - self.last_update < 0.1):
+            return
+        percent = 100 * self.completed / self.total if self.total else 100
+        if self.completed < self.total:
+            percent = min(percent, 99.9)
+        line = f'{self.label}: {percent:5.1f}% ({self.completed}/{self.total} bytes)'
+        if failed:
+            line += ' - interrupted'
+        if self.interactive:
+            print('\r' + line.ljust(self.width), end='', file=self.stream, flush=True)
+            self.width = max(self.width, len(line))
+        else:
+            print(line, file=self.stream, flush=True)
+        self.last_update = now
+
+    def __exit__(self, exc_type, exc, traceback):
+        self.render(force=True, failed=exc_type is not None)
+        if self.interactive:
+            print(file=self.stream, flush=True)
+
+
+def verify(programmer, expected, start=0, label='Verified', progress=None):
+    with nullcontext(progress) if progress is not None else Progress(label, len(expected)) as report:
+        for offset in range(0, len(expected), BLOCK):
+            block = expected[offset:offset + BLOCK]
+            actual = programmer.read_block(start + offset, len(block))
+            if len(actual) != len(block):
+                raise RuntimeError('Incomplete read block')
+            if actual != block:
+                i = next(i for i, (a, b) in enumerate(zip(block, actual)) if a != b)
+                raise RuntimeError(f'0x{start + offset + i:06X}: expected {block[i]:02X}, read {actual[i]:02X}')
+            report.advance(len(block))
 
 
 def write_image(programmer, image, device):
     if not 0 < len(image) <= SIZE:
         raise ValueError('Image must contain 1..4194304 bytes')
     affected = [(a, n) for a, n in sectors(device) if a < len(image)]
-    print('Erasing sectors: ' + ', '.join(f'{a:06X}+{n:X}' for a, n in affected), flush=True)
-    for address, size in affected:
-        programmer.operation(0x12, address)
-        # Check the entire erased sector, including any tail beyond the image.
-        verify(programmer, b'\xff' * size, address, 'Erase verified')
-    for address in range(0, len(image), BLOCK):
-        block = image[address:address + BLOCK]
-        if block != b'\xff' * len(block):
-            programmer.write_block(address, block)
-        print(f'Written: {address + len(block)}/{len(image)}', flush=True)
+    erase_total = sum(size for _, size in affected)
+    print(f'Erasing {len(affected)} sectors ({erase_total} bytes)', flush=True)
+    with Progress('Erase + verify', erase_total) as progress:
+        for address, size in affected:
+            programmer.operation(0x12, address)
+            # Include the unused tail of the last sector in the overall progress.
+            verify(programmer, b'\xff' * size, address, progress=progress)
+    with Progress('Written', len(image)) as progress:
+        for address in range(0, len(image), BLOCK):
+            block = image[address:address + BLOCK]
+            if block != b'\xff' * len(block):
+                programmer.write_block(address, block)
+            progress.advance(len(block))
     verify(programmer, image)
-    print(f'Written: {len(image)} bytes\nVerified: {len(image)} bytes\nResult: SUCCESS')
+    print('Result: SUCCESS')
 
 
 def write_fram(programmer, image, start=0):
     if not (0 <= start < FRAM_SIZE and 0 < len(image) <= FRAM_SIZE - start):
         raise ValueError('Write range exceeds FRAM capacity')
     programmer.operation(0x20, data=0xa5)
-    for offset in range(0, len(image), BLOCK):
-        block = image[offset:offset + BLOCK]
-        programmer.write_block(start + offset, block)
-        print(f'Written: {offset + len(block)}/{len(image)}', flush=True)
+    with Progress('Written', len(image)) as progress:
+        for offset in range(0, len(image), BLOCK):
+            block = image[offset:offset + BLOCK]
+            programmer.write_block(start + offset, block)
+            progress.advance(len(block))
     verify(programmer, image, start)
-    print(f'Written and verified: {len(image)} bytes; SUCCESS')
+    print('Result: SUCCESS')
 
 
 def main():
@@ -248,15 +295,11 @@ def main():
                 elif args.command in ('read', 'fram-read'):
                     # Exclusive creation prevents accidentally replacing an existing dump.
                     with args.file.open('xb') as output:
-                        started = time.monotonic()
-                        for offset in range(0, args.length, BLOCK):
-                            size = min(BLOCK, args.length - offset)
-                            output.write(programmer.read_block(args.address + offset, size))
-                            if (offset + size) % 65536 == 0 or offset + size == args.length:
-                                elapsed = max(time.monotonic() - started, 0.001)
-                                print(f'Read: {offset + size}/{args.length} bytes; '
-                                      f'{(offset + size) / elapsed / 1024:.1f} KiB/s', flush=True)
-                    print(f'Read: {args.length} bytes')
+                        with Progress('Read', args.length) as progress:
+                            for offset in range(0, args.length, BLOCK):
+                                size = min(BLOCK, args.length - offset)
+                                output.write(programmer.read_block(args.address + offset, size))
+                                progress.advance(size)
             finally:
                 failed = sys.exc_info()[0] is not None
                 try:
