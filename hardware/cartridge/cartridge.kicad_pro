@@ -656,6 +656,10 @@
     [
       "2780facd-cffd-485a-aed1-c460c817db24",
       "cartridge"
+    ],
+    [
+      "6c07a520-a593-4e55-8258-571457cbffad",
+      "Power - TPS2116 + AMS1117"
     ]
   ],
   "text_variables": {},

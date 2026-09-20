@@ -44,7 +44,6 @@ firmware/rp2040/*/build-*/
 Thumbs.db
 AGENTS.md
 flash-test-*
-ttr.gb
 roms/*
 tools/*
 diagnostics/*

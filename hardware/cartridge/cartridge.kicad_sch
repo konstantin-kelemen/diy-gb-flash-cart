@@ -6488,6 +6488,16 @@
 		)
 		(uuid "4a1109d2-49d5-41da-8020-0fe75f065cf7")
 	)
+	(text "3.3 V from on-board AMS1117 to cartridge"
+		(exclude_from_sim no)
+		(at 204.47 265.43 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "735528b1-a04f-483d-b2cf-09fc1dcaa917")
+	)
 	(text "Подтяжки 10 кОм к 3,3 В: память отключена при Hi-Z FPGA"
 		(exclude_from_sim no)
 		(at 267.716 20.066 0)
@@ -6498,6 +6508,16 @@
 			(justify left bottom)
 		)
 		(uuid "d09af7e5-6841-4c44-b4a3-95aed8f3e41a")
+	)
+	(text "U8.3v3 isolated; USB powers RP2040 separately"
+		(exclude_from_sim no)
+		(at 209.55 273.05 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "fb3f90fe-f33f-48c6-9674-ca1a8182930f")
 	)
 	(junction
 		(at 351.79 234.95)
@@ -6701,6 +6721,10 @@
 		(at 185.42 52.07)
 		(uuid "1696e516-4ca4-4d57-8754-5e74e0d92907")
 	)
+	(no_connect
+		(at 367.03 82.55)
+		(uuid "5d1b36fb-6254-4c01-aa9b-6536f6b3bf0f")
+	)
 	(wire
 		(pts
 			(xy 46.99 129.54) (xy 57.15 129.54)
@@ -6740,6 +6764,16 @@
 			(type default)
 		)
 		(uuid "0762006e-9a74-4771-935a-c6a40b88af36")
+	)
+	(wire
+		(pts
+			(xy 124.46 265.43) (xy 144.78 265.43)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "084143c3-3fdc-4c3d-8acf-c5f2c11affce")
 	)
 	(wire
 		(pts
@@ -7103,6 +7137,26 @@
 	)
 	(wire
 		(pts
+			(xy 54.61 265.43) (xy 30.48 265.43)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "426b7680-8a1e-4a18-98ea-bebac7dd9c83")
+	)
+	(wire
+		(pts
+			(xy 54.61 273.05) (xy 30.48 273.05)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "42be4278-8a22-409b-a978-00be4f15c7b0")
+	)
+	(wire
+		(pts
 			(xy 128.27 238.76) (xy 135.89 238.76)
 		)
 		(stroke
@@ -7330,6 +7384,16 @@
 			(type default)
 		)
 		(uuid "65f51a74-305e-4c7b-8006-cd37155f38b1")
+	)
+	(wire
+		(pts
+			(xy 124.46 273.05) (xy 144.78 273.05)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "663d2994-aa4c-4c69-bce8-bf3b7a6cdefb")
 	)
 	(wire
 		(pts
@@ -8121,6 +8185,26 @@
 		)
 		(uuid "fb477d5e-782e-42f0-a3cf-0ce6b4f7c150")
 	)
+	(label "+3.3V"
+		(at 144.78 265.43 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "20bf8040-1ce3-4e12-958e-5880e0f4cad7")
+	)
+	(label "GND"
+		(at 144.78 273.05 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "6986d2aa-d88a-4631-bc47-5f1f6fb9f22a")
+	)
 	(label "gb_power_present"
 		(at 138.43 160.02 0)
 		(effects
@@ -8130,6 +8214,26 @@
 			(justify left bottom)
 		)
 		(uuid "bb85f219-28c0-4d8e-a776-dba8d3106130")
+	)
+	(label "+5V (USB)"
+		(at 30.48 273.05 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "d43184e8-6c0f-485d-8c22-2e34df0ae9f5")
+	)
+	(label "VCCB"
+		(at 30.48 265.43 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "fe531179-ce0c-44ab-8dcc-434505a7936f")
 	)
 	(symbol
 		(lib_id "power:VSSA")
@@ -29202,85 +29306,6 @@
 		)
 	)
 	(symbol
-		(lib_id "power:+3.3V")
-		(at 367.03 82.55 270)
-		(mirror x)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "c47fdc49-7ec5-4525-8ac1-2e4598ae3f50")
-		(property "Reference" "#PWR0306"
-			(at 363.22 82.55 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "+3.3V"
-			(at 370.84 82.5499 90)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" ""
-			(at 367.03 82.55 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 367.03 82.55 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"+3.3V\""
-			(at 367.03 82.55 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "5646ab7a-66ce-4a25-bc6c-1ceec3cc5978")
-		)
-		(instances
-			(project "cartridge"
-				(path "/2780facd-cffd-485a-aed1-c460c817db24"
-					(reference "#PWR0306")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "power:VSSA")
 		(at 242.57 170.18 270)
 		(mirror x)
@@ -34584,6 +34609,91 @@
 				(path "/2780facd-cffd-485a-aed1-c460c817db24"
 					(reference "#PWR0133")
 					(unit 1)
+				)
+			)
+		)
+	)
+	(sheet
+		(at 54.61 260.35)
+		(size 71.12 17.78)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(stroke
+			(width 0.254)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0)
+		)
+		(uuid "6c07a520-a593-4e55-8258-571457cbffad")
+		(property "Sheetname" "Power - TPS2116 + AMS1117"
+			(at 54.61 259.08 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "power_mux.kicad_sch"
+			(at 54.61 279.4 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(pin "GB_5V" input
+			(at 54.61 265.43 180)
+			(uuid "6aec8174-3a49-4b7a-aa09-b9d44cb012b7")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "USB_5V" input
+			(at 54.61 273.05 180)
+			(uuid "427215ef-d000-4868-818c-2abc088e5eb1")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(pin "CART_3V3" output
+			(at 125.73 265.43 0)
+			(uuid "39b761bf-6f14-434d-bf25-b59ffe24281c")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(pin "GND" input
+			(at 125.73 273.05 0)
+			(uuid "db261845-1df0-4319-9092-1ce16cd3f21e")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(instances
+			(project "cartridge"
+				(path "/2780facd-cffd-485a-aed1-c460c817db24"
+					(page "2")
 				)
 			)
 		)
