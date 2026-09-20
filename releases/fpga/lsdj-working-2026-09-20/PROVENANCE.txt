@@ -1,0 +1,5 @@
+﻿Base Git commit: 0aab5daf0f4dc0ebd1828ac133c175b9cc182e16
+Source archive: current workspace snapshot, including local Diamond project changes.
+Binary: copied without rebuilding from fpga/diamond/game_programmer.
+Programmed device contents were not independently read back.
+JEDEC SHA256: 0d5dc6ed1ef1be372282d1f52c589eb69ae1caf7cfb148055e49a2b99662bb9a

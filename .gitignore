@@ -46,3 +46,5 @@ AGENTS.md
 flash-test-*
 ttr.gb
 roms/*
+tools/*
+diagnostics/*

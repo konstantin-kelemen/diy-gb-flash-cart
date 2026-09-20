@@ -1,55 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<BaliProject version="3.2" title="RomEmu" device="LCMXO2-1200HC-4TG100C" default_implementation="flash_bringup">
+<BaliProject version="3.2" title="RomEmu" device="LCMXO2-1200HC-4TG100C" default_implementation="game_programmer">
     <Options/>
-    <Implementation title="game_programmer" dir="game_programmer" description="GAME multi / RP2040 block programmer" synthesis="lse" default_strategy="GameProgrammerArea">
-        <Options def_top="top"/>
-        <Source name="../targets/game_programmer/top.v" type="Verilog" type_short="Verilog"><Options top_module="top"/></Source>
-        <Source name="../rtl/game_multi_core.v" type="Verilog" type_short="Verilog"><Options/></Source>
-        <Source name="../rtl/cart_header.v" type="Verilog" type_short="Verilog"><Options/></Source>
-        <Source name="../rtl/cart_mapper.v" type="Verilog" type_short="Verilog"><Options/></Source>
-        <Source name="../rtl/mbc_rtc.v" type="Verilog" type_short="Verilog"><Options/></Source>
-        <Source name="../rtl/cart_mode.v" type="Verilog" type_short="Verilog"><Options/></Source>
-        <Source name="../rtl/programmer_block.v" type="Verilog" type_short="Verilog"><Options/></Source>
-        <Source name="../rtl/mx29_programmer.v" type="Verilog" type_short="Verilog"><Options/></Source>
-        <Source name="../rtl/mx29_bus.v" type="Verilog" type_short="Verilog"><Options/></Source>
-        <Source name="../constraints/game_programmer.lpf" type="Logic Preference" type_short="LPF"><Options/></Source>
-    </Implementation>
-    <Implementation title="game_multi" dir="game_multi" description="ROM header selected multi-mapper GAME" synthesis="lse" default_strategy="Strategy1">
-        <Options def_top="top"/>
-        <Source name="../targets/game_multi/top.v" type="Verilog" type_short="Verilog"><Options top_module="top"/></Source>
-        <Source name="../rtl/game_multi_core.v" type="Verilog" type_short="Verilog"><Options/></Source>
-        <Source name="../rtl/cart_header.v" type="Verilog" type_short="Verilog"><Options/></Source>
-        <Source name="../rtl/cart_mapper.v" type="Verilog" type_short="Verilog"><Options/></Source>
-        <Source name="../rtl/mbc_rtc.v" type="Verilog" type_short="Verilog"><Options/></Source>
-        <Source name="../constraints/game_multi.lpf" type="Logic Preference" type_short="LPF"><Options/></Source>
-    </Implementation>
-    <Implementation title="game_mbc5" dir="game_mbc5" description="LSDj 1 MiB MBC5 and 128 KiB F-RAM" synthesis="lse" default_strategy="Strategy1">
-        <Options def_top="top"/>
-        <Source name="../targets/game_mbc5/top.v" type="Verilog" type_short="Verilog"><Options top_module="top"/></Source>
-        <Source name="../constraints/game_mbc5.lpf" type="Logic Preference" type_short="LPF"><Options/></Source>
-    </Implementation>
-    <Implementation title="game_rom" dir="game_rom" description="32 KiB ROM ONLY from external Flash" synthesis="lse" default_strategy="Strategy1">
-        <Options def_top="top"/>
-        <Source name="../targets/game_rom/top.v" type="Verilog" type_short="Verilog"><Options top_module="top"/></Source>
-        <Source name="../constraints/game_rom.lpf" type="Logic Preference" type_short="LPF"><Options/></Source>
-    </Implementation>
-    <Implementation title="programmer" dir="programmer" description="USB SPI Flash programmer v3" synthesis="lse" default_strategy="Strategy1">
-        <Options def_top="top"/>
-        <Source name="../targets/programmer/top.v" type="Verilog" type_short="Verilog"><Options top_module="top"/></Source>
-        <Source name="../rtl/programmer_block.v" type="Verilog" type_short="Verilog"><Options/></Source>
-        <Source name="../rtl/mx29_programmer.v" type="Verilog" type_short="Verilog"><Options/></Source>
-        <Source name="../rtl/mx29_bus.v" type="Verilog" type_short="Verilog"><Options/></Source>
-        <Source name="../constraints/programmer.lpf" type="Logic Preference" type_short="LPF"><Options/></Source>
-    </Implementation>
-    <Implementation title="spi_bringup" dir="spi_bringup" description="SPI version probe" synthesis="lse" default_strategy="Strategy1">
-        <Options def_top="top"/>
-        <Source name="../targets/spi_bringup/top.v" type="Verilog" type_short="Verilog">
-            <Options top_module="top"/>
-        </Source>
-        <Source name="../constraints/spi_bringup.lpf" type="Logic Preference" type_short="LPF">
-            <Options/>
-        </Source>
-    </Implementation>
     <Implementation title="flash_bringup" dir="flash_bringup" description="flash_bringup" synthesis="lse" default_strategy="Area">
         <Options def_top="top"/>
         <Source name="../targets/flash_bringup/top.v" type="Verilog" type_short="Verilog">
@@ -65,6 +16,108 @@
             <Options/>
         </Source>
     </Implementation>
+    <Implementation title="game_mbc5" dir="game_mbc5" description="LSDj 1 MiB MBC5 and 128 KiB F-RAM" synthesis="lse" default_strategy="Strategy1">
+        <Options def_top="top"/>
+        <Source name="../targets/game_mbc5/top.v" type="Verilog" type_short="Verilog">
+            <Options top_module="top"/>
+        </Source>
+        <Source name="../constraints/game_mbc5.lpf" type="Logic Preference" type_short="LPF">
+            <Options/>
+        </Source>
+    </Implementation>
+    <Implementation title="game_multi" dir="game_multi" description="ROM header selected multi-mapper GAME" synthesis="lse" default_strategy="Strategy1">
+        <Options def_top="top"/>
+        <Source name="../targets/game_multi/top.v" type="Verilog" type_short="Verilog">
+            <Options top_module="top"/>
+        </Source>
+        <Source name="../rtl/game_multi_core.v" type="Verilog" type_short="Verilog">
+            <Options/>
+        </Source>
+        <Source name="../rtl/cart_header.v" type="Verilog" type_short="Verilog">
+            <Options/>
+        </Source>
+        <Source name="../rtl/cart_mapper.v" type="Verilog" type_short="Verilog">
+            <Options/>
+        </Source>
+        <Source name="../rtl/mbc_rtc.v" type="Verilog" type_short="Verilog">
+            <Options/>
+        </Source>
+        <Source name="../constraints/game_multi.lpf" type="Logic Preference" type_short="LPF">
+            <Options/>
+        </Source>
+    </Implementation>
+    <Implementation title="game_programmer" dir="game_programmer" description="GAME multi / RP2040 block programmer" synthesis="lse" default_strategy="GameProgrammerArea">
+        <Options def_top="top"/>
+        <Source name="../targets/game_programmer/top.v" type="Verilog" type_short="Verilog">
+            <Options top_module="top"/>
+        </Source>
+        <Source name="../rtl/game_multi_core.v" type="Verilog" type_short="Verilog">
+            <Options/>
+        </Source>
+        <Source name="../rtl/cart_header.v" type="Verilog" type_short="Verilog">
+            <Options/>
+        </Source>
+        <Source name="../rtl/cart_mapper.v" type="Verilog" type_short="Verilog">
+            <Options/>
+        </Source>
+        <Source name="../rtl/mbc_rtc.v" type="Verilog" type_short="Verilog">
+            <Options/>
+        </Source>
+        <Source name="../rtl/cart_mode.v" type="Verilog" type_short="Verilog">
+            <Options/>
+        </Source>
+        <Source name="../rtl/programmer_block.v" type="Verilog" type_short="Verilog">
+            <Options/>
+        </Source>
+        <Source name="../rtl/mx29_programmer.v" type="Verilog" type_short="Verilog">
+            <Options/>
+        </Source>
+        <Source name="../rtl/mx29_bus.v" type="Verilog" type_short="Verilog">
+            <Options/>
+        </Source>
+        <Source name="../constraints/game_programmer.lpf" type="Logic Preference" type_short="LPF">
+            <Options/>
+        </Source>
+        <Source name="game_programmer/game_programmer.xcf" type="Programming Project File" type_short="Programming">
+            <Options/>
+        </Source>
+    </Implementation>
+    <Implementation title="game_rom" dir="game_rom" description="32 KiB ROM ONLY from external Flash" synthesis="lse" default_strategy="Strategy1">
+        <Options def_top="top"/>
+        <Source name="../targets/game_rom/top.v" type="Verilog" type_short="Verilog">
+            <Options top_module="top"/>
+        </Source>
+        <Source name="../constraints/game_rom.lpf" type="Logic Preference" type_short="LPF">
+            <Options/>
+        </Source>
+    </Implementation>
+    <Implementation title="programmer" dir="programmer" description="USB SPI Flash programmer v3" synthesis="lse" default_strategy="Strategy1">
+        <Options def_top="top"/>
+        <Source name="../targets/programmer/top.v" type="Verilog" type_short="Verilog">
+            <Options top_module="top"/>
+        </Source>
+        <Source name="../rtl/programmer_block.v" type="Verilog" type_short="Verilog">
+            <Options/>
+        </Source>
+        <Source name="../rtl/mx29_programmer.v" type="Verilog" type_short="Verilog">
+            <Options/>
+        </Source>
+        <Source name="../rtl/mx29_bus.v" type="Verilog" type_short="Verilog">
+            <Options/>
+        </Source>
+        <Source name="../constraints/programmer.lpf" type="Logic Preference" type_short="LPF">
+            <Options/>
+        </Source>
+    </Implementation>
+    <Implementation title="spi_bringup" dir="spi_bringup" description="SPI version probe" synthesis="lse" default_strategy="Strategy1">
+        <Options def_top="top"/>
+        <Source name="../targets/spi_bringup/top.v" type="Verilog" type_short="Verilog">
+            <Options top_module="top"/>
+        </Source>
+        <Source name="../constraints/spi_bringup.lpf" type="Logic Preference" type_short="LPF">
+            <Options/>
+        </Source>
+    </Implementation>
     <Implementation title="v1_0" dir="v1_0" description="v1_0" synthesis="lse" default_strategy="Strategy1">
         <Options def_top="top"/>
         <Source name="../targets/internal_rom/top.v" type="Verilog" type_short="Verilog">
@@ -74,6 +127,6 @@
             <Options/>
         </Source>
     </Implementation>
-    <Strategy name="Strategy1" file="RomEmu1.sty"/>
     <Strategy name="GameProgrammerArea" file="RomEmu_game_programmer.sty"/>
+    <Strategy name="Strategy1" file="RomEmu1.sty"/>
 </BaliProject>

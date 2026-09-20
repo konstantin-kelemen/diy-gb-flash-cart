@@ -6,6 +6,9 @@
 
 ## FPGA
 
+- [lsdj-working-2026-09-20](fpga/lsdj-working-2026-09-20/) — свежая база GAME + PROGRAMMER:
+  сохранённый JEDEC, отчёты и снимок исходников; после замены FRAM пользователь
+  подтвердил устранение ошибки и запуск LSDj. 582/640 SLICE, setup/hold PASS.
 - [game_programmer](fpga/game_programmer/) — GAME + PROGRAMMER, SPI v4; 581/640 SLICE,
   setup/hold PASS. На плате ещё не проверен; использовать с RP2040 programmer-v4.
 - [game_rom](fpga/game_rom/) — ROM ONLY 32 КиБ.
