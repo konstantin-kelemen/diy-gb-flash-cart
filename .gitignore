@@ -5,6 +5,7 @@ _autosave-*
 *.bak
 *.lck
 .history
+fp-info-cache
 
 # Diamond temporary/build output
 *.run
@@ -28,7 +29,7 @@ fpga/diamond/*.sty
 /fpga/diamond/RomEmu_tcr.dir
 __pycache__/
 
-# RP2040 build atrifacts
+# RP2040 build artifacts
 firmware/rp2040/*/build/
 firmware/rp2040/*/build-*/
 
@@ -47,3 +48,11 @@ flash-test-*
 roms/*
 tools/*
 diagnostics/*
+
+# Local Python environment
+/.venv/
+
+# Keep Diamond source configuration visible to Git
+!/fpga/diamond/RomEmu.ldf
+!/fpga/diamond/RomEmu.ccl
+!/fpga/diamond/RomEmu*.sty

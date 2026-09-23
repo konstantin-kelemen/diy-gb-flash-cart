@@ -7,8 +7,8 @@
 ## FPGA
 
 - [lsdj-working-2026-09-20](fpga/lsdj-working-2026-09-20/) — свежая база GAME + PROGRAMMER:
-  сохранённый JEDEC, отчёты и снимок исходников; после замены FRAM пользователь
-  подтвердил устранение ошибки и запуск LSDj. 582/640 SLICE, setup/hold PASS.
+  сохранённый JEDEC, отчёты и снимок исходников; после замены FRAM
+  ошибка устранена, LSDj запускается. 582/640 SLICE, setup/hold PASS.
 - [game_programmer](fpga/game_programmer/) — GAME + PROGRAMMER, SPI v4; 581/640 SLICE,
   setup/hold PASS. На плате ещё не проверен; использовать с RP2040 programmer-v4.
 - [game_rom](fpga/game_rom/) — ROM ONLY 32 КиБ.
@@ -26,7 +26,8 @@
 ## RP2040
 
 - [programmer-v4](rp2040/programmer-v4/) — для FPGA game_programmer с SPI v4;
-  обновлять оба устройства парой. Аппаратного испытания ещё нет.
+  совместимость зафиксирована в рабочей базе LSDj от 2026-09-20.
+  Команды передачи F-RAM из текущих исходников требуют новой пары сборок.
 - [spi_bringup](rp2040/spi_bringup/) — аппаратный PASS 1000/1000 с FPGA spi_bringup.
 
 ## Плата
@@ -35,5 +36,5 @@
 
 ## Контрольные суммы
 
-Из каталога конкретного выпуска: `sha256sum -c SHA256SUMS.txt`.
+Из каталога конкретного выпуска: `shasum -a 256 -c SHA256SUMS.txt` на macOS.
 Файлы релизов сохраняются побайтово, без преобразования переводов строк.

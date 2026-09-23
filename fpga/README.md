@@ -8,23 +8,24 @@
 | Каталог target | Реализация Diamond | Ограничения / инструкция |
 |---|---|---|
 | `targets/internal_rom/` | `v1_0` | `constraints/internal_rom.lpf`; сборка ниже |
-| `targets/flash_bringup/` | `flash_bringup` (активна по умолчанию) | Общий `internal_rom.lpf`; [инструкция](targets/flash_bringup/README.md) |
+| `targets/flash_bringup/` | `flash_bringup` | Общий `internal_rom.lpf`; [инструкция](targets/flash_bringup/README.md) |
 | `targets/spi_bringup/` | `spi_bringup` | `constraints/spi_bringup.lpf`; [сборка и симуляция](targets/spi_bringup/README.md) |
 | `targets/game_rom/` | `game_rom` | `constraints/game_rom.lpf`; [запуск ROM из Flash](targets/game_rom/README.md) |
 | `targets/game_mbc5/` | `game_mbc5` | `constraints/game_mbc5.lpf`; [LSDj и F-RAM](targets/game_mbc5/README.md) |
+| `targets/game_multi/` | `game_multi` | `constraints/game_multi.lpf`; несколько мапперов и RTC |
+| `targets/game_programmer/` | `game_programmer` (активна по умолчанию) | `constraints/game_programmer.lpf`; [сборка](targets/game_programmer/README.md) |
 | `targets/programmer/` | `programmer` | `constraints/programmer.lpf`; [запись Flash](targets/programmer/README.md) |
 
-Добавлена GAME-конфигурация MBC5 для LSDj 1 МиБ / RAM 128 КиБ.
-RTL и адаптация PROGRAMMER к F-RAM проверены в симуляции; новые JEDEC
-ещё не собраны. Старые выпуски PROGRAMMER с диагностикой на 82–83
-несовместимы с подключённой F-RAM. Назначения — в
-[схеме KiCad](../hardware/cartridge/cartridge.kicad_sch).
+Рабочая база LSDj с MBC5 / F-RAM сохранена в
+[выпуске от 2026-09-20](../releases/fpga/lsdj-working-2026-09-20/).
+Текущие исходники дополнительно содержат команды передачи F-RAM по USB;
+для них нужна новая пара прошивок FPGA/RP2040.
 
 Каждая конфигурация содержит собственный `top` и собирается независимо.
 Общие модули — в `rtl/`, тесты — в `tests/`, проект — в `diamond/`.
 
-`examples/hello_world.v` — минимальный пример выхода FPGA,
-`examples/fram_test.v` — ранний автономный тест F-RAM. Они не подключены
+`examples/Hello_World.v` — минимальный пример выхода FPGA,
+`examples/FRAM_test.v` — ранний автономный тест F-RAM. Они не подключены
 к проекту Diamond. Перед использованием нужны отдельная конфигурация,
 проверенный LPF и испытания.
 

@@ -7,9 +7,11 @@
 
 ## Подготовка FPGA в Windows
 
-Использовать [JEDEC game_programmer](../releases/fpga/game_programmer/RomEmu_game_programmer.jed)
+Использовать [JEDEC game_programmer](../releases/fpga/lsdj-working-2026-09-20/RomEmu_game_programmer.jed)
 с [RP2040 programmer-v4](../releases/rp2040/programmer-v4/). Обновлять оба устройства
-парой. Сборка и симуляции пройдены, аппаратное испытание этой пары ещё не выполнено.
+парой. Сохранённая рабочая база от 2026-09-20 запускает LSDj.
+Полный цикл Flash на новых прошивках аппаратно проверен — PASS;
+[результаты](TEST_PLAN.md#журнал-результатов).
 [Сборка FPGA из исходников](../fpga/targets/game_programmer/README.md).
 
 ## Подготовка Mac

@@ -23,7 +23,8 @@
 - [TEST_PLAN.md](TEST_PLAN.md) — обязательные проверки и сохраняемые результаты.
 - [SPI_BRINGUP.md](SPI_BRINGUP.md) — подключение RP2040-Zero и протокол первого обмена.
 - [PROGRAMMER.md](PROGRAMMER.md) — полный дамп, запись `.gb` и повторное чтение на Mac.
-- [PROGRAMMER_PROTOCOL.md](PROGRAMMER_PROTOCOL.md) — блочный USB/SPI-протокол 3.0 и временные параметры.
+- [PROGRAMMER_PROTOCOL.md](PROGRAMMER_PROTOCOL.md) — USB 3.0 и прежний блочный SPI v3.
+- [PROGRAMMER_SPI_V4.md](PROGRAMMER_SPI_V4.md) — текущий SPI v4, обработка блоков на RP2040 и арбитраж.
 - [BOM.md](BOM.md) — заметки по комплектации; не источник электрической истины.
 
 `archive/` содержит устаревшие снимки, оставленные только для истории. Они не
@@ -33,7 +34,7 @@
 
 - Текущий статус хранится в `STATUS.md`, хронология испытаний — в `TEST_PLAN.md`.
 - `ROADMAP.md` содержит этапы и критерии; `ARCHITECTURE.md` — общие требования.
-- Подключение стенда и SPI 1.0 описаны в `SPI_BRINGUP.md`, протокол программатора 3.0 — в `PROGRAMMER_PROTOCOL.md`.
+- Подключение стенда и SPI 1.0 описаны в `SPI_BRINGUP.md`, USB 3.0 и прежний SPI v3 — в `PROGRAMMER_PROTOCOL.md`, текущий SPI — в `PROGRAMMER_SPI_V4.md`.
 - README конфигурации содержит сборку, запуск и специфическую диагностику.
 - Манифест выпуска фиксирует его исходники, инструменты, отчёты и контрольные суммы.
 

@@ -21,7 +21,7 @@ cmake --build firmware/rp2040/programmer/build-offload -j4
 Для стендового опыта с готовым UF2 использовать общую инструкцию выше.
 
 Проверенная новая сборка использует Pico SDK 2.2.0, ARM GNU 14.3.Rel1,
-плату `waveshare_rp2040_zero` и Release. На Windows доступны те же команды с генератором `-G Ninja`.
+плату `waveshare_rp2040_zero` и Release.
 Если нет picotool/нативного C++ компилятора, добавьте `-DPICO_NO_PICOTOOL=1`:
 SDK соберёт `.bin`, а скрипт `tools/bin_to_uf2.py` сформирует RP2040 UF2.
 
@@ -31,6 +31,5 @@ SDK соберёт `.bin`, а скрипт `tools/bin_to_uf2.py` сформир�
 python3 -m unittest discover -s firmware/rp2040/programmer/tests -v
 ```
 
-Переменная `CC` позволяет выбрать C-компилятор (по умолчанию `cc`), в том числе
-переносимый TinyCC на Windows. Проверяется настоящий `src/main.c` с моделью
+Переменная `CC` позволяет выбрать C-компилятор (по умолчанию `cc`). Проверяется настоящий `src/main.c` с моделью
 коротких SPI-команд, а не отдельная реализация алгоритма моста.
