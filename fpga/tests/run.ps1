@@ -7,6 +7,10 @@ $programmer = @('../../rtl/mx29_bus.v', '../../rtl/mx29_programmer.v', '../../rt
 $combined = @('../../targets/game_programmer/top.v') + $game + $programmer + @('../../rtl/cart_mode.v', '../game_programmer_tb.sv')
 $cases = @(
     @{Name='cart_header'; Top='cart_header_tb'; Files=@('../../rtl/cart_header.v', '../cart_header_tb.sv'); Options=''},
+    @{Name='cart_mapper'; Top='cart_mapper_tb'; Files=@('../../rtl/cart_mapper.v', '../cart_mapper_tb.sv'); Options=''},
+    @{Name='mapper_race'; Top='mapper_race_tb'; Files=@('../../rtl/cart_mapper.v', '../../rtl/mbc_rtc.v', '../mapper_race_tb.sv'); Options=''},
+    @{Name='mbc_rtc'; Top='mbc_rtc_tb'; Files=@('../../rtl/mbc_rtc.v', '../mbc_rtc_tb.sv'); Options=''},
+    @{Name='rtc_priority'; Top='rtc_priority_tb'; Files=@('../../rtl/mbc_rtc.v', '../rtc_priority_tb.sv'); Options=''},
     @{Name='game_multi'; Top='game_multi_tb'; Files=@('../../targets/game_multi/top.v') + $game + @('../game_multi_tb.sv'); Options=''},
     @{Name='programmer_block'; Top='programmer_block_tb'; Files=$programmer + @('../programmer_block_tb.sv'); Options=''},
     @{Name='game_programmer'; Top='game_programmer_tb'; Files=$combined; Options='-gHOST_BLOCKS=0'},

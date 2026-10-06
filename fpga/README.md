@@ -12,7 +12,7 @@
 | `targets/spi_bringup/` | `spi_bringup` | `constraints/spi_bringup.lpf`; [сборка и симуляция](targets/spi_bringup/README.md) |
 | `targets/game_rom/` | `game_rom` | `constraints/game_rom.lpf`; [запуск ROM из Flash](targets/game_rom/README.md) |
 | `targets/game_mbc5/` | `game_mbc5` | `constraints/game_mbc5.lpf`; [LSDj и F-RAM](targets/game_mbc5/README.md) |
-| `targets/game_multi/` | `game_multi` | `constraints/game_multi.lpf`; несколько мапперов и RTC |
+| `targets/game_multi/` | `game_multi` | `constraints/game_multi.lpf`; [мапперы, RTC и временные требования](targets/game_multi/README.md) |
 | `targets/game_programmer/` | `game_programmer` (активна по умолчанию) | `constraints/game_programmer.lpf`; [сборка](targets/game_programmer/README.md) |
 | `targets/programmer/` | `programmer` | `constraints/programmer.lpf`; [запись Flash](targets/programmer/README.md) |
 

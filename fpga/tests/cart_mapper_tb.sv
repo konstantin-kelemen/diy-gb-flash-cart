@@ -1,5 +1,8 @@
 `timescale 1ns/1ps
 module cart_mapper_tb;
+    reg clk=0;
+    always #9.4 clk=~clk;
+    wire config_ready;
     reg configured=1, multicart=0;
     reg [7:0] cart_type=255, rom_size=255, ram_size=255;
     reg [15:0] gb_a=0;
@@ -14,12 +17,12 @@ module cart_mapper_tb;
     cart_mapper dut(.*);
     integer size, hi, lo, mode, expected, i, mask;
     task boot(input [7:0] t, input [7:0] r, input [7:0] s, input multi);
-        begin gb_res_n=0; cart_type=t; rom_size=r; ram_size=s; multicart=multi;
-            #10; gb_res_n=1; #10;
+        begin configured=0; gb_res_n=0; cart_type=t; rom_size=r; ram_size=s; multicart=multi;
+            #100; configured=1; gb_res_n=1; #100;
         end
     endtask
     task wr(input [15:0] a, input [7:0] d);
-        begin gb_a=a; gb_data=d; #10; gb_wr_n=0; #100; gb_wr_n=1; #20; end
+        begin gb_a=a; gb_data=d; #10; gb_wr_n=0; #100; gb_wr_n=1; #80; end
     endtask
     task rom(input [15:0] a, input integer bank);
         begin gb_a=a; #1;

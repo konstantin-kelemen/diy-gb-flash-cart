@@ -135,5 +135,7 @@ IOBUF PORT "fram_oe_n" IO_TYPE=LVCMOS33 PULLMODE=UP ;
 LOCATE COMP "fram_we_n" SITE "84" ;
 IOBUF PORT "fram_we_n" IO_TYPE=LVCMOS33 PULLMODE=UP ;
 
-# Только внутренний домен сканера/RTC; внешние пути проверяются отдельно.
+# Домен сканера, маппера и RTC. Внешние пути Game Boy/памяти,
+# захват A/D и recovery/removal сброса проверяются отдельно после Place & Route.
+# Нельзя объявлять все пути от Game Boy false path: A/D требуют setup/hold.
 FREQUENCY NET "clk" 53.20 MHz ;

@@ -40,9 +40,10 @@ module game_multi_tb;
     reg writing=0;
     reg [16:0] write_address;
     reg [7:0] write_value;
-    time ce_start=0, ce_end=0, we_start=0, data_changed=0;
+    time ce_start=0, ce_end=0, we_start=0, data_changed=0, address_changed=0;
     integer writes=0, i, b, old_writes;
     always @(flash_d) begin #0; if(writing && !fram_we_n) data_changed=$time; end
+    always @(flash_a) address_changed=$time;
     always @(negedge fram_ce_n) begin
         if($time-ce_end<30) $fatal(1,"precharge"); ce_start=$time;
     end
@@ -54,7 +55,9 @@ module game_multi_tb;
         #0; if(writing && !fram_we_n) begin write_address=flash_a[16:0]; write_value=flash_d; end
     end
     always @(posedge fram_we_n) if(writing) begin
-        if($time-we_start<18 || $time-data_changed<15 || ^write_value===1'bx) $fatal(1,"RAM write timing/data");
+        if($time-we_start<18 || $time-ce_start<60 ||
+           $time-address_changed<60 || $time-data_changed<15 || ^write_value===1'bx)
+            $fatal(1,"RAM write timing/address/data");
         ram[write_address]=write_value; writes=writes+1; writing=0;
     end
     task idle;
@@ -76,8 +79,15 @@ module game_multi_tb;
     task boot(input [7:0] t,input [7:0] r,input [7:0] s,input multi);
         begin idle(); gb_res_n=0; cart_type=t; rom_size=r; ram_size=s; secondary_logo=multi;
             #200; if(!fram_ce_n || !flash_ce_n || !data_oe_n) $fatal(1,"reset isolation");
-            gb_res_n=1;
-            wait(dut.game.configured); #100;
+            gb_res_n=1; gb_a=16'h0100; gb_rd_n=0;
+            wait(dut.game.configured); #1;
+            if(dut.game.config_ready || !flash_ce_n || !fram_ce_n || !data_oe_n)
+                $fatal(1,"premature GAME before mapper decode");
+            wait(dut.game.config_ready); #1;
+            #120;
+            if(cpu_bus!==(dut.game.supported ? 8'h00 : 8'hff))
+                $fatal(1,"first read after scan/decode");
+            idle();
             if(dut.game.cart_type!==t || dut.game.rom_size!==r || dut.game.ram_size!==s) $fatal(1,"header scan");
         end
     endtask
@@ -92,6 +102,18 @@ module game_multi_tb;
         boot(0,0,0,0); rd('h4000,1); wr('h2000,4); rd('h4000,1);
         rd('ha000,'hff); wr('ha000,0); if(writes) $fatal(1,"ROM ONLY write");
         boot('h09,0,2,0); wr('ha000,'h77); rd('ha000,'h77);
+        // /CS отпускается до, одновременно и после /WR. Адрес не меняется.
+        for(i=0;i<3;i=i+1) begin
+            idle(); gb_a=16'ha123; gb_cs_n=0; cpu_data=8'h80+i; cpu_drive=1;
+            #40; gb_wr_n=0; #160;
+            if(i==0) begin gb_cs_n=1; #10; gb_wr_n=1; end
+            else if(i==1) begin gb_cs_n=1; gb_wr_n=1; end
+            else begin gb_wr_n=1; #10; gb_cs_n=1; end
+            #30;
+            if(flash_a[16:0]!==17'h123 || ram[17'h123]!==8'h80+i)
+                $fatal(1,"CS release changed RAM address/data");
+            cpu_drive=0; #50;
+        end
         boot(3,4,3,0); wr(0,'ha); wr('h6000,1);
         for(b=0;b<4;b=b+1) begin wr('h4000,b); wr('hbfff,b+64); end
         for(b=0;b<4;b=b+1) begin wr('h4000,b); rd('hbfff,b+64); end
@@ -143,6 +165,11 @@ module game_multi_tb;
     always @(*) begin
         if(!flash_we_n) $fatal(1,"Flash written");
         if(!flash_ce_n && !fram_ce_n) $fatal(1,"both memories selected");
+    end
+    always @(negedge gb_res_n) begin
+        #1;
+        if(!flash_ce_n || !fram_ce_n || !fram_we_n || !data_oe_n)
+            $fatal(1,"asynchronous reset isolation");
     end
     initial begin #200000000; $fatal(1,"timeout"); end
 endmodule
